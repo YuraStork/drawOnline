@@ -44,3 +44,7 @@ export interface PokemonsResponse {
   previous: any;
   results: PokemonShortData[];
 }
+
+export interface RoomType {
+  _id: string,
+}
