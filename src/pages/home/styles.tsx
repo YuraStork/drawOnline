@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const HomePageSection = styled.section`
-  background-color: #3f654d;
+  background-color: #343a40;
   min-height: 100vh;
 `;
 
@@ -15,24 +15,24 @@ const HomePageWrapper = styled.div`
   padding: 10px;
 
   & > div {
-    box-shadow: 0px 0px 2px 1px #fff;
+    box-shadow: 0px 0px 2px 1px #e9ecef;
     border-radius: 10px;
   }
 `;
 const ActiveRoomsWrapper = styled.div`
-  background-color: #ffffffdf;
+  background-color: #6c757d;
   padding: 10px;
 
   & > h3 {
-    color: #000000;
+    color: #ffffff;
     font-weight: 400;
     font-size: 22px;
   }
 
   & > div {
     height: 40px;
-    border: 2px solid #040404;
-    color: #000000;
+    border: 2px solid #ffffff;
+    color: #ffffff;
     margin-top: 10px;
     cursor: pointer;
     padding: 8px;
@@ -51,6 +51,7 @@ const ActiveRoomsWrapper = styled.div`
 
 const Wrapper = styled.div`
   padding: 10px;
+  background-color: #212529;
   & > div:last-child {
     margin-top: 20px;
   }
@@ -61,7 +62,6 @@ const ChatWrapper = styled(ActiveRoomsWrapper)``;
 const RoomWrapper = styled.div`
   flex-basis: 400px;
   flex-grow: 1;
-  background-color: #e6e6e62c;
   padding: 10px;
   border-radius: 10px;
 
