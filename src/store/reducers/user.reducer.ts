@@ -3,7 +3,7 @@ import { USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSavedUser, saveUserInStorage } from "services/token.service";
 import { SavedUserObject } from "types";
-import { getUserProfileThunk, updateUserProfileThunk, UserLoginThunk } from "store/thunks/user.thunk";
+import { getUserProfileThunk, updateUserProfileThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user.thunk";
 
 type initialStateTypes = {
   isAuth: boolean,
@@ -116,6 +116,17 @@ export const UserReducer = createSlice({
     builder.addCase(updateUserProfileThunk.rejected, (state) => {
       state.isLoading = false;
       state.error = "Error";
+    })
+
+    builder.addCase(UserRegistrationThunk.pending, (state) => {
+      state.isLoading = true;
+    })
+    builder.addCase(UserRegistrationThunk.fulfilled, (state) => {
+      state.isLoading = false;
+    })
+    builder.addCase(UserRegistrationThunk.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload as string;
     })
   }
 })

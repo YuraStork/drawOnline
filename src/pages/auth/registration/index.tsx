@@ -3,12 +3,17 @@ import { Form, FormWrapper, Title } from "../styles";
 import { initialValues, validationSchema, onSubmit } from "./const";
 import { Button } from "components/button/styles";
 import { Input } from "components/input";
+import { useAppDispatch } from "store/store";
+import { useNavigate } from "react-router-dom";
 
 export const RegistrationComponent = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit,
+    onSubmit: (data: any, helper: any) => onSubmit(data, helper, dispatch, navigate),
   });
 
   return (

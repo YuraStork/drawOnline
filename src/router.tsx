@@ -26,7 +26,7 @@ export const Router = () => {
 
   const notAuthorized = useRoutes([
     { path: "/authorization", element: <AuthPage /> },
-    { path: "*", element: <Navigate to="/login" /> },
+    { path: "*", element: <Navigate to="/authorization" /> },
   ]);
 
   return isAuth ? authorized : notAuthorized;

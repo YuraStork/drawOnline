@@ -10,15 +10,8 @@ import { HomePageSection, HomePageWrapper, ActiveRoomsWrapper, ChatWrapper, Wrap
 
 export const HomePage = () => {
   const [loading, setIsLoading] = useState(false);
-  const { data, isLoading, makeRequest } = useRequest(getAllRooms);
-
-  useEffect(() => {
-    if (!data) {
-      makeRequest();
-    }
-  }, [])
-
-  if (isLoading || loading) return <Loader position="absolute" />
+ 
+  if (loading) return <Loader position="absolute" />
 
   return <HomePageSection>
     <Container>

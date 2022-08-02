@@ -23,8 +23,8 @@ export const onSubmit = (
   navigate: NavigateFunction
 ): void => {
   const password = cryptoSha256(data.password);
-  dispatch(UserLoginThunk({ ...data, password })).unwrap().then(() => {
-    navigate("/home")
+  dispatch(UserLoginThunk({ ...data, password })).then(() => {
+    navigate("/")
   })
   formikHelper.resetForm();
 };

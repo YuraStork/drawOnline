@@ -1,8 +1,11 @@
-import { handleRegistration } from "api/user.api";
 import { FormikHelpers } from "formik";
+import { toastSuccess } from "../../../toast";
 import { UserRegistrationData } from "types";
 import { cryptoSha256 } from "utils/cryptoPassord";
 import * as yup from "yup";
+import { AppDispatch } from "store/store";
+import { NavigateFunction } from "react-router-dom";
+import { UserRegistrationThunk } from "store/thunks/user.thunk";
 
 export const validationSchema = yup.object().shape({
   name: yup.string().min(2, "min 2 symbols").required("Required"),
@@ -19,8 +22,12 @@ export const initialValues: UserRegistrationData = {
 export const onSubmit = (
   data: UserRegistrationData,
   formikHelper: FormikHelpers<UserRegistrationData>,
+  dispatch: AppDispatch,
+  navigate: NavigateFunction
 ): void => {
   const password = cryptoSha256(data.password);
-  handleRegistration({ ...data, password });
-  formikHelper.resetForm();
+  dispatch(UserRegistrationThunk({ ...data, password })).then(res => {
+    formikHelper.resetForm();
+    toastSuccess(res.payload.message);
+  });
 };
