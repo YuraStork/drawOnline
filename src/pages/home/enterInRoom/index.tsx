@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { EnterInRoomWrapper } from "./styles";
+import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../../components/loader";
@@ -19,7 +19,7 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ setIsLoading, isLoadi
   });
   if (isLoading) return <Loader position="absolute" />
   return (
-    <EnterInRoomWrapper>
+    <RoomWrapper>
       <h3>Enter in room</h3>
       <form onSubmit={formik.handleSubmit}>
         <div>
@@ -63,6 +63,6 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ setIsLoading, isLoadi
         </div>
         <button type="submit">Enter in room</button>
       </form>
-    </EnterInRoomWrapper>
+    </RoomWrapper>
   );
 };
