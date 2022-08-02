@@ -5,24 +5,48 @@ const AuthSection = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${(p) => p.theme.colors.light_gray};
-  padding: 10px;
-  background-color: #f0f2f5;
-  gap: 40px;
-  & > h1 {
-    text-align: right;
-  }
+  background-color: #25bbfc;
+`;
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(300px, 500px);
+  gap: 50px;
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  border-radius: 10px;
+  flex-flow: column wrap;
+  gap: 20px;
+  border: 4px solid #fff;
+  box-shadow: 0px 0px 2px 0px #989898;
+  background-color: #00a2ff;
+  padding: 20px;
+`
+
+const Title = styled.h2`
+  color: #ffffff;
+  font-weight: 400;
+`
+const Logo = styled.h1`
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  color: #fff;
+  display: flex;
+  align-items: center;
 `;
 const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: white;
-  border-radius: 5px;
-  padding: 15px;
-  width: 400px;
-  border: 1px solid ${(p) => p.theme.colors.light_gray};
-  box-shadow: 0px 0px 2px 0px #989898;
 
+  & > h2{
+    margin: 0;
+
+  }
   & > a {
     width: max-content;
     display: inline-block;
@@ -37,4 +61,4 @@ const FormWrapper = styled.div`
 `;
 const Form = styled.form``;
 
-export { AuthSection, Form, FormWrapper };
+export { AuthSection, Form, FormWrapper, Container, Logo, Wrapper, Title };

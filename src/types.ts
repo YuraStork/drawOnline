@@ -4,7 +4,6 @@ export interface UserLoginFormData {
 }
 export interface UserRegistrationData extends UserLoginFormData {
   name: string;
-  age: number;
 }
 export interface AuthorizedUser {
   id: string;

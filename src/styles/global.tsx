@@ -7,10 +7,11 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     margin: 0;
   }
-
+ 
   body{
     overflow-x: hidden;
     font-family: Roboto;
+    min-height: 100vh;
   }
   li{
     list-style-type: none;
