@@ -27,25 +27,7 @@ const ActiveRoomsWrapper = styled.div`
     color: #ffffff;
     font-weight: 400;
     font-size: 22px;
-  }
-
-  & > div {
-    height: 40px;
-    border: 2px solid #ffffff;
-    color: #ffffff;
-    margin-top: 10px;
-    cursor: pointer;
-    padding: 8px;
-    font-size: 20px;
-    transition: all 0.3s;
-
-    &:hover {
-      background-color: white;
-      color: black;
-    }
-  }
-  & > div:first-child {
-    margin-top: 0;
+    margin-bottom: 15px;
   }
 `;
 

@@ -3,14 +3,14 @@ import { useEffect, useState } from "react"
 import { getAllRooms } from "../../api/rooms/getRooms"
 
 import { Loader } from "../../components/loader"
-import { useRequest } from "../../hooks/useRequest.hook"
+import { ActiveRooms } from "./activeRooms"
 import { CreateRoomComponent } from "./createRoom"
 import { EnterInRoomComponent } from "./enterInRoom"
 import { HomePageSection, HomePageWrapper, ActiveRoomsWrapper, ChatWrapper, Wrapper } from "./styles"
 
 export const HomePage = () => {
   const [loading, setIsLoading] = useState(false);
- 
+
   if (loading) return <Loader position="absolute" />
 
   return <HomePageSection>
@@ -18,9 +18,7 @@ export const HomePage = () => {
       <HomePageWrapper>
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
+          <ActiveRooms />
         </ActiveRoomsWrapper>
         <Wrapper>
           <CreateRoomComponent isLoading={loading} setIsLoading={setIsLoading} />
