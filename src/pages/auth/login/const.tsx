@@ -1,3 +1,4 @@
+import { FormikHelpers } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "store/store";
 import { UserLoginThunk } from "store/thunks/user.thunk";
@@ -17,7 +18,7 @@ export const initialValues: UserLoginFormData = {
 
 export const onSubmit = (
   data: UserLoginFormData,
-  formikHelper: any,
+  formikHelper: FormikHelpers<UserLoginFormData>,
   dispatch: AppDispatch,
   navigate: NavigateFunction
 ): void => {

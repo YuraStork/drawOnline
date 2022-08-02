@@ -1,4 +1,5 @@
 import { handleRegistration } from "api/user.api";
+import { FormikHelpers } from "formik";
 import { UserRegistrationData } from "types";
 import { cryptoSha256 } from "utils/cryptoPassord";
 import * as yup from "yup";
@@ -13,12 +14,11 @@ export const initialValues: UserRegistrationData = {
   name: "",
   email: "",
   password: "",
-  age: 18,
 };
 
 export const onSubmit = (
   data: UserRegistrationData,
-  formikHelper: any
+  formikHelper: FormikHelpers<UserRegistrationData>,
 ): void => {
   const password = cryptoSha256(data.password);
   handleRegistration({ ...data, password });

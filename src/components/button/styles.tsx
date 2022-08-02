@@ -4,12 +4,13 @@ type ButtonProps = {
   margin?: string;
   background?: string;
   color?: string;
+  width?: string;
 };
 
 export const Button = styled.button<ButtonProps>`
   position: relative;
   padding: 10px;
-  width: 100px;
+  width:${(p) => p.width ? p.width : "100px"};
   ${(p) =>
     p.margin &&
     css`
@@ -21,13 +22,14 @@ export const Button = styled.button<ButtonProps>`
   transition: all 0.3s ease-in;
   border: none;
   cursor: pointer;
+  border: 2px solid #fff;
 
   &:disabled {
-    background-color: #808080;
+    background-color: transparent;
     cursor: no-drop;
   }
 
   &:hover:not([disabled]) {
-    background-color: ${(p) => p.background || "#0055c4"};
+    background-color: ${(p) => p.background || "#0063e4"};
   }
 `;

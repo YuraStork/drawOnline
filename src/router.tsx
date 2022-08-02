@@ -1,6 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { LoginPage } from "pages/auth/login";
-import { RegistrationPage } from "pages/auth/registration";
+import { AuthPage } from "pages/auth/index";
 import { UserCabinet } from "pages/userCabinet";
 import { getUser } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
@@ -22,14 +21,11 @@ export const Router = () => {
     { path: "/checkRoompassword/:id", element: <PrivateRoom /> },
     { path: "/cabinet", element: <UserCabinet /> },
     { path: "/server-error", element: <ServerErrorPage /> },
-    { path: "/login", element: <>You have already signed in</> },
-    { path: "/registration", element: <>You have already signed up</> },
     { path: "*", element: <NotFoundPage /> },
   ]);
 
   const notAuthorized = useRoutes([
-    { path: "/login", element: <LoginPage /> },
-    { path: "/registration", element: <RegistrationPage /> },
+    { path: "/authorization", element: <AuthPage /> },
     { path: "*", element: <Navigate to="/login" /> },
   ]);
 
