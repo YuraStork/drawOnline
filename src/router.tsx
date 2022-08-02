@@ -11,23 +11,32 @@ import { ServerErrorPage } from "pages/serverErrorPage";
 import { NotFoundPage } from "pages/notfoundPage";
 import { HomePage } from "pages/home";
 
+const setRoutes = (isAuth: boolean) =>
+  isAuth
+    ? [
+        { path: "/", element: <HomePage /> },
+        { path: "/draw", element: <LayoutComponent /> },
+        {
+          path: "/draw_online/:id",
+          element: (
+            <EnterRoomWrapper>
+              <DrawOnlinePage />
+            </EnterRoomWrapper>
+          ),
+        },
+        { path: "/checkRoompassword/:id", element: <PrivateRoom /> },
+        { path: "/cabinet", element: <UserCabinet /> },
+        { path: "/server-error", element: <ServerErrorPage /> },
+        { path: "/authorization", element: <Navigate to="/" /> },
+        { path: "*", element: <NotFoundPage /> },
+      ]
+    : [
+        { path: "/authorization", element: <AuthPage /> },
+        { path: "*", element: <Navigate to="/authorization" /> },
+      ];
+
 export const Router = () => {
   const { isAuth } = useAppSelector(getUser);
-
-  const authorized = useRoutes([
-    { path: "/", element: <HomePage /> },
-    { path: "/draw", element: <LayoutComponent /> },
-    { path: "/draw_online/:id", element: <EnterRoomWrapper><DrawOnlinePage /></EnterRoomWrapper> },
-    { path: "/checkRoompassword/:id", element: <PrivateRoom /> },
-    { path: "/cabinet", element: <UserCabinet /> },
-    { path: "/server-error", element: <ServerErrorPage /> },
-    { path: "*", element: <NotFoundPage /> },
-  ]);
-
-  const notAuthorized = useRoutes([
-    { path: "/authorization", element: <AuthPage /> },
-    { path: "*", element: <Navigate to="/authorization" /> },
-  ]);
-
-  return isAuth ? authorized : notAuthorized;
+  const routes = useRoutes(setRoutes(isAuth));
+  return routes;
 };
