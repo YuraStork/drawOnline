@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
-import { CreateRoomWrapper } from "./styles";
+import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
 import { useNavigate } from "react-router-dom";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Loader } from "../../../components/loader";
 
 type ComponentProps = {
@@ -19,7 +19,7 @@ export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoadin
   });
   if (isLoading) return <Loader position="absolute" />
   return (
-    <CreateRoomWrapper>
+    <RoomWrapper>
       <h3>Create room</h3>
       <form onSubmit={formik.handleSubmit}>
         <div>
@@ -63,6 +63,6 @@ export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoadin
         </div>
         <button type="submit">Create room</button>
       </form>
-    </CreateRoomWrapper>
+    </RoomWrapper>
   );
 };
