@@ -5,7 +5,7 @@ const AuthSection = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #25bbfc;
+  background-color: #4361ee;
 `;
 const Container = styled.div`
   max-width: 1200px;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   gap: 20px;
   border: 4px solid #fff;
   box-shadow: 0px 0px 2px 0px #989898;
-  background-color: #00a2ff;
+  background-color: #4361ee;
   padding: 20px;
 `
 
