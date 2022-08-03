@@ -1,28 +1,31 @@
 import styled from "styled-components";
 
 const HomePageSection = styled.section`
+  height: 100vh;
   background-color: #343a40;
-  min-height: 100vh;
+  display: grid;
+  align-items: center;
 `;
 
 const HomePageWrapper = styled.div`
+  max-width: 1400px;
+  height: 80vh;
   display: grid;
-  min-height: 100vh;
-  grid-template-columns: 300px 1fr 300px;
-  grid-template-rows: 700px;
- 
+  min-height: 0px;
+  grid-template: 1fr / 1fr 3fr 2fr;
   gap: 20px;
-  padding: 10px;
+  margin: 0 auto;
 
   & > div {
     box-shadow: 0px 0px 2px 1px #e9ecef;
     border-radius: 10px;
   }
 `;
-const ActiveRoomsWrapper = styled.div`
-  background-color: #6c757d;
-  padding: 10px;
 
+const ActiveRoomsWrapper = styled.div`
+  background-color: #646668;
+  padding: 10px;
+  min-height: 0px;
   & > h3 {
     color: #ffffff;
     font-weight: 400;
@@ -42,8 +45,6 @@ const Wrapper = styled.div`
 const ChatWrapper = styled(ActiveRoomsWrapper)``;
 
 const RoomWrapper = styled.div`
-  flex-basis: 400px;
-  flex-grow: 1;
   padding: 10px;
   border-radius: 10px;
 

@@ -8,6 +8,10 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
  
+  html,body{
+    height: 100%;
+  }
+
   body{
     overflow-x: hidden;
     font-family: Roboto;

@@ -1,59 +1,94 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { useEffect, useRef, useState } from "react"
+import { LittleLoader } from "components/littleLoader";
+import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "store/store";
 import { ChatMessage, ChatType } from "../types";
-import { Message, MessageWrapper } from "./styles";
+import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
 export const Chat = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<ChatMessage[] | []>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data } = useAppSelector(s => s.user);
+  const { data } = useAppSelector((s) => s.user);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const [messageLoading, setMessageLoading] = useState(false);
 
   useEffect(() => {
     if (!socket) {
       const socket = new WebSocket("ws://localhost:5000/chat");
       setSocket(socket);
 
-      socket.onopen = () => socket.send(JSON.stringify({
-        method: "chat"
-      }))
+      socket.onopen = () => {
+        socket.send(
+          JSON.stringify({
+            method: "chat",
+          })
+        );
+      }
 
       socket.onmessage = (e) => {
         const msg: ChatType = JSON.parse(e.data);
-        console.log("MSG", msg)
         switch (msg.method) {
-          case "chat": setMessages(msg.data as ChatMessage[]); break;
-          case "message": setMessages((pre) => [...pre, msg.data] as ChatMessage[]); break;
+          case "chat":
+            setIsLoading(false)
+            setMessages(msg.data as ChatMessage[]);
+            break;
+          case "message":
+            setMessages((pre) => [...pre, msg.data] as ChatMessage[]);
+            if ((msg.data as ChatMessage).userId === data.id) {
+              setMessageLoading(false)
+            }
+            break;
         }
-      }
+      };
     }
+  }, []);
 
-  }, [])
+  useEffect(()=>{
+    chatRef.current?.scrollTo(0, 100000);
+  },[messages])
 
   const handleSendMessage = () => {
-    socket?.send(JSON.stringify({
-      data: {
-        id: data.id,
-        avatar: data.avatar,
-        userName: data.name,
-        message: inputRef.current?.value
-      },
-      method: "message",
-    }))
-  }
+    if (inputRef.current?.value) {
+      setMessageLoading(true);
+      socket?.send(
+        JSON.stringify({
+          data: {
+            userId: data.id,
+            avatar: data.avatar,
+            name: data.name,
+            message: inputRef.current?.value,
+          },
+          method: "message",
+        })
+      );
+      inputRef.current.value = "";
+    }
+  };
 
-  return <div>
-    {messages.length && messages.map((msg: ChatMessage) => <MessageWrapper key={nanoid()}>
-      <div>
-        <img src={msg.avatar} width={30} height={30} alt={msg.userName} />
+  return (
+    <ChatWrapper>
+      <div ref={chatRef}>
+        {isLoading ? <LittleLoader /> :
+          messages.length &&
+          messages.map((msg: ChatMessage) => (
+            <MessagesWrapper key={nanoid()}>
+              <div>
+                <img src={msg.avatar} width={30} height={30} alt={msg.name} />
+              </div>
+              <Message myMessage={msg.userId === data.id}>
+                <h4>{msg.name}</h4>
+                <p>{msg.message}</p>
+              </Message>
+            </MessagesWrapper>
+          ))
+        }
       </div>
-      <Message myMessage={msg.id === data.id}>
-        <h4>{msg.userName}</h4>
-        <p>{msg.message}</p>
-      </Message>
-    </MessageWrapper>)}
-    <input type="text" ref={inputRef} />
-    <button onClick={handleSendMessage}>send</button>
-  </div>
-}
+      <div>
+        <input type="text" ref={inputRef} required={true} />
+        <button onClick={handleSendMessage} disabled={messageLoading}>send</button>
+      </div>
+    </ChatWrapper>
+  );
+};
