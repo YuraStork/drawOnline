@@ -4,6 +4,7 @@ import { getAllRooms } from "../../api/rooms/getRooms"
 
 import { Loader } from "../../components/loader"
 import { ActiveRooms } from "./activeRooms"
+import { Chat } from "./chat"
 import { CreateRoomComponent } from "./createRoom"
 import { EnterInRoomComponent } from "./enterInRoom"
 import { HomePageSection, HomePageWrapper, ActiveRoomsWrapper, ChatWrapper, Wrapper } from "./styles"
@@ -26,9 +27,7 @@ export const HomePage = () => {
         </Wrapper>
         <ChatWrapper>
           <h3>Chat</h3>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
+          <Chat />
         </ChatWrapper>
       </HomePageWrapper>
     </Container>
