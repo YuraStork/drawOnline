@@ -32,7 +32,7 @@ const LoaderWrapper = styled.div<LoaderProps>`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   & > div > div:nth-child(1) {
