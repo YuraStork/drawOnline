@@ -62,6 +62,7 @@ export const UserReducer = createSlice({
         state.data.name = user.user.name;
         state.data.role = user.user.role;
         state.isAuth = true;
+        state.error = undefined;
       }
     },
     logoutAction: (state) => {
@@ -78,7 +79,7 @@ export const UserReducer = createSlice({
       state.isLoading = true;
       state.error = undefined;
     })
-    
+
     builder.addCase(UserLoginThunk.fulfilled, (state, { payload }: PayloadAction<SavedUserObject>) => {
       const { user, token } = payload;
       state.token = token;

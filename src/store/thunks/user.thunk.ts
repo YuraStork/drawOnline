@@ -13,7 +13,6 @@ export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,
   async (_, { dispatch, rejectWithValue }) => {
     const savedUser = getSavedUser();
-    console.log("SAVED USER", savedUser)
     if (savedUser) {
       const response = await getProfile(savedUser.user.id);
       dispatch(initializeUser());
@@ -38,40 +37,30 @@ export const UserLoginThunk = createAsyncThunk(
   `${USER_REDUCER}/login-thunk`,
   async (data: UserLoginFormData) => {
     const response = await authorizeUser(data);
-    return response.data;
+    return response.data
   }
 );
 
 export const UserRegistrationThunk = createAsyncThunk(
   `${USER_REDUCER}/registration-thunk`,
-  async (data: UserRegistrationData, thunkAPI) => {
-    try {
-      const response = await registrationUser(data);
-      return response.data;
-    } catch (e: any) {
-      return thunkAPI.rejectWithValue(e.response.data.message || "Error");
-    }
+  async (data: UserRegistrationData) => {
+    const response = await registrationUser(data);
+    return response.data;
   }
 );
 
 export const getUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/profile-thunk`,
-  async (id: string, thunkAPI) => {
+  async (id: string) => {
     const response = await getProfile(id);
-    if (response?.data) {
-      return response?.data;
-    }
-    return thunkAPI.rejectWithValue("Error");
+    return response?.data;
   }
 );
 
 export const updateUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/update-profile-thunk`,
-  async (data: any, thunkAPI) => {
+  async (data: any) => {
     const response = await updateUser(data);
-    if (response?.status === 200) {
-      return response?.data;
-    }
-    return thunkAPI.rejectWithValue("Error");
+    return response.data;
   }
 );
