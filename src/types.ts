@@ -20,6 +20,11 @@ export interface AuthorizedUser {
   date: string;
   biography: string;
 }
+
+export interface AuthorizedUserObject {
+  token: string,
+  data: AuthorizedUser;
+}
 export interface SavedUserObject {
   token: string;
   user: Pick<AuthorizedUser, "name" | "role" | "id">;
@@ -33,18 +38,6 @@ export interface AuthContextTypes {
   logout: () => void;
   isLoading: boolean;
 }
-
-export interface PokemonShortData {
-  name: string;
-  url: string;
-}
-export interface PokemonsResponse {
-  count: number;
-  next: any;
-  previous: any;
-  results: PokemonShortData[];
-}
-
 export interface RoomType {
   _id: string,
 }

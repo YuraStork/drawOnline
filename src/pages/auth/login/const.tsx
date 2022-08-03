@@ -26,5 +26,4 @@ export const onSubmit = (
   dispatch(UserLoginThunk({ ...data, password })).then(() => {
     navigate("/")
   })
-  formikHelper.resetForm();
 };

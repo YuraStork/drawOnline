@@ -4,5 +4,5 @@ import { getToken } from "services/token.service";
 import { AuthorizedUser } from "types";
 
 export const getProfile = async (id: string) => {
-  return Instance.get<AuthorizedUser | null>(`${API}/user/${id}`, { headers: { "Authorization": `Bearer ${getToken()}` } });
+  return Instance.get<AuthorizedUser>(`${API}/user/${id}`, { headers: { "Authorization": `Bearer ${getToken()}` } });
 } 

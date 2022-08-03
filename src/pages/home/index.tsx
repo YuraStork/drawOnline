@@ -11,7 +11,6 @@ import { HomePageSection, HomePageWrapper, ActiveRoomsWrapper, ChatWrapper, Wrap
 
 export const HomePage = () => {
   const [loading, setIsLoading] = useState(false);
-
   if (loading) return <Loader position="absolute" />
 
   return <HomePageSection>

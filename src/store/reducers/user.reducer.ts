@@ -1,16 +1,15 @@
-import { AuthorizedUser } from "./../../types";
+import { AuthorizedUser, AuthorizedUserObject } from "./../../types";
 import { USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSavedUser, saveUserInStorage } from "services/token.service";
 import { SavedUserObject } from "types";
-import { getUserProfileThunk, updateUserProfileThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user.thunk";
+import { AuthorizedThunk, getUserProfileThunk, updateUserProfileThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user.thunk";
 
 type initialStateTypes = {
   isAuth: boolean,
   isLoading: boolean,
   error: undefined | string,
   token: undefined | string,
-
   data: {
     id: string,
     avatar: string,
@@ -65,7 +64,7 @@ export const UserReducer = createSlice({
         state.isAuth = true;
       }
     },
-    logout: (state) => {
+    logoutAction: (state) => {
       localStorage.removeItem("user");
       state.data = initialState.data;
       state.isAuth = false;
@@ -74,26 +73,29 @@ export const UserReducer = createSlice({
   },
 
   extraReducers: builder => {
+    // --------------------------------------------------------
     builder.addCase(UserLoginThunk.pending, (state) => {
       state.isLoading = true;
       state.error = undefined;
     })
+    
     builder.addCase(UserLoginThunk.fulfilled, (state, { payload }: PayloadAction<SavedUserObject>) => {
-      state.token = payload.token;
-      state.data.id = payload.user.id;
-      state.data.name = payload.user.name;
-      state.data.role = payload.user.role;
+      const { user, token } = payload;
+      state.token = token;
+      state.data = { ...state.data, ...user }
       state.error = undefined;
       state.isAuth = true;
       state.isLoading = false;
       saveUserInStorage(payload);
     })
-    builder.addCase(UserLoginThunk.rejected, (state) => {
+
+    builder.addCase(UserLoginThunk.rejected, (state, { error }) => {
       state.isLoading = false;
       state.isAuth = false;
-      state.error = "Error";
+      state.error = error.message;
     })
 
+    // --------------------------------------------------------
     builder.addCase(getUserProfileThunk.pending, (state) => {
       state.isLoading = true;
     })
@@ -107,6 +109,7 @@ export const UserReducer = createSlice({
       state.error = "Error";
     })
 
+    // --------------------------------------------------------
     builder.addCase(updateUserProfileThunk.pending, (state) => {
       state.isLoading = true;
     })
@@ -118,6 +121,7 @@ export const UserReducer = createSlice({
       state.error = "Error";
     })
 
+    // --------------------------------------------------------
     builder.addCase(UserRegistrationThunk.pending, (state) => {
       state.isLoading = true;
     })
@@ -128,7 +132,25 @@ export const UserReducer = createSlice({
       state.isLoading = false;
       state.error = payload as string;
     })
+
+    // --------------------------------------------------------
+    builder.addCase(AuthorizedThunk.pending, (state) => {
+      state.isLoading = true;
+    })
+    builder.addCase(AuthorizedThunk.fulfilled, (state, { payload }: PayloadAction<AuthorizedUser>) => {
+      const user = getSavedUser() as SavedUserObject;
+      state.token = user?.token;
+      state.data = payload;
+      state.isAuth = true;
+      state.isLoading = false;
+      state.error = undefined;
+    })
+    builder.addCase(AuthorizedThunk.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload as string;
+    })
+    // --------------------------------------------------------
   }
 })
 
-export const { initializeUser, logout } = UserReducer.actions;
+export const { initializeUser, logoutAction } = UserReducer.actions;
