@@ -17,6 +17,7 @@ export const Chat = () => {
   useEffect(() => {
     if (!socket) {
       const socket = new WebSocket("ws://localhost:5000/chat");
+      console.log("socket", socket)
       setSocket(socket);
 
       socket.onopen = () => {
