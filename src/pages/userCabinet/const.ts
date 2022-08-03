@@ -22,7 +22,7 @@ const setInitialValues = (data: AuthorizedUser): InitialStateTypes => ({
   name: data.name,
   country: data.country,
   city: data.city,
-  age: data.age,
+  age: data.age || "",
   color: data.color,
   gender: data.gender,
   date: data.date,

@@ -11,9 +11,9 @@ export type EnterInRoomType = {
 };
 
 export type ChatMessage = {
-  id: string;
+  userId: string;
   avatar: string;
-  userName: string;
+  name: string;
   message: string;
 };
 

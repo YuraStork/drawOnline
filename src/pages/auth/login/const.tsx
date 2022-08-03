@@ -1,7 +1,7 @@
 import { FormikHelpers } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "store/store";
-import { UserLoginThunk } from "store/thunks/user.thunk";
+import { getUserProfileThunk, UserLoginThunk } from "store/thunks/user.thunk";
 import { UserLoginFormData } from "types";
 import { cryptoSha256 } from "utils/cryptoPassord";
 import * as yup from "yup";
@@ -23,7 +23,9 @@ export const onSubmit = (
   navigate: NavigateFunction
 ): void => {
   const password = cryptoSha256(data.password);
-  dispatch(UserLoginThunk({ ...data, password })).then(() => {
-    navigate("/")
-  })
+  dispatch(UserLoginThunk({ ...data, password }))
+    .unwrap()
+    .then((res) => {
+      dispatch(getUserProfileThunk(res.user.id)).then(() => navigate("/"));
+    });
 };

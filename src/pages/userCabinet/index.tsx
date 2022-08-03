@@ -24,10 +24,6 @@ export const UserCabinet = () => {
   const { data, isLoading } = useAppSelector(getUser);
   const handleEdit = () => setEditMode(!editMode);
 
-  useEffect(() => {
-    dispatch(getUserProfileThunk(data.id!));
-  }, []);
-
   return (
     <UserCabinetSection>
       <Container>
