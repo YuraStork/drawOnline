@@ -5,7 +5,8 @@ export type CreateRoom = {
 };
 
 export type EnterInRoomType = {
-  name: string;
+  userId: string;
+  userName: string;
   roomId: string;
   roomPassword: string;
 };
