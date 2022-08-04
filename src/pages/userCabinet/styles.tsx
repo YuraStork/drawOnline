@@ -81,6 +81,7 @@ const Avatar = styled.div`
 
 const UserInfoWrapper = styled.div`
   grid-column: 1/3;
+  border-radius:10px;
   display: grid;
   grid-template: minmax(150px, auto) minmax(50px, auto) / 1fr;
   box-shadow: 2px 2px 10px 1px #bcbcbc;

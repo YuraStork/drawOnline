@@ -12,7 +12,6 @@ Instance.interceptors.response.use(
       window.location.replace("/server-error");
       return Promise.reject(error);
     }
-    
     toastError((error.response?.data as any)?.message || "Server Error");
     return Promise.reject(error);
   }
