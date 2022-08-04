@@ -4,19 +4,20 @@ import { UserCabinet } from "pages/userCabinet";
 import { getUser } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { LayoutComponent } from "pages/layout";
-import { DrawOnlinePage } from "pages/drawOnlinePage";
+import { OnlineCanvas } from "pages/onlineDrawPage/canvas";
 import { PrivateRoom } from "pages/confirmAccessPage";
 import { ServerErrorPage } from "pages/serverErrorPage";
 import { NotFoundPage } from "pages/notfoundPage";
 import { HomePage } from "pages/home";
+import { OnlineDrawPage } from "pages/onlineDrawPage";
 
 const setRoutes = (isAuth: boolean) =>
   isAuth
     ? [
       { path: "/", element: <HomePage /> },
       { path: "/draw", element: <LayoutComponent /> },
-      { path: "/draw_online/:roomId", element: <DrawOnlinePage /> },
-      { path: "/checkRoompassword/:id", element: <PrivateRoom /> },
+      { path: "/draw_online/:roomId", element: <OnlineDrawPage><OnlineCanvas /></OnlineDrawPage> },
+      { path: "/checkRoompassword/:roomId", element: <PrivateRoom /> },
       { path: "/cabinet", element: <UserCabinet /> },
       { path: "/server-error", element: <ServerErrorPage /> },
       { path: "/authorization", element: <Navigate to="/" /> },
