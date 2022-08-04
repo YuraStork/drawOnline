@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
-import { ToolsTypes } from "../../hooks/canvas.hook";
 import { StyledToolbar, ToolButton } from "./styles";
 
 export const Toolbar = () => {

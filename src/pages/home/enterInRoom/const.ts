@@ -23,7 +23,7 @@ const onSubmit = async (
     setIsLoading(true)
     const res = await enterInRoom(data);
     if (res.status === 200) {
-      navigate(`/draw_online/${res.data._id}`, { state: { userName: data.userName } })
+      navigate(`/draw_online/${res.data._id}`)
     }
   } catch (e) {
     console.error(e);
