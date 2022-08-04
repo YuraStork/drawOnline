@@ -18,10 +18,10 @@ const Layout = styled.div`
 
 export const DrawOnlinePage = () => {
   const data = useCanvas();
-  const params = useParams();
+  const {roomId} = useParams();
   const navigate = useNavigate();
 
-  if (!params.id) navigate("/");
+  if (!roomId) navigate("/");
   return (
     <PaintContext.Provider value={{ ...data }}>
       <Layout>

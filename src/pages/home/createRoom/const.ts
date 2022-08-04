@@ -5,30 +5,25 @@ import { createRoom } from "../../../api/rooms/createRoom";
 import { CreateRoom } from "../types";
 
 const initialValues = {
-  name: "",
   roomName: "",
   roomPassword: "",
 };
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Required"),
   roomName: yup.string().required("Required"),
   roomPassword: yup.string().required("Required"),
 });
 
 const onSubmit = async (
   data: CreateRoom,
-  helper: FormikHelpers<CreateRoom>,
+  helper: FormikHelpers<Omit<CreateRoom, "userName" | "userId">>,
   navigate: NavigateFunction,
   setIsLoading: (arg: boolean) => void
 ) => {
-  try {
-    setIsLoading(true);
-    const res = await createRoom(data);
+  setIsLoading(true);
+  const res = await createRoom(data)
+  if (res.status === 200) {
     navigate(`/draw_online/${res.data._id}`);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    setIsLoading(false);
   }
+  setIsLoading(false);
 };
 export { initialValues, validationSchema, onSubmit };
