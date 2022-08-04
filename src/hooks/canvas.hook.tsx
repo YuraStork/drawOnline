@@ -56,13 +56,12 @@ export const useCanvas = () => {
   }, []);
 
   useEffect(() => {
-    if (socket === null) {
-      console.log("WEB SOCKET")
+    if (!socket) {
+      console.log("WEB SOCKET DRAW")
       const socket = new WebSocket("ws://localhost:5000/ws");
       setSocket(socket);
 
       socket.onopen = () => {
-
         socket.send(
           JSON.stringify({
             name: (location.state as any)?.userName || "user",
@@ -86,9 +85,11 @@ export const useCanvas = () => {
                 const ctx = canvasRef.current?.getContext("2d");
                 switch (data.tool) {
                   case "pen": {
-                    console.log(ctx, data.x, data.y)
                     Pen.draw(ctx, data.x, data.y);
-                  }
+                  } break;
+                  case "square": {
+                    Square.draw(ctx, data.x, data.y, canvasRef.current.width, canvasRef.current.height, canvasRef.current);
+                  }break;
                 }
               }
             }

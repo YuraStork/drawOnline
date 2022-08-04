@@ -4,26 +4,32 @@ import { checkRoom } from "api/rooms/checkRoom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
 
+type ParamsProps = {
+  roomId: string;
+};
 export const OnlineDrawPage: FC<any> = ({ children }) => {
   const user = useAppSelector((s) => s.user.data);
-  const { roomId } = useParams();
+  const { roomId } = useParams<ParamsProps>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [access, setAccess] = useState(false);
 
   useEffect(() => {
-      if (roomId) {
-        setIsLoading(true);
-        checkRoom(roomId, user.id)
-          .then(() => {
-            setAccess(true);
-          })
-          .finally(() => setIsLoading(false));
-      }
+    setIsLoading(true);
+    checkRoom(roomId || "", user.id)
+      .then((res) => {
+        if (res.status === 200) {
+          setAccess(true);
+        }
+      })
+      .catch(e => {
+        navigate(`/checkRoompassword/${roomId}`);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
-  if (!roomId) navigate("/");
   if (isLoading) return <Loader position="absolute" />;
-  if (!isLoading && !access) navigate(`/checkRoompassword/${roomId}`);
+  if (!access) return null;
+
   return <>{children}</>;
 };

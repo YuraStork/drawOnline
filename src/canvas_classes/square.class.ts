@@ -26,11 +26,18 @@ export class Square extends Tool {
 
   private onMouseMove(e: MouseEvent) {
     if (this.mouseDown && this.ctx) {
-      let img = new Image();
-      img.src = this.saved;
-      img.onload = () => {
-        this.draw(e, img)
-      }
+      this.socket.send(JSON.stringify({
+        method: "draw",
+        tool: "square",
+        id: this.id,
+        x: e.offsetX,
+        y: e.offsetY
+      }))
+      // let img = new Image();
+      // img.src = this.saved;
+      // img.onload = () => {
+      //   Square.draw(this.ctx, e, img, this.x1, this.y1, this.canvas.current)
+      // }
     }
   };
 
@@ -40,15 +47,16 @@ export class Square extends Tool {
     this.y1 = 0;
   };
 
-  private draw(e: MouseEvent, img: HTMLImageElement) {
-    if (this.ctx) {
-      this.ctx.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height);
-      this.ctx.drawImage(img, 0, 0, this.canvas.current.width, this.canvas.current.height);
-      this.ctx.beginPath();
-      this.ctx.rect(this.x1, this.y1, e.offsetX - this.x1, e.offsetY - this.y1);
-      this.ctx.fill();
-      this.ctx.stroke();
-      this.ctx.closePath();
+  static draw(ctx: any, e: MouseEvent, img: HTMLImageElement, x1: number, y1: number, canvas: HTMLCanvasElement) {
+    if (ctx) {
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.fillStyle = "#fff";
+      ctx.rect(x1, y1, e.offsetX - x1, e.offsetY - y1);
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
     }
   }
 };
