@@ -15,10 +15,8 @@ const setRoutes = (isAuth: boolean) =>
     ? [
       { path: "/", element: <HomePage /> },
       { path: "/draw", element: <LayoutComponent /> },
-
       { path: "/draw_online/:roomId", element: <DrawOnlinePage /> },
       { path: "/checkRoompassword/:id", element: <PrivateRoom /> },
-
       { path: "/cabinet", element: <UserCabinet /> },
       { path: "/server-error", element: <ServerErrorPage /> },
       { path: "/authorization", element: <Navigate to="/" /> },
