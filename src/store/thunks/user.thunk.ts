@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { UserLoginFormData, UserRegistrationData } from "./../../types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { USER_REDUCER } from "store/const";
@@ -37,7 +38,7 @@ export const UserLoginThunk = createAsyncThunk(
   `${USER_REDUCER}/login-thunk`,
   async (data: UserLoginFormData) => {
     const response = await authorizeUser(data);
-    return response.data
+    return response.data;
   }
 );
 
@@ -59,8 +60,19 @@ export const getUserProfileThunk = createAsyncThunk(
 
 export const updateUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/update-profile-thunk`,
-  async (data: any) => {
-    const response = await updateUser(data);
-    return response.data;
+  async (data: any, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await updateUser(data);
+      return response.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 401) {
+          dispatch(logoutAction());
+          return rejectWithValue("User is not authorized");
+        }
+        return rejectWithValue("Error");
+      }
+      return rejectWithValue("Error");
+    }
   }
 );

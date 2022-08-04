@@ -67,7 +67,21 @@ export const UserReducer = createSlice({
     },
     logoutAction: (state) => {
       localStorage.removeItem("user");
-      state.data = initialState.data;
+      state.data = {
+        id: "",
+        avatar: "",
+        backgroundFon: "",
+        name: "",
+        age: "",
+        role: "",
+        email: "",
+        country: "",
+        city: "",
+        color: "",
+        gender: "",
+        date: "",
+        biography: "",
+      }
       state.isAuth = false;
       state.token = undefined;
     }

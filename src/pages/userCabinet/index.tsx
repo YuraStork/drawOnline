@@ -17,9 +17,10 @@ import { getUser } from "store/selectors/user.selector";
 import { getUserProfileThunk } from "store/thunks/user.thunk";
 import { UpdateUserModal } from "./updateUserModal";
 import { HtmlText } from "components/htmlText";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const UserCabinet = () => {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const { data, isLoading } = useAppSelector(getUser);
   const handleEdit = () => setEditMode(!editMode);
@@ -76,6 +77,9 @@ export const UserCabinet = () => {
               <ButtonWrapper>
                 <Button onClick={handleEdit} color="#fff">
                   Edit
+                </Button>
+                <Button onClick={() => navigate("/")} color="#fff">
+                  Back
                 </Button>
               </ButtonWrapper>
             </Wrapper>

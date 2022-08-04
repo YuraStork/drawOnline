@@ -35,7 +35,7 @@ const ActiveRoomsWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 10px;
+  padding: 20px;
   background-color: #212529;
   & > div:last-child {
     margin-top: 20px;
@@ -45,7 +45,6 @@ const Wrapper = styled.div`
 const ChatWrapper = styled(ActiveRoomsWrapper)``;
 
 const RoomWrapper = styled.div`
-  padding: 10px;
   border-radius: 10px;
 
   & > h3 {

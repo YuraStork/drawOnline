@@ -7,6 +7,7 @@ import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
 import { CreateRoomComponent } from "./createRoom";
 import { EnterInRoomComponent } from "./enterInRoom";
+import { HomeCabinet } from "./homeCabinet";
 import {
   HomePageSection,
   HomePageWrapper,
@@ -35,6 +36,7 @@ export const HomePage = () => {
             isLoading={loading}
             setIsLoading={setIsLoading}
           />
+          <HomeCabinet />
         </Wrapper>
         <ChatWrapper>
           <h3>Chat</h3>

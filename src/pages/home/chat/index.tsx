@@ -87,7 +87,7 @@ export const Chat = () => {
         }
       </div>
       <div>
-        <input type="text" ref={inputRef} required={true} />
+        <input type="text" ref={inputRef} />
         <button onClick={handleSendMessage} disabled={messageLoading}>send</button>
       </div>
     </ChatWrapper>
