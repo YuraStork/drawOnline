@@ -1,8 +1,5 @@
-import { Container } from "components/container/styles";
-import { useEffect, useState } from "react";
-import { getAllRooms } from "../../api/rooms/getRooms";
-
-import { Loader } from "../../components/loader";
+import { Loader } from "components/loader";
+import { useState } from "react";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
 import { CreateRoomComponent } from "./createRoom";

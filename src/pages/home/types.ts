@@ -1,5 +1,6 @@
 export type CreateRoom = {
-  name: string;
+  userId: string;
+  userName: string;
   roomName: string;
   roomPassword: string;
 };

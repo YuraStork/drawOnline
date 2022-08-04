@@ -4,6 +4,7 @@ import { initialValues, onSubmit, validationSchema } from "./const";
 import { useNavigate } from "react-router-dom";
 import { FC } from "react";
 import { Loader } from "../../../components/loader";
+import { useAppSelector } from "store/store";
 
 type ComponentProps = {
   isLoading: boolean,
@@ -12,29 +13,18 @@ type ComponentProps = {
 
 export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoading }) => {
   const navigate = useNavigate();
+  const user = useAppSelector(s => s.user.data);
+
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data, helper) => onSubmit(data, helper, navigate, setIsLoading),
+    onSubmit: (data, helper) => onSubmit({ ...data, userId: user.id, userName: user.name }, helper, navigate, setIsLoading),
   });
   if (isLoading) return <Loader position="absolute" />
   return (
     <RoomWrapper>
       <h3>Create room</h3>
       <form onSubmit={formik.handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.name && formik.touched.name && (
-            <div>{formik.errors.name}</div>
-          )}
-        </div>
         <div>
           <input
             type="text"
