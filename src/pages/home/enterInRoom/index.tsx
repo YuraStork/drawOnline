@@ -4,37 +4,28 @@ import { initialValues, onSubmit, validationSchema } from "./const";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../../../components/loader";
 import { FC, useState } from "react";
+import { useAppSelector } from "store/store";
+import { LittleLoader } from "components/littleLoader";
 
 type ComponentProps = {
   isLoading: boolean,
   setIsLoading: (arg: boolean) => void
 }
-export const EnterInRoomComponent: FC<ComponentProps> = ({ setIsLoading, isLoading }) => {
+export const EnterInRoomComponent: FC<ComponentProps> = () => {
   const navigate = useNavigate();
+  const user = useAppSelector(s => s.user);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data, helper) => onSubmit(data, helper, navigate, setIsLoading)
+    onSubmit: (data, helper) => onSubmit({ ...data, userId: user.data.id, userName: user.data.name }, helper, navigate, setIsLoading)
   });
-  if (isLoading) return <Loader position="absolute" />
+
   return (
     <RoomWrapper>
       <h3>Enter in room</h3>
       <form onSubmit={formik.handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.name && formik.touched.name && (
-            <div>{formik.errors.name}</div>
-          )}
-        </div>
         <div>
           <input
             type="text"
@@ -43,6 +34,7 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ setIsLoading, isLoadi
             value={formik.values.roomId}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={isLoading}
           />
           {formik.errors.roomId && formik.touched.roomId && (
             <div>{formik.errors.roomId}</div>
@@ -56,12 +48,14 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ setIsLoading, isLoadi
             value={formik.values.roomPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={isLoading}
           />
           {formik.errors.roomPassword && formik.touched.roomPassword && (
             <div>{formik.errors.roomPassword}</div>
           )}
         </div>
-        <button type="submit">Enter in room</button>
+        <button type="submit" disabled={isLoading}>Enter in room</button>
+        {isLoading && <LittleLoader />}
       </form>
     </RoomWrapper>
   );

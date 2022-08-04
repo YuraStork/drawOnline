@@ -1,5 +1,5 @@
 import { Instance } from "../instance";
 
-export const checkRoom = (id: string) => {
-  return Instance.get(`room/check/${id}`, { withCredentials: true });
+export const checkRoom = (id: string, userId: string) => {
+  return Instance.post(`room/check/${id}`, {userId}, { withCredentials: true });
 }

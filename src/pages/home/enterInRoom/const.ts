@@ -5,26 +5,26 @@ import { EnterInRoomType } from "../types";
 import { enterInRoom } from "../../../api/rooms/enterInRoom";
 
 const initialValues = {
-  name: "",
   roomId: "",
   roomPassword: "",
 };
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Required"),
   roomId: yup.string().required("Required"),
   roomPassword: yup.string()
 });
 
 const onSubmit = async (
   data: EnterInRoomType,
-  helper: FormikHelpers<EnterInRoomType>,
+  helper: FormikHelpers<Omit<EnterInRoomType, "userId" | "userName">>,
   navigate: NavigateFunction,
   setIsLoading: (arg: boolean) => void
 ) => {
   try {
     setIsLoading(true)
     const res = await enterInRoom(data);
-    navigate(`/draw_online/${res.data._id}`, { state: { userName: data.name } })
+    if (res.status === 200) {
+      navigate(`/draw_online/${res.data._id}`, { state: { userName: data.userName } })
+    }
   } catch (e) {
     console.error(e);
   }
