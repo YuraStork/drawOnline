@@ -1,5 +1,7 @@
 import { Loader } from "components/loader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
 import { CreateRoomComponent } from "./createRoom";
@@ -15,6 +17,40 @@ import {
 
 export const HomePage = () => {
   const [loading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [socket, setSocket] = useState<null | WebSocket>(null);
+  const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!socket) {
+      const socket = new WebSocket("ws://localhost:5000/rooms");
+      setSocket(socket);
+      socket.onopen = () => {
+        socket.send(JSON.stringify({
+          method: "GETROOMS",
+        }))
+      }
+
+      socket.onmessage = (e) => {
+        const msg: any = JSON.parse(e.data);
+        console.log(msg);
+
+        switch (msg.method) {
+          case "GETROOMS":
+            setActiveRooms(msg.data)
+            break;
+          case "CREATE_SUCCESS":
+            navigate(`/draw_online/${msg.data.id}`);
+            break;
+          case "ERROR": console.log("Error")
+            break;
+        }
+      }
+    }
+  }, []);
+
+  if (error) return <p>{error}</p>;
   if (loading) return <Loader position="absolute" />;
 
   return (
@@ -22,12 +58,13 @@ export const HomePage = () => {
       <HomePageWrapper>
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
-          <ActiveRooms />
+          <ActiveRooms activeRooms={activeRooms} />
         </ActiveRoomsWrapper>
         <Wrapper>
           <CreateRoomComponent
             isLoading={loading}
             setIsLoading={setIsLoading}
+            socket={socket}
           />
           <EnterInRoomComponent
             isLoading={loading}
