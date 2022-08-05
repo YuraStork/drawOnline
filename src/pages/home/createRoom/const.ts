@@ -17,13 +17,16 @@ const onSubmit = async (
   data: CreateRoom,
   helper: FormikHelpers<Omit<CreateRoom, "userName" | "userId">>,
   navigate: NavigateFunction,
-  setIsLoading: (arg: boolean) => void
+  setIsLoading: (arg: boolean) => void,
+  socket: WebSocket | null
 ) => {
-  setIsLoading(true);
-  const res = await createRoom(data)
-  if (res.status === 200) {
-    navigate(`/draw_online/${res.data._id}`);
+  if (socket) {
+    setIsLoading(true);
+    socket.send(JSON.stringify({
+      method: "CREATE",
+      data
+    }))
+    setIsLoading(false);
   }
-  setIsLoading(false);
 };
 export { initialValues, validationSchema, onSubmit };

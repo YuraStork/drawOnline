@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Canvas } from "../../../components/canvas";
 import { SettingsBar } from "../../../components/settings";
@@ -15,7 +16,7 @@ const Layout = styled.div`
 
 export const OnlineCanvas = () => {
   const data = useCanvas();
-  
+
   return (
     <PaintContext.Provider value={{ ...data }}>
       <Layout>

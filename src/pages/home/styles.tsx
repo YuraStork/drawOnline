@@ -3,16 +3,15 @@ import styled from "styled-components";
 const HomePageSection = styled.section`
   height: 100vh;
   background-color: #343a40;
-  display: grid;
+  display: flex;
   align-items: center;
 `;
 
 const HomePageWrapper = styled.div`
   max-width: 1400px;
+  flex-basis: 100%;
   height: 80vh;
-  display: grid;
-  min-height: 0px;
-  grid-template: 1fr / 1fr 3fr 2fr;
+  display: flex;
   gap: 20px;
   margin: 0 auto;
 
@@ -25,7 +24,7 @@ const HomePageWrapper = styled.div`
 const ActiveRoomsWrapper = styled.div`
   background-color: #646668;
   padding: 10px;
-  min-height: 0px;
+  flex-basis: 25%;
   & > h3 {
     color: #ffffff;
     font-weight: 400;
@@ -36,6 +35,7 @@ const ActiveRoomsWrapper = styled.div`
 
 const Wrapper = styled.div`
   padding: 20px;
+  flex-basis: 50%;
   background-color: #212529;
   & > div:last-child {
     margin-top: 20px;

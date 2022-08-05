@@ -8,17 +8,18 @@ import { useAppSelector } from "store/store";
 
 type ComponentProps = {
   isLoading: boolean,
-  setIsLoading: (arg: boolean) => void
+  setIsLoading: (arg: boolean) => void,
+  socket: WebSocket | null
 }
 
-export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoading }) => {
+export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoading, socket }) => {
   const navigate = useNavigate();
   const user = useAppSelector(s => s.user.data);
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data, helper) => onSubmit({ ...data, userId: user.id, userName: user.name }, helper, navigate, setIsLoading),
+    onSubmit: (data, helper) => onSubmit({ ...data, userId: user.id, userName: user.name }, helper, navigate, setIsLoading, socket),
   });
   if (isLoading) return <Loader position="absolute" />
   return (
