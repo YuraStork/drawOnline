@@ -11,14 +11,14 @@ const ChatWrapper = styled.div`
   & > div:first-child {
     max-height: 100%;
     overflow: auto;
-    background-color: #343a40;
+    background-color: #183333;
     border-radius: 5px;
     padding:10px;
   }
   & > div:last-child{
     margin-top: 5px;
     border-radius: 5px;
-    background-color: #343a40;
+    background-color: #183333;
     display: flex;
     align-items: center;
     padding-left: 10px;

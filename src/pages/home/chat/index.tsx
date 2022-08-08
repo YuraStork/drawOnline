@@ -46,9 +46,9 @@ export const Chat = () => {
     }
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     chatRef.current?.scrollTo(0, 100000);
-  },[messages])
+  }, [messages])
 
   const handleSendMessage = () => {
     if (inputRef.current?.value) {
@@ -72,7 +72,6 @@ export const Chat = () => {
     <ChatWrapper>
       <div ref={chatRef}>
         {isLoading ? <LittleLoader /> :
-          messages.length &&
           messages.map((msg: ChatMessage) => (
             <MessagesWrapper key={nanoid()}>
               <div>
