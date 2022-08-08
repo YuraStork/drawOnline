@@ -8,8 +8,8 @@ import { updateUser } from "api/user/update";
 import { registrationUser } from "api/user/registration";
 import { logout } from "api/user/logout";
 import { initializeUser, logoutAction } from "store/reducers/user.reducer";
-import { getSavedUser } from "services/token.service";
-import { toastSuccess } from "../../toast";
+import { getSavedUser, saveUserInStorage } from "services/token.service";
+import { toastError, toastSuccess } from "../../toast";
 
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,
@@ -28,28 +28,45 @@ export const AuthorizedThunk = createAsyncThunk(
 
 export const UserLogoutThunk = createAsyncThunk(
   `${USER_REDUCER}/logout-thunk`,
-  async (_, ThunkApi) => {
+  async (_, { dispatch }) => {
     await logout();
-    ThunkApi.dispatch(logoutAction());
+    dispatch(logoutAction());
     return true;
   }
 );
 
 export const UserLoginThunk = createAsyncThunk(
   `${USER_REDUCER}/login-thunk`,
-  async (data: UserLoginFormData, { dispatch }) => {
-    const response = await authorizeUser(data);
-    await dispatch(getUserProfileThunk(response.data.user.id))
-    return response.data;
+  async (data: UserLoginFormData, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await authorizeUser(data);
+      saveUserInStorage(response.data);
+      await dispatch(getUserProfileThunk(response.data.user.id));
+      return response.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toastError(e.response?.data.message);
+        return rejectWithValue(e.response?.data.message || "Login error");
+      }
+      return rejectWithValue("Login error");
+    }
   }
 );
 
 export const UserRegistrationThunk = createAsyncThunk(
   `${USER_REDUCER}/registration-thunk`,
-  async (data: UserRegistrationData) => {
-    const response = await registrationUser(data);
-    toastSuccess(response.data.message);
-    return response.data;
+  async (data: UserRegistrationData, { rejectWithValue }) => {
+    try {
+      const response = await registrationUser(data);
+      toastSuccess(response.data.message);
+      return response.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toastError(e.response?.data.message);
+        return rejectWithValue(e.response?.data.message || "Registration error");
+      }
+      return rejectWithValue("Registration error");
+    }
   }
 );
 

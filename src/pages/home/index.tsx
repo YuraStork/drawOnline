@@ -1,6 +1,8 @@
 import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "store/store";
+import { UserLogoutThunk } from "store/thunks/user.thunk";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
@@ -18,6 +20,7 @@ import {
 export const HomePage = () => {
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
   const [socket, setSocket] = useState<null | WebSocket>(null);
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
   const navigate = useNavigate();
@@ -56,6 +59,9 @@ export const HomePage = () => {
   return (
     <HomePageSection>
       <HomePageWrapper>
+        <div>
+          <button onClick={() => dispatch(UserLogoutThunk())}>logout</button>
+        </div>
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
           <ActiveRooms activeRooms={activeRooms} />

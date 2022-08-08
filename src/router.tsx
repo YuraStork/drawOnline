@@ -30,6 +30,7 @@ const setRoutes = (isAuth: boolean) =>
 
 export const Router = () => {
   const { isAuth } = useAppSelector(getUser);
+  console.log(isAuth);
   const routes = useRoutes(setRoutes(isAuth));
   return routes;
 };

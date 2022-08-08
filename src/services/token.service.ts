@@ -5,6 +5,8 @@ export const saveUserInStorage = (user: SavedUserObject) => {
   localStorage.setItem("user", JSON.stringify(user));
 }
 
+export const deleteSavedToken = () => localStorage.removeItem("user");
+
 export const getSavedUser = (): SavedUserObject | null => {
   const user = localStorage.getItem("user");
   if (user) {

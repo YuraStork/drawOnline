@@ -1,7 +1,7 @@
 import { AuthorizedUser } from "./../../types";
 import { USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getSavedUser, saveUserInStorage } from "services/token.service";
+import { deleteSavedToken, getSavedUser, saveUserInStorage } from "services/token.service";
 import { SavedUserObject } from "types";
 import { AuthorizedThunk, getUserProfileThunk, updateUserProfileThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user.thunk";
 
@@ -66,7 +66,6 @@ export const UserReducer = createSlice({
       }
     },
     logoutAction: (state) => {
-      localStorage.removeItem("user");
       state.data = {
         id: "",
         avatar: "",
@@ -82,8 +81,11 @@ export const UserReducer = createSlice({
         date: "",
         biography: "",
       }
+      state.isLoading = false;
       state.isAuth = false;
+      state.error = undefined;
       state.token = undefined;
+      deleteSavedToken();
     }
   },
 
@@ -101,13 +103,12 @@ export const UserReducer = createSlice({
       state.error = undefined;
       state.isAuth = true;
       state.isLoading = false;
-      saveUserInStorage(payload);
     })
 
-    builder.addCase(UserLoginThunk.rejected, (state, { error }) => {
+    builder.addCase(UserLoginThunk.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.isAuth = false;
-      state.error = error.message;
+      state.error = payload as string;
     })
 
     // --------------------------------------------------------

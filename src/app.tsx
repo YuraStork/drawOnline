@@ -9,7 +9,7 @@ export const App = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    dispatch(AuthorizedThunk());
+    dispatch(AuthorizedThunk())
     setIsReady(true);
   }, []);
 
