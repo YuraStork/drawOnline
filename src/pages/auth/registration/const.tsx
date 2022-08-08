@@ -1,10 +1,7 @@
-import { FormikHelpers } from "formik";
-import { toastSuccess } from "../../../toast";
 import { UserRegistrationData } from "types";
 import { cryptoSha256 } from "utils/cryptoPassord";
 import * as yup from "yup";
 import { AppDispatch } from "store/store";
-import { NavigateFunction } from "react-router-dom";
 import { UserRegistrationThunk } from "store/thunks/user.thunk";
 
 export const validationSchema = yup.object().shape({
@@ -19,15 +16,15 @@ export const initialValues: UserRegistrationData = {
   password: "",
 };
 
-export const onSubmit = (
+export const RegistrationFileds = ["name", "email", "password"];
+
+export const SetTypesFields = (name: string) =>
+  name === "email" ? "email" : name === "password" ? "password" : "text";
+
+export const onSubmit = async (
   data: UserRegistrationData,
-  formikHelper: FormikHelpers<UserRegistrationData>,
-  dispatch: AppDispatch,
-  navigate: NavigateFunction
-): void => {
+  dispatch: AppDispatch
+) => {
   const password = cryptoSha256(data.password);
-  dispatch(UserRegistrationThunk({ ...data, password })).then(res => {
-    formikHelper.resetForm();
-    toastSuccess(res.payload.message);
-  });
+  await dispatch(UserRegistrationThunk({ ...data, password }));
 };

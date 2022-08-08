@@ -9,6 +9,7 @@ import { registrationUser } from "api/user/registration";
 import { logout } from "api/user/logout";
 import { initializeUser, logoutAction } from "store/reducers/user.reducer";
 import { getSavedUser } from "services/token.service";
+import { toastSuccess } from "../../toast";
 
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,
@@ -36,8 +37,9 @@ export const UserLogoutThunk = createAsyncThunk(
 
 export const UserLoginThunk = createAsyncThunk(
   `${USER_REDUCER}/login-thunk`,
-  async (data: UserLoginFormData) => {
+  async (data: UserLoginFormData, { dispatch }) => {
     const response = await authorizeUser(data);
+    await dispatch(getUserProfileThunk(response.data.user.id))
     return response.data;
   }
 );
@@ -46,6 +48,7 @@ export const UserRegistrationThunk = createAsyncThunk(
   `${USER_REDUCER}/registration-thunk`,
   async (data: UserRegistrationData) => {
     const response = await registrationUser(data);
+    toastSuccess(response.data.message);
     return response.data;
   }
 );

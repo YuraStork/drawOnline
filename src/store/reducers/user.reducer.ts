@@ -1,4 +1,4 @@
-import { AuthorizedUser, AuthorizedUserObject } from "./../../types";
+import { AuthorizedUser } from "./../../types";
 import { USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSavedUser, saveUserInStorage } from "services/token.service";
