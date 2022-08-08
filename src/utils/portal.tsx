@@ -5,7 +5,7 @@ import styled from "styled-components";
 const ChildrenWrapper = styled.div`
   position: fixed;
   width: 100%;
-  background: #1a1a1ac5;
+  background: #0000006f;
   height: 100%;
   z-index: 9999;
   top: 0;

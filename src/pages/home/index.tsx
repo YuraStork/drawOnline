@@ -1,3 +1,4 @@
+import { Button } from "components/button/styles";
 import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ import {
   ActiveRoomsWrapper,
   ChatWrapper,
   Wrapper,
+  HomeHeader,
 } from "./styles";
 
 export const HomePage = () => {
@@ -59,9 +61,9 @@ export const HomePage = () => {
   return (
     <HomePageSection>
       <HomePageWrapper>
-        <div>
-          <button onClick={() => dispatch(UserLogoutThunk())}>logout</button>
-        </div>
+        <HomeHeader>
+          <Button onClick={() => dispatch(UserLogoutThunk())}>logout</Button>
+        </HomeHeader>
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
           <ActiveRooms activeRooms={activeRooms} />
