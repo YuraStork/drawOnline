@@ -5,17 +5,15 @@ const HomePageSection = styled.section`
   background-color: #183333;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const HomePageWrapper = styled.div`
-  max-height: 80vh;
+  max-height: 100vh;
   max-width: 1400px;
-  flex-basis: 100%;
-  height: 80vh;
   display: grid;
-  grid-template: 50px calc(80vh - 50px) / 1fr 3fr 2fr;
+  grid-template: 50px calc(90vh - 50px) / 1fr 3fr 2fr;
   gap: 20px;
-  margin: 0 auto;
 
   & > div {
     border-radius: 10px;
