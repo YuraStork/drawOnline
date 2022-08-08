@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 
 type LoaderProps = {
   position?: "absolute" | "fixed";
+  color?: "white" | "black";
 };
 
 const LoaderWrapper = styled.div<LoaderProps>`
@@ -32,7 +33,7 @@ const LoaderWrapper = styled.div<LoaderProps>`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: rgb(0, 0, 0);
+    background-color: ${p => p.color ? p.color : "#000"};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   & > div > div:nth-child(1) {
@@ -52,9 +53,9 @@ const LoaderWrapper = styled.div<LoaderProps>`
     animation: lds-ellipsis3 0.6s infinite;
   }
 `;
-export const Loader: FC<LoaderProps> = ({ position }) => {
+export const Loader: FC<LoaderProps> = ({ position, color }) => {
   return (
-    <LoaderWrapper position={position}>
+    <LoaderWrapper position={position} color={color}>
       <div>
         <div></div>
         <div></div>
