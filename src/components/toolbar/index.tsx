@@ -1,18 +1,39 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
 import { StyledToolbar, ToolButton } from "./styles";
 
 export const Toolbar = () => {
   const { setToolhandler, tool, changeBackgroundColor, handleRedo, handleReset, snapshot } = useContext(PaintContext);
+  const { roomId } = useParams();
+  const { id } = useAppSelector(s => s.user.data)
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const navigate = useNavigate();
 
   const handleChangeTool = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if ((e.target as HTMLElement).tagName === "BUTTON") {
       setToolhandler((e.target as HTMLButtonElement).dataset.tool as ToolsTypes)
     }
   }
+  useEffect(() => {
+    if (!socket) {
+      const socket = new WebSocket("ws://localhost:5000/rooms");
+      setSocket(socket);
+    }
+  }, [])
 
+  const handleExitFromRoom = () => {
+    socket?.send(JSON.stringify({
+      method: "EXIT",
+      data: {
+        roomId,
+        userId: id
+      }
+    }))
+    navigate("/");
+  }
   const handleSavePhoto = async () => {
     if (snapshot) {
       const res = await fetch(snapshot);
@@ -40,7 +61,7 @@ export const Toolbar = () => {
         <ToolButton img="../assets/left-arrow.png" onClick={handleReset} />
         <ToolButton img="../assets/right-arrow.png" onClick={handleRedo} />
         <ToolButton img="../assets/diskette.png" onClick={handleSavePhoto} />
-        <Link to="/">Home</Link>
+        <button onClick={handleExitFromRoom}>Exit from room</button>
       </div>
     </StyledToolbar>
   );

@@ -58,7 +58,7 @@ export const useCanvas = () => {
   useEffect(() => {
     if (!socket) {
       console.log("WEB SOCKET DRAW")
-      const socket = new WebSocket("ws://localhost:5000/ws");
+      const socket = new WebSocket("ws://localhost:5000/draw");
       setSocket(socket);
 
       socket.onopen = () => {
