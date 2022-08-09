@@ -35,6 +35,7 @@ export const UserReducer = createSlice({
       state.error = undefined;
       state.isAuth = true;
       state.isLoading = false;
+      state.isReady = true;
     })
     builder.addCase(UserLoginThunk.rejected, (state, { payload }) => {
       state.isLoading = false;
@@ -87,10 +88,12 @@ export const UserReducer = createSlice({
       state.isAuth = true;
       state.isLoading = false;
       state.error = undefined;
+      state.isReady = true;
     })
     builder.addCase(AuthorizedThunk.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload as string;
+      state.isReady = true;
     })
     // --------------------------------------------------------
   }

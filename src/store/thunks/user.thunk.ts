@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { USER_REDUCER } from "store/const";
 import { getProfile } from "api/user/getProfile";
 import { updateUser } from "api/user/update";
-import { UserLogoutThunk } from "./user_authorization_thunks";
+import { AxiosError } from "axios";
+import { logoutAction } from "store/reducers/user.reducer";
 
 export const getUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/profile-thunk`,
@@ -19,7 +20,13 @@ export const updateUserProfileThunk = createAsyncThunk(
       const response = await updateUser(data);
       return response.data;
     } catch (e) {
-      await dispatch(UserLogoutThunk)
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 401) {
+          dispatch(logoutAction());
+          return rejectWithValue("User is not authorized");
+        }
+        return rejectWithValue("Error");
+      }
       return rejectWithValue("Error");
     }
   }
