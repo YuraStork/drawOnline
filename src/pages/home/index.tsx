@@ -3,7 +3,7 @@ import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "store/store";
-import { UserLogoutThunk } from "store/thunks/user.thunk";
+import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
