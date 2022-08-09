@@ -1,9 +1,10 @@
+import { USER_REDUCER } from "./const";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { UserReducer } from "./reducers/user.reducer";
 
 const RootReducer = combineReducers({
-  "user": UserReducer.reducer
+  [USER_REDUCER]: UserReducer.reducer
 })
 
 export const store = configureStore({

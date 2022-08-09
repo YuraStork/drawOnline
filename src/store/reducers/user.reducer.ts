@@ -9,6 +9,7 @@ type initialStateTypes = {
   isAuth: boolean,
   isLoading: boolean,
   error: undefined | string,
+  isReady: boolean,
   token: undefined | string,
   data: {
     id: string,
@@ -32,7 +33,7 @@ const initialState: initialStateTypes = {
   error: undefined,
   isLoading: false,
   token: undefined,
-
+  isReady: false,
   data: {
     id: "",
     avatar: "",
@@ -103,6 +104,7 @@ export const UserReducer = createSlice({
       state.error = undefined;
       state.isAuth = true;
       state.isLoading = false;
+      state.isReady = true;
     })
 
     builder.addCase(UserLoginThunk.rejected, (state, { payload }) => {
@@ -160,10 +162,12 @@ export const UserReducer = createSlice({
       state.isAuth = true;
       state.isLoading = false;
       state.error = undefined;
+      state.isReady = true;
     })
     builder.addCase(AuthorizedThunk.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload as string;
+      state.isReady = true;
     })
     // --------------------------------------------------------
   }
