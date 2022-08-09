@@ -9,6 +9,7 @@ const HomePageSection = styled.section`
 `;
 
 const HomePageWrapper = styled.div`
+  flex-grow: 1;
   max-height: 100vh;
   max-width: 1400px;
   display: grid;

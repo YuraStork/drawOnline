@@ -14,13 +14,16 @@ import { toastError, toastSuccess } from "../../toast";
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,
   async (_, { dispatch, rejectWithValue }) => {
-    const savedUser = getSavedUser();
-    if (savedUser) {
-      const response = await getProfile(savedUser.user.id);
-      dispatch(initializeUser());
-      return response.data;
-    } else {
-      dispatch(logoutAction());
+    try {
+      const savedUser = getSavedUser();
+      if (savedUser) {
+        const profile = await getProfile(savedUser.user.id);
+        dispatch(initializeUser());
+        return profile.data;
+      }
+      throw new Error("User is not authorized");
+    } catch (e) {
+      await dispatch(UserLogoutThunk());
       return rejectWithValue("User is not authorized");
     }
   }
@@ -28,10 +31,15 @@ export const AuthorizedThunk = createAsyncThunk(
 
 export const UserLogoutThunk = createAsyncThunk(
   `${USER_REDUCER}/logout-thunk`,
-  async (_, { dispatch }) => {
-    await logout();
-    dispatch(logoutAction());
-    return true;
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await logout();
+      dispatch(logoutAction());
+      return true;
+    } catch (e) {
+      dispatch(logoutAction());
+      rejectWithValue("Error")
+    }
   }
 );
 
@@ -85,13 +93,7 @@ export const updateUserProfileThunk = createAsyncThunk(
       const response = await updateUser(data);
       return response.data;
     } catch (e) {
-      if (e instanceof AxiosError) {
-        if (e.response?.status === 401) {
-          dispatch(logoutAction());
-          return rejectWithValue("User is not authorized");
-        }
-        return rejectWithValue("Error");
-      }
+      await dispatch(UserLogoutThunk())
       return rejectWithValue("Error");
     }
   }

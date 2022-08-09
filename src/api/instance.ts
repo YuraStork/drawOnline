@@ -20,8 +20,8 @@ Instance.interceptors.response.use(
         if (token) {
           const refresh = await axios.get(`${API}/user/refresh`, { withCredentials: true, ...SetHeaders() });
           saveUserInStorage(refresh.data);
-          console.log(history);
-          window.location.replace("/")
+          error.config.headers!["authorization"] = `Bearer ${refresh.data.token}`;
+          return Instance.request(error.config);
         }
       } catch (e) {
         return Promise.reject(error);
