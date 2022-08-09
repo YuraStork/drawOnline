@@ -19,7 +19,7 @@ export const updateUserProfileThunk = createAsyncThunk(
       const response = await updateUser(data);
       return response.data;
     } catch (e) {
-      await dispatch(UserLogoutThunk)
+      await dispatch(UserLogoutThunk())
       return rejectWithValue("Error");
     }
   }
