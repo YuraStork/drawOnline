@@ -19,7 +19,11 @@ export type ChatMessage = {
   message: string;
 };
 
+export type ChatError = {
+  error: string;
+}
+
 export type ChatType = {
-  method: "chat" | "message";
-  data: ChatMessage[] | ChatMessage;
+  method: "GET_CHAT" | "MESSAGE" | "ERROR";
+  data: ChatMessage[] | ChatMessage | ChatError;
 };
