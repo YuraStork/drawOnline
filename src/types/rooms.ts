@@ -8,6 +8,9 @@ export type ActiveRoom = {
   _id: string;
   roomName: string;
   users: UserInRoom[];
-  active: boolean;
+  status: boolean;
+  limit: number;
+  roomImages: string[];
   owner: string;
+  isShow: boolean;
 }

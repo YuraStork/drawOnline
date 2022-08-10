@@ -1,7 +1,4 @@
-import { FormikHelpers } from "formik";
-import { NavigateFunction } from "react-router-dom";
 import * as yup from "yup";
-import { createRoom } from "../../../api/rooms/createRoom";
 import { CreateRoom } from "../types";
 
 const initialValues = {
@@ -15,8 +12,6 @@ const validationSchema = yup.object().shape({
 
 const onSubmit = async (
   data: CreateRoom,
-  helper: FormikHelpers<Omit<CreateRoom, "userName" | "userId">>,
-  navigate: NavigateFunction,
   setIsLoading: (arg: boolean) => void,
   socket: WebSocket | null
 ) => {

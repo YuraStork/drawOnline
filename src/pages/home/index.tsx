@@ -2,11 +2,12 @@ import { Button } from "components/button/styles";
 import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "store/store";
+import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
+import { SetRoomsConnection } from "./const";
 import { CreateRoomComponent } from "./createRoom";
 import { EnterInRoomComponent } from "./enterInRoom";
 import { HomeCabinet } from "./homeCabinet";
@@ -20,6 +21,7 @@ import {
 } from "./styles";
 
 export const HomePage = () => {
+  const { id } = useAppSelector(s => s.user.data);
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
@@ -29,29 +31,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     if (!socket) {
-      const socket = new WebSocket("ws://localhost:5000/rooms");
-      setSocket(socket);
-      socket.onopen = () => {
-        socket.send(JSON.stringify({
-          method: "GETROOMS",
-        }))
-      }
-
-      socket.onmessage = (e) => {
-        const msg: any = JSON.parse(e.data);
-        console.log(msg);
-
-        switch (msg.method) {
-          case "GETROOMS":
-            setActiveRooms(msg.data)
-            break;
-          case "CREATE_SUCCESS":
-            navigate(`/draw_online/${msg.data.id}`);
-            break;
-          case "ERROR": console.log("Error")
-            break;
-        }
-      }
+      SetRoomsConnection({ navigate, setActiveRooms, setSocket })
     }
   }, []);
 
@@ -66,7 +46,7 @@ export const HomePage = () => {
         </HomeHeader>
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
-          <ActiveRooms activeRooms={activeRooms} />
+          <ActiveRooms activeRooms={activeRooms} userId={id} />
         </ActiveRoomsWrapper>
         <Wrapper>
           <CreateRoomComponent
@@ -75,8 +55,7 @@ export const HomePage = () => {
             socket={socket}
           />
           <EnterInRoomComponent
-            isLoading={loading}
-            setIsLoading={setIsLoading}
+            socket={socket}
           />
           <HomeCabinet />
         </Wrapper>

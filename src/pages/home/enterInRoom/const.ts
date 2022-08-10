@@ -1,8 +1,5 @@
-import { NavigateFunction } from "react-router-dom";
-import { FormikHelpers } from "formik";
 import * as yup from "yup";
 import { EnterInRoomType } from "../types";
-import { enterInRoom } from "../../../api/rooms/enterInRoom";
 
 const initialValues = {
   roomId: "",
@@ -15,23 +12,17 @@ const validationSchema = yup.object().shape({
 
 const onSubmit = async (
   data: EnterInRoomType,
-  helper: FormikHelpers<Omit<EnterInRoomType, "userId" | "userName">>,
-  navigate: NavigateFunction,
+  socket: WebSocket | null,
   setIsLoading: (arg: boolean) => void
 ) => {
-  try {
+  if (socket) {
     setIsLoading(true)
-    const res = await enterInRoom(data);
-    if (res.status === 200) {
-      navigate(`/draw_online/${res.data._id}`)
-    }
-  } catch (e) {
-    console.error(e);
-  }
-  finally {
+    socket.send(JSON.stringify({
+      method: "JOIN",
+      data
+    }))
     setIsLoading(false)
   }
-
 };
 
 export { initialValues, onSubmit, validationSchema }

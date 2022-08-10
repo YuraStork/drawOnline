@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { checkRoom } from "api/rooms/checkRoom";
 import { useAppSelector } from "store/store";
@@ -7,6 +7,10 @@ import { Loader } from "components/loader";
 type ParamsProps = {
   roomId: string;
 };
+interface LocationState {
+  socket: WebSocket | undefined
+}
+
 export const OnlineDrawPage: FC<any> = ({ children }) => {
   const user = useAppSelector((s) => s.user.data);
   const { roomId } = useParams<ParamsProps>();
