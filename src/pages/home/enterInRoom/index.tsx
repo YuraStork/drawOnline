@@ -1,30 +1,26 @@
 import { useFormik } from "formik";
 import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
-import { useNavigate } from "react-router-dom";
-import { Loader } from "../../../components/loader";
 import { FC, useState } from "react";
 import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
 
 type ComponentProps = {
-  isLoading: boolean,
-  setIsLoading: (arg: boolean) => void
+  socket: WebSocket | null,
 }
-export const EnterInRoomComponent: FC<ComponentProps> = () => {
-  const navigate = useNavigate();
+export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
   const user = useAppSelector(s => s.user);
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data, helper) => onSubmit({ ...data, userId: user.data.id, userName: user.data.name }, helper, navigate, setIsLoading)
+    onSubmit: (data) => onSubmit({ ...data, userId: user.data.id, userName: user.data.name }, socket, setIsLoading)
   });
 
   return (
     <RoomWrapper>
-      <h3>Enter in room</h3>
+      <h3>Join to room</h3>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <input
