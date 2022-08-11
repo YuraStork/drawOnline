@@ -1,6 +1,7 @@
 import { Button } from "components/button/styles";
 import { Loader } from "components/loader";
-import { useEffect, useState } from "react";
+import { WsContext } from "context/ws.context";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
@@ -21,19 +22,17 @@ import {
 } from "./styles";
 
 export const HomePage = () => {
-  const { id } = useAppSelector(s => s.user.data);
+  const { id } = useAppSelector((s) => s.user.data);
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
-  const [socket, setSocket] = useState<null | WebSocket>(null);
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
+  const { socket } = useContext(WsContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!socket) {
-      SetRoomsConnection({ navigate, setActiveRooms, setSocket })
-    }
-  }, []);
+    SetRoomsConnection({ navigate, setActiveRooms, socket })
+  }, [])
 
   if (error) return <p>{error}</p>;
   if (loading) return <Loader position="absolute" />;
@@ -61,7 +60,7 @@ export const HomePage = () => {
         </Wrapper>
         <ChatWrapper>
           <h3>Chat</h3>
-          <Chat />
+          <Chat socket={socket} />
         </ChatWrapper>
       </HomePageWrapper>
     </HomePageSection>
