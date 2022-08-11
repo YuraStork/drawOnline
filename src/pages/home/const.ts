@@ -5,7 +5,7 @@ import { ActiveRoom } from "types/rooms";
 export const GET_ROOMS = "GET_ROOMS";
 export const CREATE_SUCCESS = "CREATE_SUCCESS";
 export const JOIN_SUCCESS = "JOIN_SUCCESS";
-export const ERROR = "ERROR";;
+export const JOIN_ERROR = "JOIN_ERROR";;
 
 type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;
@@ -20,13 +20,14 @@ export const SetRoomsConnection = (data: Props) => {
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => {
     setActiveRooms(data);
   })
-  socket.on(CREATE_SUCCESS, (data: any) => {
-    navigate(`/draw_online/${data.id}`);
+  socket.on(CREATE_SUCCESS, (id: string) => {
+    navigate(`/draw_online/${id}`);
   })
-  socket.on(JOIN_SUCCESS, (data: any) => {
-    navigate(`/draw_online/${data.roomId}`)
+  socket.on(JOIN_SUCCESS, (id: string) => {
+    console.log("JOIN_SUCCESS")
+    navigate(`/draw_online/${id}`)
   })
-  socket.on(ERROR, (data: string) => {
-    navigate(`/draw_online/${data}`)
+  socket.on(JOIN_ERROR, (data: string) => {
+    console.error("ERROR IN HOME", data);
   })
 };
