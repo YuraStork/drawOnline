@@ -4,9 +4,10 @@ import { initialValues, onSubmit, validationSchema } from "./const";
 import { FC, useState } from "react";
 import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
+import { Socket } from "socket.io-client";
 
 type ComponentProps = {
-  socket: WebSocket | null,
+  socket: Socket<any, any>,
 }
 export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
   const user = useAppSelector(s => s.user);

@@ -4,11 +4,12 @@ import { initialValues, onSubmit, validationSchema } from "./const";
 import { FC } from "react";
 import { Loader } from "../../../components/loader";
 import { useAppSelector } from "store/store";
+import { Socket } from "socket.io-client";
 
 type ComponentProps = {
   isLoading: boolean,
   setIsLoading: (arg: boolean) => void,
-  socket: WebSocket | null
+  socket: Socket<any, any>,
 }
 
 export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoading, socket }) => {

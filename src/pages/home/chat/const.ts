@@ -1,7 +1,12 @@
-import { ChatError, ChatMessage, ChatType } from "../types";
+import { Socket } from "socket.io-client";
+import { ChatMessage } from "../types";
+
+export const GET_CHAT = "GET_CHAT";
+export const MESSAGE = "MESSAGE";
+export const ERROR = "ERROR";
 
 type Props = {
-  setSocket: (s: WebSocket) => void;
+  socket: Socket<any, any>;
   setIsLoading: (e: boolean) => void;
   setMessages: (e: any) => void;
   setMessageLoading: (e: boolean) => void;
@@ -10,38 +15,18 @@ type Props = {
 };
 
 export const SetConnectionChat = (data: Props) => {
-  const { setSocket, setIsLoading, setMessages, id, setMessageLoading, setError } = data;
-  const socket = new WebSocket("ws://localhost:5000/chat");
-  console.log("CHAT WS");
-  setSocket(socket);
+  const { setIsLoading, setMessages, id, setMessageLoading, setError, socket } = data;
 
-  socket.onopen = () => {
-    socket.send(
-      JSON.stringify({
-        method: "GET_CHAT",
-      })
-    );
-  };
-
-  socket.onmessage = (e) => {
-    const msg: ChatType = JSON.parse(e.data);
-    switch (msg.method) {
-
-      case "GET_CHAT":
-        setIsLoading(false);
-        setMessages(msg.data as ChatMessage[]);
-        break;
-
-      case "MESSAGE":
-        setMessages((pre: ChatMessage[]) => [...pre, msg.data] as ChatMessage[]);
-        if ((msg.data as ChatMessage).userId === id) {
-          setMessageLoading(false);
-        }
-        break;
-
-      case "ERROR":
-        setError((msg.data as ChatError).error || "Error")
-        break;
-    };
-  };
-}
+  socket.emit(GET_CHAT);
+  socket.on(ERROR, (data: string) => setError(data));
+  socket.on(GET_CHAT, (data: ChatMessage[]) => {
+    setIsLoading(false);
+    setMessages(data);
+  });
+  socket.on(MESSAGE, (data: ChatMessage) => {
+    setMessages((pre: ChatMessage[]) => [...pre, data]);
+    if (data.userId === id) {
+      setMessageLoading(false);
+    }
+  });
+};

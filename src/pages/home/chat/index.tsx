@@ -1,13 +1,17 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { LittleLoader } from "components/littleLoader";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+import { Socket } from "socket.io-client";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
 import { SetConnectionChat } from "./const";
 import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
-export const Chat = () => {
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+type ChatProps = {
+  socket: Socket<any, any>;
+}
+
+export const Chat: FC<ChatProps> = ({ socket }) => {
   const [messages, setMessages] = useState<ChatMessage[] | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -17,16 +21,14 @@ export const Chat = () => {
   const [messageLoading, setMessageLoading] = useState(false);
 
   useEffect(() => {
-    if (!socket) {
-      SetConnectionChat({
-        id: data.id,
-        setIsLoading,
-        setMessageLoading,
-        setMessages,
-        setSocket,
-        setError,
-      });
-    }
+    SetConnectionChat({
+      id: data.id,
+      socket,
+      setIsLoading,
+      setMessageLoading,
+      setMessages,
+      setError,
+    });
   }, []);
 
   useEffect(() => {
@@ -35,16 +37,11 @@ export const Chat = () => {
 
   const handleSendMessage = () => {
     if (inputRef.current?.value) {
-      setMessageLoading(true);
-      socket?.send(
-        JSON.stringify({
-          data: {
-            userId: data.id,
-            name: data.name,
-            message: inputRef.current?.value,
-          },
-          method: "MESSAGE",
-        })
+      socket.emit("MESSAGE", {
+        userId: data.id,
+        name: data.name,
+        message: inputRef.current.value,
+      }
       );
       inputRef.current.value = "";
     }

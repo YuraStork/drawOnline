@@ -1,3 +1,4 @@
+import { Socket } from "socket.io-client";
 import * as yup from "yup";
 import { CreateRoom } from "../types";
 
@@ -13,15 +14,10 @@ const validationSchema = yup.object().shape({
 const onSubmit = async (
   data: CreateRoom,
   setIsLoading: (arg: boolean) => void,
-  socket: WebSocket | null
+  socket: Socket<any, any>
 ) => {
-  if (socket) {
-    setIsLoading(true);
-    socket.send(JSON.stringify({
-      method: "CREATE",
-      data
-    }))
-    setIsLoading(false);
-  }
+  setIsLoading(true);
+  socket.emit("CREATE", data);
+  setIsLoading(false);
 };
 export { initialValues, validationSchema, onSubmit };

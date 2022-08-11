@@ -28,7 +28,6 @@ type ActiveRoomsProps = {
 }
 
 export const ActiveRooms: FC<ActiveRoomsProps> = ({ activeRooms, userId }) => {
-  console.log("ACTIVE ROOMS", activeRooms)
   return (
     <>
       {activeRooms ? (

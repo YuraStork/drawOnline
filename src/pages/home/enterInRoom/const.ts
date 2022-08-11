@@ -1,3 +1,4 @@
+import { Socket } from "socket.io-client";
 import * as yup from "yup";
 import { EnterInRoomType } from "../types";
 
@@ -7,22 +8,17 @@ const initialValues = {
 };
 const validationSchema = yup.object().shape({
   roomId: yup.string().required("Required"),
-  roomPassword: yup.string()
+  roomPassword: yup.string(),
 });
 
 const onSubmit = async (
   data: EnterInRoomType,
-  socket: WebSocket | null,
+  socket: Socket<any, any>,
   setIsLoading: (arg: boolean) => void
 ) => {
-  if (socket) {
-    setIsLoading(true)
-    socket.send(JSON.stringify({
-      method: "JOIN",
-      data
-    }))
-    setIsLoading(false)
-  }
+  setIsLoading(true);
+  socket.emit("JOIN", data);
+  setIsLoading(false);
 };
 
-export { initialValues, onSubmit, validationSchema }
+export { initialValues, onSubmit, validationSchema };
