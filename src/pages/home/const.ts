@@ -21,6 +21,7 @@ export const SetRoomsConnection = (data: Props) => {
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => {
     setActiveRooms(data);
   })
+
   socket.on(CREATE_SUCCESS, (id: string) => {
     navigate(`/draw_online/${id}`);
   })
