@@ -5,7 +5,8 @@ import { ActiveRoom } from "types/rooms";
 export const GET_ROOMS = "GET_ROOMS";
 export const CREATE_SUCCESS = "CREATE_SUCCESS";
 export const JOIN_SUCCESS = "JOIN_SUCCESS";
-export const JOIN_ERROR = "JOIN_ERROR";;
+export const JOIN_ERROR = "JOIN_ERROR";
+export const CASE_EXIT = "CASE_EXIT";
 
 type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;
