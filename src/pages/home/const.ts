@@ -8,6 +8,7 @@ export const JOIN_SUCCESS = "JOIN_SUCCESS";
 export const JOIN_ERROR = "JOIN_ERROR";
 export const CASE_EXIT = "CASE_EXIT";
 
+
 type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;
   navigate: NavigateFunction;
@@ -21,6 +22,7 @@ export const SetRoomsConnection = (data: Props) => {
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => {
     setActiveRooms(data);
   })
+
   socket.on(CREATE_SUCCESS, (id: string) => {
     navigate(`/draw_online/${id}`);
   })
