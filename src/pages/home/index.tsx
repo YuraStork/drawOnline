@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
+import { toastError } from "../../toast";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
@@ -20,6 +21,7 @@ import {
   Wrapper,
   HomeHeader,
 } from "./styles";
+import { UserRooms } from "./userRooms";
 
 export const HomePage = () => {
   const { id } = useAppSelector((s) => s.user.data);
@@ -28,25 +30,35 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
   const { socket } = useContext(WsContext);
+  const [userRooms, setUserRooms] = useState<ActiveRoom[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    SetRoomsConnection({ navigate, setActiveRooms, socket })
+    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms })
   }, [])
 
-  if (error) return <p>{error}</p>;
+  useEffect(() => {
+    if (error) {
+      toastError(error || "Occured Error")
+    }
+  }, [error])
+
   if (loading) return <Loader position="absolute" />;
 
   return (
     <HomePageSection>
       <HomePageWrapper>
+
         <HomeHeader>
+          <HomeCabinet />
           <Button onClick={() => dispatch(UserLogoutThunk())}>logout</Button>
         </HomeHeader>
+
         <ActiveRoomsWrapper>
           <h3>Active rooms</h3>
           <ActiveRooms activeRooms={activeRooms} userId={id} />
         </ActiveRoomsWrapper>
+
         <Wrapper>
           <CreateRoomComponent
             isLoading={loading}
@@ -56,12 +68,15 @@ export const HomePage = () => {
           <EnterInRoomComponent
             socket={socket}
           />
-          <HomeCabinet />
         </Wrapper>
+
+        <UserRooms socket={socket} userRooms={userRooms} />
+
         <ChatWrapper>
           <h3>Chat</h3>
           <Chat socket={socket} />
         </ChatWrapper>
+
       </HomePageWrapper>
     </HomePageSection>
   );
