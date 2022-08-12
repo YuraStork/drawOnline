@@ -18,6 +18,7 @@ const onSubmit = async (
 ) => {
   setIsLoading(true);
   socket.emit("CREATE", data);
+  socket.emit("GET_USER_ROOMS", { userId: data.userId });
   setIsLoading(false);
 };
 export { initialValues, validationSchema, onSubmit };

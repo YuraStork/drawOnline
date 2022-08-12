@@ -9,6 +9,6 @@ export const useWebSocket = () => {
   useEffect(() => {
     socket.current.id = id;
   }, [])
-  
+
   return { socket: socket.current };
 };

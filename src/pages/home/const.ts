@@ -12,10 +12,11 @@ type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;
   navigate: NavigateFunction;
   socket: Socket<any, any>;
+  setUserRooms: (e: ActiveRoom[]) => void;
 };
 
 export const SetRoomsConnection = (data: Props) => {
-  const { socket, setActiveRooms, navigate } = data;
+  const { socket, setActiveRooms, navigate, setUserRooms } = data;
 
   socket.emit(GET_ROOMS);
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => {
@@ -32,4 +33,7 @@ export const SetRoomsConnection = (data: Props) => {
   socket.on(JOIN_ERROR, (data: string) => {
     console.error("ERROR IN HOME", data);
   })
+  socket.on("GET_USER_ROOMS", (data: ActiveRoom[]) => {
+    setUserRooms(data);
+  });
 };

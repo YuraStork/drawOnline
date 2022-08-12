@@ -1,19 +1,21 @@
 import styled from "styled-components";
 
 const HomePageSection = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   background-color: #183333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const HomePageWrapper = styled.div`
-  flex-grow: 1;
-  max-height: 100vh;
-  max-width: 1400px;
   display: grid;
-  grid-template: 50px calc(90vh - 50px) / 1fr 3fr 2fr;
+  height: 95vh;
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 2vh 0px 0px 0px;
+  grid-template: 50px 1fr 1fr / 1fr 3fr 2fr;
+  grid-template-areas:
+    "header header header"
+    "activeRooms wrapper chat"
+    "activeRooms myRooms chat";
   gap: 20px;
 
   & > div {
@@ -22,13 +24,12 @@ const HomePageWrapper = styled.div`
 `;
 
 const HomeHeader = styled.header`
-  grid-column: 1/4;
-  grid-row: 1/2;
+  grid-area: header;
   box-shadow: 0px 0px 2px 1px #6b9080;
-  background-color: #cce3de;
+  background-color: #c3e2dd;
   padding: 5px;
   border-radius: 10px;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: right;
 
@@ -36,15 +37,17 @@ const HomeHeader = styled.header`
     background-color: #183333;
     color: #fff;
 
-    &:hover:not([disabled]){
+    &:hover:not([disabled]) {
       background-color: #457353;
     }
   }
 `;
 
 const ActiveRoomsWrapper = styled.div`
+  grid-area: activeRooms;
+  overflow: auto;
   box-shadow: 0px 0px 2px 1px #6b9080;
-  background-color: #cce3de;
+  background-color: #c3e2dd;
   padding: 10px;
 
   & > h3 {
@@ -56,6 +59,7 @@ const ActiveRoomsWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
+  grid-area: wrapper;
   padding: 20px;
   box-shadow: 0px 0px 2px 1px #6b9080;
   display: flex;
@@ -66,7 +70,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const ChatWrapper = styled(ActiveRoomsWrapper)``;
+const ChatWrapper = styled(ActiveRoomsWrapper)`
+  grid-area: chat;
+`;
 
 const RoomWrapper = styled.div`
   border-radius: 10px;
