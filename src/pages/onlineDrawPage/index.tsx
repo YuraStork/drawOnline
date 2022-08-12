@@ -1,15 +1,13 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { checkRoom } from "api/rooms/checkRoom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
+import { AxiosError } from "axios";
 
 type ParamsProps = {
   roomId: string;
 };
-interface LocationState {
-  socket: WebSocket | undefined
-}
 
 export const OnlineDrawPage: FC<any> = ({ children }) => {
   const user = useAppSelector((s) => s.user.data);
@@ -26,7 +24,8 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
           setAccess(true);
         }
       })
-      .catch(e => {
+      .catch((e: AxiosError) => {
+        console.log(e.status);
         navigate(`/checkRoompassword/${roomId}`);
       })
       .finally(() => setIsLoading(false));

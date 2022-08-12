@@ -1,5 +1,6 @@
-import { Instance } from "../instance";
+import { API } from "api/const";
+import axios from "axios";
 
 export const checkRoom = (id: string, userId: string) => {
-  return Instance.post(`room/check/${id}`, {userId}, { withCredentials: true });
+  return axios.post(`${API}/room/check/${id}`, {userId}, { withCredentials: true });
 }

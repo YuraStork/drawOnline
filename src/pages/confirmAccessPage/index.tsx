@@ -6,16 +6,21 @@ import { Loader } from "../../components/loader";
 
 export const PrivateRoom = () => {
   const [roomPassword, setPassword] = useState("");
-  const user = useAppSelector(s => s.user.data)
+  const user = useAppSelector((s) => s.user.data);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { roomId } = useParams()
+  const { roomId } = useParams();
 
   const handleEnter = async () => {
     try {
       if (roomId) {
         setIsLoading(true);
-        await checkRoomPassword({ roomId, roomPassword, userId: user.id, userName: user.name });
+        await checkRoomPassword({
+          roomId,
+          roomPassword,
+          userId: user.id,
+          userName: user.name,
+        });
         navigate(`/draw_online/${roomId}`);
       }
     } catch (e) {

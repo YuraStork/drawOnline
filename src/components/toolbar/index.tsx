@@ -1,39 +1,46 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { WsContext } from "context/ws.context";
+import { CASE_EXIT } from "pages/home/const";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
-import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
 import { StyledToolbar, ToolButton } from "./styles";
 
 export const Toolbar = () => {
-  const { setToolhandler, tool, changeBackgroundColor, handleRedo, handleReset, snapshot } = useContext(PaintContext);
+  const {
+    setToolhandler,
+    tool,
+    changeBackgroundColor,
+    handleRedo,
+    handleReset,
+    snapshot,
+  } = useContext(PaintContext);
   const { roomId } = useParams();
-  const { id } = useAppSelector(s => s.user.data)
-  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const { id } = useAppSelector((s) => s.user.data);
   const navigate = useNavigate();
+  const { socket } = useContext(WsContext);
 
-  const handleChangeTool = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if ((e.target as HTMLElement).tagName === "BUTTON") {
-      setToolhandler((e.target as HTMLButtonElement).dataset.tool as ToolsTypes)
-    }
-  }
   useEffect(() => {
-    if (!socket) {
-      const socket = new WebSocket("ws://localhost:5000/rooms");
-      setSocket(socket);
+    socket.on(CASE_EXIT, (data: string) => {
+      console.error("CASE_EXIT", data);
+      navigate("/");
+    });
+  }, []);
+
+  const handleChangeTool = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).tagName === "BUTTON") {
+      setToolhandler((e.target as HTMLButtonElement).dataset.tool);
     }
-  }, [])
+  };
 
   const handleExitFromRoom = () => {
-    socket?.send(JSON.stringify({
-      method: "EXIT",
-      data: {
-        roomId,
-        userId: id
-      }
-    }))
+    socket.emit("EXIT", {
+      roomId,
+      userId: id,
+    });
     navigate("/");
-  }
+  };
+
   const handleSavePhoto = async () => {
     if (snapshot) {
       const res = await fetch(snapshot);
@@ -44,17 +51,41 @@ export const Toolbar = () => {
       a.download = "image.png";
       a.click();
     }
-  }
+  };
 
   return (
     <StyledToolbar>
       <div onClickCapture={handleChangeTool}>
-        <ToolButton img="../assets/pen.png" data-tool="pen" active={tool === "pen"} />
-        <ToolButton img="../assets/square.png" data-tool="square" active={tool === "square"} />
-        <ToolButton img="../assets/circle.png" data-tool="circle" active={tool === "circle"} />
-        <ToolButton img="../assets/eraser.png" data-tool="eraser" active={tool === "eraser"} />
-        <ToolButton img="../assets/line.png" data-tool="line" active={tool === "line"} />
-        <input type="color" name="color" onChange={(e) => changeBackgroundColor(e.target.value)} />
+        <ToolButton
+          img="../assets/pen.png"
+          data-tool="pen"
+          active={tool === "pen"}
+        />
+        <ToolButton
+          img="../assets/square.png"
+          data-tool="square"
+          active={tool === "square"}
+        />
+        <ToolButton
+          img="../assets/circle.png"
+          data-tool="circle"
+          active={tool === "circle"}
+        />
+        <ToolButton
+          img="../assets/eraser.png"
+          data-tool="eraser"
+          active={tool === "eraser"}
+        />
+        <ToolButton
+          img="../assets/line.png"
+          data-tool="line"
+          active={tool === "line"}
+        />
+        <input
+          type="color"
+          name="color"
+          onChange={(e) => changeBackgroundColor(e.target.value)}
+        />
       </div>
 
       <div>
