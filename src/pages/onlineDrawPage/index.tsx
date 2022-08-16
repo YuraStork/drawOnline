@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { checkRoom } from "api/rooms/checkRoom";
 import { useAppSelector } from "store/store";
@@ -25,7 +25,6 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
         }
       })
       .catch((e: AxiosError) => {
-        console.log(e.status);
         navigate(`/checkRoompassword/${roomId}`);
       })
       .finally(() => setIsLoading(false));
@@ -34,5 +33,5 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
   if (isLoading) return <Loader position="absolute" />;
   if (!access) return null;
 
-  return <>{children}</>;
+  return children;
 };

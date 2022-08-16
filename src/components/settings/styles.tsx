@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const StyledSettings = styled.div`
+  grid-area: settings;
   padding: 5px;
   box-shadow: 0px 2px 5px 1px #b7bebe;
   display: flex;

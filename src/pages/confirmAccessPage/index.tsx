@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { WsContext } from "context/ws.context";
+import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
-import { checkRoomPassword } from "../../api/rooms/checkRoomPassword";
+import { toastError } from "../../toast";
 import { Loader } from "../../components/loader";
 
 export const PrivateRoom = () => {
@@ -10,22 +11,24 @@ export const PrivateRoom = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { roomId } = useParams();
-
+  const { socket } = useContext(WsContext);
+  
   const handleEnter = async () => {
-    try {
-      if (roomId) {
-        setIsLoading(true);
-        await checkRoomPassword({
-          roomId,
-          roomPassword,
-          userId: user.id,
-          userName: user.name,
-        });
-        navigate(`/draw_online/${roomId}`);
-      }
-    } catch (e) {
-    } finally {
-      setIsLoading(false);
+    if (roomId) {
+      setIsLoading(true);
+      socket.emit("JOIN", {
+        roomId,
+        roomPassword,
+        userId: user.id,
+        userName: user.name,
+      });
+      socket.on("JOIN_SUCCESS", (id: string) => {
+        navigate(`/draw_online/${id}`); setIsLoading(false)
+      });
+      socket.on("JOIN_ERROR", (e: string) => {
+        setIsLoading(false);
+        toastError(e)
+      });
     }
   };
 

@@ -26,7 +26,6 @@ import { UserRooms } from "./userRooms";
 export const HomePage = () => {
   const { id } = useAppSelector((s) => s.user.data);
   const [loading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const dispatch = useAppDispatch();
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
   const { socket } = useContext(WsContext);
@@ -36,12 +35,6 @@ export const HomePage = () => {
   useEffect(() => {
     SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms })
   }, [])
-
-  useEffect(() => {
-    if (error) {
-      toastError(error || "Occured Error")
-    }
-  }, [error])
 
   if (loading) return <Loader position="absolute" />;
 

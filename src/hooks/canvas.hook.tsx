@@ -50,7 +50,7 @@ export const useCanvas = () => {
   };
 
   useEffect(() => {
-    canvasRef.current.width = 1200;
+    canvasRef.current.width = 1100;
     canvasRef.current.height = 550;
     handleSnapshot();
   }, []);
