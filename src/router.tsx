@@ -10,16 +10,15 @@ import { ServerErrorPage } from "pages/serverErrorPage";
 import { NotFoundPage } from "pages/notfoundPage";
 import { HomePage } from "pages/home";
 import { OnlineDrawPage } from "pages/onlineDrawPage";
-import { useWebSocket } from "hooks/useWebSocket";
 import { WsContext } from "context/ws.context";
-import { ReactNode } from "react";
-import { Loader } from "components/loader";
+import { ReactNode, useRef } from "react";
+import { io } from "socket.io-client";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  const { socket } = useWebSocket();
-  if (!socket) return <Loader position="absolute" />;
+  const socket = useRef(io("ws://localhost:5000"));
+
   return (
-    <WsContext.Provider value={{ socket }}>
+    <WsContext.Provider value={{ socket: socket.current }}>
       {children}
     </WsContext.Provider>
   );
@@ -28,30 +27,32 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
 const setRoutes = (isAuth: boolean) =>
   isAuth
     ? [
-        { path: "/", element: <HomePage /> },
-        { path: "/draw", element: <LayoutComponent /> },
-        {
-          path: "/draw_online/:roomId",
-          element: (
-            <OnlineDrawPage>
-              <OnlineCanvas />
-            </OnlineDrawPage>
-          ),
-        },
-        { path: "/checkRoompassword/:roomId", element: <PrivateRoom /> },
-        { path: "/cabinet", element: <UserCabinet /> },
-        { path: "/server-error", element: <ServerErrorPage /> },
-        { path: "/authorization", element: <Navigate to="/" /> },
-        { path: "*", element: <NotFoundPage /> },
-      ]
+      { path: "/", element: <HomePage /> },
+      { path: "/draw", element: <LayoutComponent /> },
+      {
+        path: "/draw_online/:roomId",
+        element: (
+          <OnlineDrawPage>
+            <OnlineCanvas />
+          </OnlineDrawPage>
+        ),
+      },
+      { path: "/checkRoompassword/:roomId", element: <PrivateRoom /> },
+      { path: "/cabinet", element: <UserCabinet /> },
+      { path: "/server-error", element: <ServerErrorPage /> },
+      { path: "/authorization", element: <Navigate to="/" /> },
+      { path: "*", element: <NotFoundPage /> },
+    ]
     : [
-        { path: "/authorization", element: <AuthPage /> },
-        { path: "*", element: <Navigate to="/authorization" /> },
-      ];
+      { path: "/authorization", element: <AuthPage /> },
+      { path: "*", element: <Navigate to="/authorization" /> },
+    ];
 
 export const Router = () => {
   const { isAuth } = useAppSelector(getUser);
   const routes = useRoutes(setRoutes(isAuth));
+
+  console.log("%c Router RENDER ", "background-color: blue;color:#fff;padding: 5px 10px;")
 
   if (isAuth) return <Wrapper>{routes}</Wrapper>;
   return routes;

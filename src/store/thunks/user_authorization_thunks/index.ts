@@ -24,7 +24,6 @@ export const AuthorizedThunk = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const savedUser = getSavedUser();
-      console.log("SAVED_USER", savedUser)
       if (savedUser) {
         const profile = await getProfile(savedUser.user.id);
         dispatch(initializeUser(savedUser));

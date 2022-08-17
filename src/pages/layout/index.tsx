@@ -3,7 +3,7 @@ import { Canvas } from "../../components/canvas"
 import { SettingsBar } from "../../components/settings"
 import { Toolbar } from "../../components/toolbar"
 import { PaintContext } from "../../context/paintContext";
-import { useCanvas } from "../../hooks/canvas.hook";
+import { useCanvas } from "../../hooks/useCanvas/useCanvas.hook";
 
 const Layout = styled.div`
   max-width: 1200px;

@@ -1,9 +1,10 @@
+import { Socket } from "socket.io-client";
 import { Tool } from "./tool.class";
 
 export class Pen extends Tool {
   private mouseDown = false;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: WebSocket, id: string) {
+  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -16,10 +17,9 @@ export class Pen extends Tool {
 
   private onMouseUp(e: MouseEvent) {
     this.mouseDown = false;
-    this.socket.send(JSON.stringify({
-      method: "finish",
-      id: this.id,
-    }))
+    this.socket.emit("FINISH_DRAW", {
+      roomId: this.id,
+    })
   }
 
   private onMouseDown(e: MouseEvent) {
@@ -31,13 +31,12 @@ export class Pen extends Tool {
 
   private onMouseMove(e: MouseEvent) {
     if (this.mouseDown && this.ctx) {
-      this.socket.send(JSON.stringify({
-        method: "draw",
+      this.socket.emit("DRAW", {
         tool: "pen",
-        id: this.id,
+        roomId: this.id,
         x: e.offsetX,
         y: e.offsetY
-      }))
+      })
     }
   }
 

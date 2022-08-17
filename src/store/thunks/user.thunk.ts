@@ -9,7 +9,7 @@ export const getUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/profile-thunk`,
   async (id: string) => {
     const response = await getProfile(id);
-    return response?.data;
+    return response.data;
   }
 );
 

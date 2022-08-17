@@ -22,7 +22,6 @@ export const RoomUsers = () => {
   useEffect(() => {
     socket.emit("GET_ROOM", roomId);
     socket.on("GET_ROOM", (data: any) => {
-      console.log("%c GET_ROOMS", "padding: 10px; color: #ffffff; background: red;")
       setUsers(data.users);
     });
   }, []);

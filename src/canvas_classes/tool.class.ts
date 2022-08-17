@@ -1,3 +1,5 @@
+import { Socket } from "socket.io-client";
+
 export class Tool {
   protected canvas;
   protected ctx;
@@ -6,7 +8,7 @@ export class Tool {
   protected socket;
   protected id;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: WebSocket, id: string) {
+  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
     this.canvas = canvas;
     this.socket = socket;
     this.id = id;

@@ -3,6 +3,7 @@ import { CASE_EXIT } from "pages/home/const";
 import { MouseEvent, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
+import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
 import { StyledToolbar, ToolButton } from "./styles";
 
@@ -29,7 +30,7 @@ export const Toolbar = () => {
 
   const handleChangeTool = (e: MouseEvent) => {
     if ((e.target as HTMLElement).tagName === "BUTTON") {
-      setToolhandler((e.target as HTMLButtonElement).dataset.tool);
+      setToolhandler(((e.target as HTMLButtonElement).dataset.tool) as ToolsTypes);
     }
   };
 
