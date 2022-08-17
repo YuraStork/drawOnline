@@ -1,10 +1,6 @@
-import { AxiosError, AxiosResponse } from "axios";
-import {
-  SavedUserObject,
-  UserLoginFormData,
-  UserRegistrationData,
-} from "./../../../types";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { UserLoginFormData, UserRegistrationData } from "./../../../types";
+import { createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { USER_REDUCER } from "store/const";
 import { authorizeUser } from "api/user/authorize";
 import { getProfile } from "api/user/getProfile";
@@ -17,7 +13,6 @@ import {
   saveUserInStorage,
 } from "services/token.service";
 import { toastError, toastSuccess } from "../../../toast";
-import { getUserProfileThunk } from "../user.thunk";
 
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,
@@ -31,7 +26,7 @@ export const AuthorizedThunk = createAsyncThunk(
       }
       throw new Error("User is not authorized");
     } catch (e) {
-      await dispatch(UserLogoutThunk());
+      await UserLogoutThunk(dispatch);
       return rejectWithValue("User is not authorized");
     }
   }
@@ -39,15 +34,12 @@ export const AuthorizedThunk = createAsyncThunk(
 
 export const UserLoginThunk = createAsyncThunk(
   `${USER_REDUCER}/login-thunk`,
-  async (data: UserLoginFormData, { dispatch, rejectWithValue }) => {
+  async (data: UserLoginFormData, { rejectWithValue }) => {
     try {
-      const response: AxiosResponse<SavedUserObject> = await authorizeUser(
-        data
-      );
+      const response = await authorizeUser(data);
       saveUserInStorage(response.data);
-      dispatch(initializeUser(response.data));
-      await dispatch(getUserProfileThunk(response.data.user.id));
-      return response.data;
+      const profile = await getProfile(response.data.user.id);
+      return { token: response.data.token, profile: profile.data };
     } catch (e) {
       if (e instanceof AxiosError) {
         toastError(e.response?.data.message);
@@ -77,11 +69,8 @@ export const UserRegistrationThunk = createAsyncThunk(
   }
 );
 
-export const UserLogoutThunk = createAsyncThunk(
-  `${USER_REDUCER}/logout-thunk`,
-  async (_, { dispatch }) => {
-    await logout();
-    deleteSavedToken();
-    dispatch(logoutAction());
-  }
-);
+export const UserLogoutThunk = async (dispatch: Dispatch) => {
+  await logout();
+  deleteSavedToken();
+  dispatch(logoutAction());
+};

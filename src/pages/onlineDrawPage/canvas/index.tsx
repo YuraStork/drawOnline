@@ -1,8 +1,5 @@
 import { PaintContext } from "context/paintContext";
-import { WsContext } from "context/ws.context";
 import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Canvas } from "../../../components/canvas";
 import { SettingsBar } from "../../../components/settings";

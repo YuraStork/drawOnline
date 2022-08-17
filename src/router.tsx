@@ -11,11 +11,17 @@ import { NotFoundPage } from "pages/notfoundPage";
 import { HomePage } from "pages/home";
 import { OnlineDrawPage } from "pages/onlineDrawPage";
 import { WsContext } from "context/ws.context";
-import { ReactNode, useRef } from "react";
-import { io } from "socket.io-client";
+import { ReactNode, useEffect, useRef } from "react";
+import { io, Socket } from "socket.io-client";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  const socket = useRef(io("ws://localhost:5000"));
+  const socket = useRef<Socket>(io("http://localhost:5000"));
+
+  useEffect(() => {
+    return () => {
+      socket.current.disconnect();
+    };
+  }, []);
 
   return (
     <WsContext.Provider value={{ socket: socket.current }}>
@@ -52,8 +58,12 @@ export const Router = () => {
   const { isAuth } = useAppSelector(getUser);
   const routes = useRoutes(setRoutes(isAuth));
 
-  console.log("%c Router RENDER ", "background-color: blue;color:#fff;padding: 5px 10px;")
+  console.log("ISAUTH", isAuth);
+  console.log(
+    "%c Router RENDER ",
+    "background-color: blue; color:#fff; padding: 5px 10px;"
+  );
 
-  if (isAuth) return <Wrapper>{routes}</Wrapper>;
+  if (isAuth) return <Wrapper>{routes}</Wrapper>
   return routes;
 };

@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
-import { toastError } from "../../toast";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
@@ -44,7 +43,7 @@ export const HomePage = () => {
 
         <HomeHeader>
           <HomeCabinet />
-          <Button onClick={() => dispatch(UserLogoutThunk())}>logout</Button>
+          <Button onClick={() => UserLogoutThunk(dispatch)}>logout</Button>
         </HomeHeader>
 
         <ActiveRoomsWrapper>

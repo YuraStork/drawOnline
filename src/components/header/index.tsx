@@ -1,6 +1,8 @@
 import { BurgerMenu } from "components/burger-menu";
+import { WsContext } from "context/ws.context";
+import { useContext } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { logout } from "store/reducers/user.reducer";
+import { logoutAction } from "store/reducers/user.reducer";
 import { useAppDispatch } from "store/store";
 import { Container } from "../container/styles";
 import { LINKS } from "./const";
@@ -8,6 +10,7 @@ import { HeaderComponent, BurgerWrapper, HeaderNavigation, HeaderUserBlock } fro
 
 export const Header = () => {
   const dispatch = useAppDispatch();
+  const { socket } = useContext(WsContext);
   const { pathname } = useLocation();
   return (
     <HeaderComponent>
@@ -28,7 +31,7 @@ export const Header = () => {
 
         <HeaderUserBlock>
           {pathname !== "/cabinet" && <Link to="/cabinet">My Cabinet</Link>}
-          <button onClick={() => dispatch(logout())}>logout</button>
+          <button onClick={() => { socket.disconnect(); dispatch(logoutAction()) }}>logout</button>
         </HeaderUserBlock>
       </Container>
     </HeaderComponent>
