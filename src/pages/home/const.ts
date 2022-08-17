@@ -20,7 +20,7 @@ type Props = {
 
 export const SetRoomsConnection = (data: Props) => {
   const { socket, setActiveRooms, navigate, setUserRooms } = data;
-
+  
   socket.emit(GET_ROOMS);
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => setActiveRooms(data))
   socket.on(CREATE_SUCCESS, (id: string) => navigate(`/draw_online/${id}`))
