@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 const StyledToolbar = styled.div`
+  grid-area: toolbar;
   padding: 5px;
   box-shadow: 0px 2px 5px 1px #b7bebe;
   display: flex;
@@ -26,7 +27,7 @@ const ToolButton = styled.button<ToolButtonProps>`
   background: none;
   border: 2px solid white;
   
-  ${p=>p.active && css`
+  ${p => p.active && css`
       border: 2px solid red;
   `};
 

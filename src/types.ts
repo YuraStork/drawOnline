@@ -41,3 +41,8 @@ export interface AuthContextTypes {
 export interface RoomType {
   _id: string,
 }
+
+export interface UserInRoom {
+  userName: string;
+  userId: string;
+}

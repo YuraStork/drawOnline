@@ -27,6 +27,8 @@ export const UserRoomCard: FC<Props> = ({ room, socket }) => {
         show: {String(room.isShow)}
         <br />
         limit: {room.limit}
+        <br />
+        status: {String(room.status)}
       </p>
       {active && (
         <CardSettings>
@@ -62,7 +64,14 @@ export const UserRoomCard: FC<Props> = ({ room, socket }) => {
         </Portal>
       )}
 
-      {editMode && <UpdateCard socket={socket} room={room} userId={id} setEditMode={setEditMode} />}
+      {editMode && (
+        <UpdateCard
+          socket={socket}
+          room={room}
+          userId={id}
+          setEditMode={setEditMode}
+        />
+      )}
     </RoomCard>
   );
 };

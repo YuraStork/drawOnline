@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { ToolsTypes } from "../hooks/canvas.hook";
+import { ToolsTypes } from "types/canvas";
 
 type PaintContextTypes = {
   canvasRef: React.Ref<HTMLCanvasElement>;
@@ -10,7 +10,7 @@ type PaintContextTypes = {
   changeBorderSize: (e: number) => void,
   handleReset: () => void,
   handleRedo: () => void,
-  handleSnapshot: () => void,
+  handleSnapshot: (data: any) => void,
   snapshot: string | null,
 };
 

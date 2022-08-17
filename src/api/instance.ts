@@ -1,3 +1,4 @@
+import { toastError } from "./../toast/index";
 import { API, SetHeaders } from "api/const";
 import axios, { AxiosError } from "axios";
 import { getToken, saveUserInStorage } from "services/token.service";
@@ -9,8 +10,8 @@ Instance.interceptors.response.use(
     return config;
   },
   async function (error: AxiosError) {
-    if (error.response?.status === 500) {
-      window.location.replace("/server-error");
+    if (error.code === "ERR_NETWORK" || error.response?.status === 500) {
+      toastError("NETWORK ERROR")
       return Promise.reject(error);
     }
 
