@@ -11,6 +11,7 @@ export const JOIN_ERROR = "JOIN_ERROR";
 export const CASE_EXIT = "CASE_EXIT";
 export const GET_USER_ROOMS = "GET_USER_ROOMS";
 
+
 type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;
   navigate: NavigateFunction;
