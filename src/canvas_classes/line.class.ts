@@ -1,3 +1,4 @@
+import { Socket } from "socket.io-client";
 import { Tool } from "./tool.class";
 
 export class Line extends Tool {
@@ -6,7 +7,11 @@ export class Line extends Tool {
   private x1 = 0;
   private y1 = 0;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: WebSocket, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -19,6 +24,16 @@ export class Line extends Tool {
 
   private onMouseUp(e: any) {
     this.mouseDown = false;
+    this.socket.emit("DRAW", {
+      tool: "line",
+      roomId: this.id,
+      x1: this.x1,
+      y1: this.y1,
+      x2: e.offsetX,
+      y2: e.offsetY,
+    });
+    this.x1 = 0;
+    this.y1 = 0;
   }
 
   private onMouseDown(e: MouseEvent) {
@@ -27,6 +42,7 @@ export class Line extends Tool {
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
   }
+
   private onMouseMove(e: MouseEvent) {
     let img = new Image();
     img.src = this.saved;
@@ -42,8 +58,17 @@ export class Line extends Tool {
       this.ctx.beginPath();
       this.ctx.moveTo(this.x1, this.y1);
       this.ctx.lineTo(e.offsetX, e.offsetY);
-      this.ctx.stroke();
       this.ctx.closePath();
+    }
+  }
+
+  static drawOnline(ctx: any, x1: number, y1: number, x2: number, y2: number) {
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.closePath();
     }
   }
 }

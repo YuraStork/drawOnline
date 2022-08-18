@@ -1,15 +1,23 @@
 import { toastSuccess } from "./../../../toast/index";
-import { Pen } from "../../../canvas_classes/pen.class";
-import { Square } from "../../../canvas_classes/square.class";
 import { Socket } from "socket.io-client";
 import { NavigateFunction } from "react-router-dom";
+import {
+  Circle,
+  Eraser,
+  Line,
+  Pen,
+  Square,
+} from "../../../canvas_classes/index";
 
 export const SetDrawConnection = (
   socket: Socket<any, any>,
   canvasRef: any,
   roomId: string,
   name: string,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  strokeStyle: string,
+  lineWidht: number,
+  background: string
 ) => {
   socket.emit("CONNECTION_DRAW", { userName: name, roomId });
   socket.on("CONNECTION_DRAW", (data: string) => toastSuccess(data + "joined"));
@@ -19,26 +27,39 @@ export const SetDrawConnection = (
     ctx?.beginPath();
   });
   socket.on("CASE_EXIT", () => {
-    navigate("/")
-  })
+    navigate("/");
+  });
+
   socket.on("DRAW", (data: any) => {
-    console.log("DRAW", data)
     if (canvasRef.current) {
       const ctx = canvasRef.current?.getContext("2d");
       switch (data.tool) {
         case "pen":
-          Pen.draw(ctx, data.x, data.y);
+          Pen.drawOnline(
+            ctx,
+            data.x,
+            data.y,
+            data.lineColor,
+            data.lineWidth,
+            strokeStyle,
+            lineWidht
+          );
           break;
-        // case "square":
-        //   Square.draw(
-        //     ctx,
-        //     data.x,
-        //     data.y,
-        //     canvasRef.current.width,
-        //     canvasRef.current.height,
-        //     canvasRef.current
-        //   );
-        //   break;
+        case "square":
+          Square.drawOnline(ctx, data.x1, data.y1, data.width, data.height);
+          break;
+        case "circle":
+          Circle.drawOnline(ctx, data.x1, data.y1, data.a, data.b);
+          break;
+        case "eraser":
+          Eraser.draw(ctx, data.x1, data.y1);
+          break;
+        case "line":
+          Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2);
+          break;
+        default:
+          Pen.draw(ctx, data.x, data.y, strokeStyle, lineWidht);
+          break;
       }
     }
   });

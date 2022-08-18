@@ -1,3 +1,4 @@
+import { Socket } from "socket.io-client";
 import { Tool } from "./tool.class";
 
 export class Eraser extends Tool {
@@ -5,7 +6,11 @@ export class Eraser extends Tool {
   private x1 = 0;
   private y1 = 0;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: WebSocket, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -20,22 +25,32 @@ export class Eraser extends Tool {
     this.mouseDown = true;
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
-  };
+  }
 
   private onMouseMove(e: MouseEvent) {
     if (this.ctx && this.mouseDown) {
-      this.ctx.beginPath();
-      this.ctx.rect(this.x1, this.y1, 40, 40);
-      this.ctx.fillStyle = "#ececec";
-      this.ctx.fill();
-      this.ctx.closePath();
+      this.socket.emit("DRAW", {
+        tool: "eraser",
+        roomId: this.id,
+        x1: this.x1,
+        y1: this.y1,
+      });
     }
-
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
-  };
+  }
 
-  private onMouseUp(e: MouseEvent) {
+  private onMouseUp() {
     this.mouseDown = false;
   }
-};
+
+  static draw(ctx: any, x1: number, y1: number) {
+    if (ctx) {
+      ctx.beginPath();
+      ctx.arc(x1, y1, 20, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}

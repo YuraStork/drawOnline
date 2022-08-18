@@ -1,3 +1,4 @@
+import { Socket } from "socket.io-client";
 import { Tool } from "./tool.class";
 
 export class Circle extends Tool {
@@ -6,7 +7,7 @@ export class Circle extends Tool {
   private x1 = 0;
   private y1 = 0;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: WebSocket, id: string) {
+  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -36,6 +37,16 @@ export class Circle extends Tool {
 
   private onMouseUp(e: MouseEvent) {
     this.mouseDown = false;
+
+    this.socket.emit("DRAW", {
+      roomId: this.id,
+      tool: "circle",
+      x1: this.x1,
+      y1: this.y1,
+      a: e.offsetY - this.y1,
+      b: e.offsetY - this.y1,
+    })
+
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
   }
@@ -53,6 +64,17 @@ export class Circle extends Tool {
       this.ctx.fill();
       this.ctx.stroke();
       this.ctx.closePath();
+    }
+  }
+  static drawOnline(ctx: any, x1: number, y1: number, a: number, b: number) {
+    let c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+
+    if (ctx) {
+      ctx.beginPath();
+      ctx.arc(x1, y1, c / 2, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
     }
   }
 }

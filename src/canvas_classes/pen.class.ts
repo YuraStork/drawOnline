@@ -4,7 +4,11 @@ import { Tool } from "./tool.class";
 export class Pen extends Tool {
   private mouseDown = false;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -19,7 +23,7 @@ export class Pen extends Tool {
     this.mouseDown = false;
     this.socket.emit("FINISH_DRAW", {
       roomId: this.id,
-    })
+    });
   }
 
   private onMouseDown(e: MouseEvent) {
@@ -35,13 +39,32 @@ export class Pen extends Tool {
         tool: "pen",
         roomId: this.id,
         x: e.offsetX,
-        y: e.offsetY
-      })
+        y: e.offsetY,
+        lineColor: this.ctx.strokeStyle,
+        lineWidth: this.ctx.lineWidth,
+      });
     }
   }
 
-  static draw(ctx: any, x: number, y: number) {
+  static draw(ctx: any, x: number, y: number, strokeStyle: string, lineWidth: number) {
     ctx.lineTo(x, y);
     ctx.stroke();
+  }
+
+  static drawOnline(
+    ctx: any,
+    x: number,
+    y: number,
+    lineColor: string,
+    lineWidht: number,
+    oldColor: string,
+    oldWidht: number
+  ) {
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = lineWidht;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.strokeStyle = oldColor;
+    ctx.lineWidth = oldWidht;
   }
 }
