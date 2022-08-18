@@ -20,19 +20,19 @@ export class Tool {
     this.height = canvas.current.height;
   }
 
-  changeBackgroundColor(color: string) {
+  changeFillStyle(color: string) {
     if (this.ctx) {
       this.fillStyle = color;
       this.ctx.fillStyle = color;
     }
   }
-  changeBorderColor(color: string) {
+  changeStrokeStyle(color: string) {
     if (this.ctx) {
       this.strokeStyle = color;
       this.ctx.strokeStyle = color;
     }
   }
-  changeBorderSize(size: number) {
+  changeLineWidth(size: number) {
     if (this.ctx) {
       this.lineWidth = size;
       this.ctx.lineWidth = size;

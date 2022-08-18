@@ -22,9 +22,9 @@ export const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const navigate = useNavigate();
   const [tool, setTool] = useState<ToolsTypes>("pen");
-  const [backgroundColor, setBackgroundColor] = useState("#000");
-  const [borderColor, setBorderColor] = useState("#000");
-  const [borderSize, setBorderSize] = useState(1);
+  const [fillStyle, setFillStyle] = useState("#000");
+  const [strokeStyle, setStrokeStyle] = useState("#000");
+  const [lineWidth, setLineWidth] = useState(1);
   const [snapshotList, setSnapshotList] = useState<string[]>([]);
   const [snapshotIndex, setSnapshotIndex] = useState(-1);
   const { socket } = useContext(WsContext);
@@ -42,18 +42,27 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, borderColor, borderSize, backgroundColor);
+    SetDrawConnection(
+      socket,
+      canvasRef,
+      roomId || "",
+      name,
+      navigate,
+      fillStyle,
+      strokeStyle,
+      lineWidth
+    );
   }, []);
 
   useEffect(() => {
     draw();
-  }, [tool, backgroundColor, borderColor, borderSize, snapshotIndex]);
+  }, [tool, fillStyle, strokeStyle, lineWidth, snapshotIndex]);
 
   const draw = () => {
     const myCanvas = new Tool(canvasRef, socket, roomId || "1");
-    myCanvas.changeBackgroundColor(backgroundColor);
-    myCanvas.changeBorderColor(borderColor);
-    myCanvas.changeBorderSize(borderSize);
+    myCanvas.changeFillStyle(fillStyle);
+    myCanvas.changeStrokeStyle(strokeStyle);
+    myCanvas.changeLineWidth(lineWidth);
     myCanvas.setSnapshot(snapshotList[snapshotIndex]);
 
     switch (tool) {
@@ -82,9 +91,9 @@ export const useCanvas = () => {
     setToolhandler,
     draw,
     tool,
-    changeBackgroundColor: setBackgroundColor,
-    changeBorderColor: setBorderColor,
-    changeBorderSize: setBorderSize,
+    changeFillStyle: setFillStyle,
+    changeStrokeStyle: setStrokeStyle,
+    changeLineWidth: setLineWidth,
     handleSnapshot: () =>
       handleSnapshot({
         snapshotIndex,

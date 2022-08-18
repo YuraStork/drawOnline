@@ -5,9 +5,9 @@ type PaintContextTypes = {
   canvasRef: React.Ref<HTMLCanvasElement>;
   setToolhandler: (tool: ToolsTypes) => void;
   tool: ToolsTypes;
-  changeBackgroundColor: (e: string) => void,
-  changeBorderColor: (e: string) => void
-  changeBorderSize: (e: number) => void,
+  changeFillStyle: (e: string) => void,
+  changeStrokeStyle: (e: string) => void
+  changeLineWidth: (e: number) => void,
   handleReset: () => void,
   handleRedo: () => void,
   handleSnapshot: (data: any) => void,
@@ -18,9 +18,9 @@ export const PaintContext = createContext<PaintContextTypes>({
   canvasRef: null,
   setToolhandler: () => { },
   tool: "pen",
-  changeBackgroundColor: () => { },
-  changeBorderColor: () => { },
-  changeBorderSize: () => { },
+  changeFillStyle: () => { },
+  changeStrokeStyle: () => { },
+  changeLineWidth: () => { },
   handleReset: () => { },
   handleRedo: () => { },
   handleSnapshot: () => { },

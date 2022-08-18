@@ -11,7 +11,7 @@ export const Toolbar = () => {
   const {
     setToolhandler,
     tool,
-    changeBackgroundColor,
+    changeFillStyle,
     handleRedo,
     handleReset,
     snapshot,
@@ -85,7 +85,7 @@ export const Toolbar = () => {
         <input
           type="color"
           name="color"
-          onChange={(e) => changeBackgroundColor(e.target.value)}
+          onChange={(e) => changeFillStyle(e.target.value)}
         />
       </div>
 

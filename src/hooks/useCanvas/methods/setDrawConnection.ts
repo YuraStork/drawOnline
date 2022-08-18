@@ -15,9 +15,9 @@ export const SetDrawConnection = (
   roomId: string,
   name: string,
   navigate: NavigateFunction,
+  fillStyle: string,
   strokeStyle: string,
   lineWidht: number,
-  background: string
 ) => {
   socket.emit("CONNECTION_DRAW", { userName: name, roomId });
   socket.on("CONNECTION_DRAW", (data: string) => toastSuccess(data + "joined"));
@@ -39,10 +39,8 @@ export const SetDrawConnection = (
             ctx,
             data.x,
             data.y,
-            data.lineColor,
+            data.strokeStyle,
             data.lineWidth,
-            strokeStyle,
-            lineWidht
           );
           break;
         case "square":
@@ -58,7 +56,13 @@ export const SetDrawConnection = (
           Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2);
           break;
         default:
-          Pen.draw(ctx, data.x, data.y, strokeStyle, lineWidht);
+          Pen.drawOnline(
+            ctx,
+            data.x,
+            data.y,
+            data.strokeStyle,
+            data.lineWidth,
+          );
           break;
       }
     }

@@ -3,7 +3,7 @@ import { PaintContext } from "../../context/paintContext";
 import { StyledSettings } from "./styles";
 
 export const SettingsBar = () => {
-  const { changeBorderColor, changeBorderSize } = useContext(PaintContext);
+  const { changeStrokeStyle, changeLineWidth } = useContext(PaintContext);
   return (
     <StyledSettings>
       <div>
@@ -13,14 +13,14 @@ export const SettingsBar = () => {
           id="borderSize"
           name="borderSize"
           defaultValue={1}
-          onChange={(e) => changeBorderSize(Number(e.target.value))}
+          onChange={(e) => changeLineWidth(Number(e.target.value))}
         />
         <label htmlFor="borderColor">Border color</label>
         <input
           type="color"
           id="borderColor"
           name="borderColor"
-          onChange={(e) => changeBorderColor(e.target.value)}
+          onChange={(e) => changeStrokeStyle(e.target.value)}
         />
       </div>
     </StyledSettings>

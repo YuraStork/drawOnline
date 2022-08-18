@@ -40,31 +40,31 @@ export class Pen extends Tool {
         roomId: this.id,
         x: e.offsetX,
         y: e.offsetY,
-        lineColor: this.ctx.strokeStyle,
+        strokeStyle: this.ctx.strokeStyle,
         lineWidth: this.ctx.lineWidth,
       });
     }
   }
 
-  static draw(ctx: any, x: number, y: number, strokeStyle: string, lineWidth: number) {
+  static draw(
+    ctx: any,
+    x: number,
+    y: number,
+  ) {
     ctx.lineTo(x, y);
     ctx.stroke();
   }
 
   static drawOnline(
-    ctx: any,
+    ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
-    lineColor: string,
+    strokeStyle: string,
     lineWidht: number,
-    oldColor: string,
-    oldWidht: number
   ) {
-    ctx.strokeStyle = lineColor;
+    ctx.strokeStyle = strokeStyle;
     ctx.lineWidth = lineWidht;
     ctx.lineTo(x, y);
     ctx.stroke();
-    ctx.strokeStyle = oldColor;
-    ctx.lineWidth = oldWidht;
   }
 }
