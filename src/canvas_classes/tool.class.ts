@@ -7,6 +7,9 @@ export class Tool {
   protected height = 550;
   protected socket;
   protected id;
+  protected strokeStyle = "#000";
+  protected fillStyle = "#000";
+  protected lineWidth = 1;
 
   constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
     this.canvas = canvas;
@@ -17,18 +20,21 @@ export class Tool {
     this.height = canvas.current.height;
   }
 
-  changeBackgroundColor(color: string) {
+  changeFillStyle(color: string) {
     if (this.ctx) {
+      this.fillStyle = color;
       this.ctx.fillStyle = color;
     }
   }
-  changeBorderColor(color: string) {
+  changeStrokeStyle(color: string) {
     if (this.ctx) {
+      this.strokeStyle = color;
       this.ctx.strokeStyle = color;
     }
   }
-  changeBorderSize(size: number) {
+  changeLineWidth(size: number) {
     if (this.ctx) {
+      this.lineWidth = size;
       this.ctx.lineWidth = size;
     }
   }

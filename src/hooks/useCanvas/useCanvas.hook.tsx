@@ -3,10 +3,16 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
-import { Pen } from "../../canvas_classes/pen.class";
-import { Tool } from "../../canvas_classes/tool.class";
 import { SetDrawConnection } from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
+import {
+  Circle,
+  Eraser,
+  Line,
+  Pen,
+  Square,
+  Tool,
+} from "../../canvas_classes/index";
 
 type ParamsProps = {
   roomId: string;
@@ -16,9 +22,9 @@ export const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const navigate = useNavigate();
   const [tool, setTool] = useState<ToolsTypes>("pen");
-  const [backgroundColor, setBackgroundColor] = useState("#000");
-  const [borderColor, setBorderColor] = useState("#000");
-  const [borderSize, setBorderSize] = useState(1);
+  const [fillStyle, setFillStyle] = useState("#000");
+  const [strokeStyle, setStrokeStyle] = useState("#000");
+  const [lineWidth, setLineWidth] = useState(1);
   const [snapshotList, setSnapshotList] = useState<string[]>([]);
   const [snapshotIndex, setSnapshotIndex] = useState(-1);
   const { socket } = useContext(WsContext);
@@ -36,23 +42,44 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate);
+    SetDrawConnection(
+      socket,
+      canvasRef,
+      roomId || "",
+      name,
+      navigate,
+      fillStyle,
+      strokeStyle,
+      lineWidth
+    );
   }, []);
 
   useEffect(() => {
     draw();
-  }, [tool, backgroundColor, borderColor, borderSize, snapshotIndex]);
+  }, [tool, fillStyle, strokeStyle, lineWidth, snapshotIndex]);
 
   const draw = () => {
     const myCanvas = new Tool(canvasRef, socket, roomId || "1");
-    myCanvas.changeBackgroundColor(backgroundColor);
-    myCanvas.changeBorderColor(borderColor);
-    myCanvas.changeBorderSize(borderSize);
+    myCanvas.changeFillStyle(fillStyle);
+    myCanvas.changeStrokeStyle(strokeStyle);
+    myCanvas.changeLineWidth(lineWidth);
     myCanvas.setSnapshot(snapshotList[snapshotIndex]);
 
     switch (tool) {
       case "pen":
         new Pen(canvasRef, socket, roomId || "1");
+        break;
+      case "square":
+        new Square(canvasRef, socket, roomId || "1");
+        break;
+      case "circle":
+        new Circle(canvasRef, socket, roomId || "1");
+        break;
+      case "eraser":
+        new Eraser(canvasRef, socket, roomId || "1");
+        break;
+      case "line":
+        new Line(canvasRef, socket, roomId || "1");
         break;
       default:
         new Pen(canvasRef, socket, roomId || "1");
@@ -64,9 +91,9 @@ export const useCanvas = () => {
     setToolhandler,
     draw,
     tool,
-    changeBackgroundColor: setBackgroundColor,
-    changeBorderColor: setBorderColor,
-    changeBorderSize: setBorderSize,
+    changeFillStyle: setFillStyle,
+    changeStrokeStyle: setStrokeStyle,
+    changeLineWidth: setLineWidth,
     handleSnapshot: () =>
       handleSnapshot({
         snapshotIndex,
