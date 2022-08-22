@@ -11,24 +11,46 @@ import { NotFoundPage } from "pages/notfoundPage";
 import { HomePage } from "pages/home";
 import { OnlineDrawPage } from "pages/onlineDrawPage";
 import { WsContext } from "context/ws.context";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { Loader } from "components/loader";
+import { nanoid } from "@reduxjs/toolkit";
+import {socket} from "./socket";
 
-const Wrapper = ({ children }: { children: ReactNode }) => {
-  const socket = useRef<Socket>(io("http://localhost:5000"));
+// const getSocketId = () => {
+//   const id = localStorage.getItem("socketId");
+//   if (id) {
+//     return id;
+//   }
 
-  useEffect(() => {
-    return () => {
-      socket.current.disconnect();
-    };
-  }, []);
+//   const newId = nanoid();
+//   console.log("NEW ID", newId);
 
-  return (
-    <WsContext.Provider value={{ socket: socket.current }}>
-      {children}
-    </WsContext.Provider>
-  );
-};
+//   localStorage.setItem("socketId", newId);
+
+//   return newId;
+// };
+
+// const Wrapper = ({ children }: { children: ReactNode }) => {
+//   const [socket, setSocket] = useState<Socket | null>(null);
+
+//   useEffect(() => {
+//     if (!socket) {
+//       const socket = io("http://localhost:5000", { query: { id: getSocketId() } });
+//       socket.on("connect", () => {
+//         setSocket(socket);
+//       })
+//     }
+//     return () => {
+//       if (socket) {
+//         socket.close();
+//       }
+//     };
+//   }, []);
+
+//   if (!socket) return <Loader position="absolute" />;
+//   return <WsContext.Provider value={{ socket }}>{children}</WsContext.Provider>;
+// };
 
 const setRoutes = (isAuth: boolean) =>
   isAuth
@@ -64,6 +86,6 @@ export const Router = () => {
     "background-color: blue; color:#fff; padding: 5px 10px;"
   );
 
-  if (isAuth) return <Wrapper>{routes}</Wrapper>
+  // if (isAuth) return<WsContext.Provider value={{ socket }}>{routes}</WsContext.Provider>;
   return routes;
 };

@@ -17,9 +17,10 @@ export const SetDrawConnection = (
   navigate: NavigateFunction,
   fillStyle: string,
   strokeStyle: string,
-  lineWidht: number,
+  lineWidht: number
 ) => {
   socket.emit("CONNECTION_DRAW", { userName: name, roomId });
+
   socket.on("CONNECTION_DRAW", (data: string) => toastSuccess(data + "joined"));
 
   socket.on("FINISH_DRAW", () => {
@@ -27,6 +28,7 @@ export const SetDrawConnection = (
     ctx?.beginPath();
   });
   socket.on("CASE_EXIT", () => {
+    console.log("EXIT");
     navigate("/");
   });
 
@@ -35,13 +37,7 @@ export const SetDrawConnection = (
       const ctx = canvasRef.current?.getContext("2d");
       switch (data.tool) {
         case "pen":
-          Pen.drawOnline(
-            ctx,
-            data.x,
-            data.y,
-            data.strokeStyle,
-            data.lineWidth,
-          );
+          Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);
           break;
         case "square":
           Square.drawOnline(ctx, data.x1, data.y1, data.width, data.height);
@@ -56,13 +52,7 @@ export const SetDrawConnection = (
           Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2);
           break;
         default:
-          Pen.drawOnline(
-            ctx,
-            data.x,
-            data.y,
-            data.strokeStyle,
-            data.lineWidth,
-          );
+          Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);
           break;
       }
     }

@@ -8,7 +8,7 @@ import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
-import { SetRoomsConnection } from "./const";
+import { ClearRoomsConnection, SetRoomsConnection } from "./const";
 import { CreateRoomComponent } from "./createRoom";
 import { EnterInRoomComponent } from "./enterInRoom";
 import { HomeCabinet } from "./homeCabinet";
@@ -32,15 +32,15 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms })
-  }, [])
+    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms });
+    return () => ClearRoomsConnection(socket);
+  }, []);
 
   if (loading) return <Loader position="absolute" />;
 
   return (
     <HomePageSection>
       <HomePageWrapper>
-
         <HomeHeader>
           <HomeCabinet />
           <Button onClick={() => UserLogoutThunk(dispatch)}>logout</Button>
@@ -57,9 +57,7 @@ export const HomePage = () => {
             setIsLoading={setIsLoading}
             socket={socket}
           />
-          <EnterInRoomComponent
-            socket={socket}
-          />
+          <EnterInRoomComponent socket={socket} />
         </Wrapper>
 
         <UserRooms socket={socket} userRooms={userRooms} />
@@ -68,7 +66,6 @@ export const HomePage = () => {
           <h3>Chat</h3>
           <Chat socket={socket} />
         </ChatWrapper>
-
       </HomePageWrapper>
     </HomePageSection>
   );

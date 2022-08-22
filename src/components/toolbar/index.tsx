@@ -1,7 +1,6 @@
 import { WsContext } from "context/ws.context";
-import { CASE_EXIT } from "pages/home/const";
-import { MouseEvent, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { MouseEvent, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
@@ -18,19 +17,13 @@ export const Toolbar = () => {
   } = useContext(PaintContext);
   const { roomId } = useParams();
   const { id } = useAppSelector((s) => s.user.data);
-  const navigate = useNavigate();
   const { socket } = useContext(WsContext);
-
-  useEffect(() => {
-    socket.on(CASE_EXIT, (data: string) => {
-      console.error("CASE_EXIT", data);
-      navigate("/");
-    });
-  }, []);
 
   const handleChangeTool = (e: MouseEvent) => {
     if ((e.target as HTMLElement).tagName === "BUTTON") {
-      setToolhandler(((e.target as HTMLButtonElement).dataset.tool) as ToolsTypes);
+      setToolhandler(
+        (e.target as HTMLButtonElement).dataset.tool as ToolsTypes
+      );
     }
   };
 
@@ -39,7 +32,6 @@ export const Toolbar = () => {
       roomId,
       userId: id,
     });
-    navigate("/");
   };
 
   const handleSavePhoto = async () => {
