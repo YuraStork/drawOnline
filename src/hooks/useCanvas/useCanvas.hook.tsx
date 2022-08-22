@@ -3,7 +3,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
-import { SetDrawConnection } from "./methods/setDrawConnection";
+import {
+  SetDrawConnection,
+  ClearDrawConnection,
+} from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import {
   Circle,
@@ -52,6 +55,9 @@ export const useCanvas = () => {
       strokeStyle,
       lineWidth
     );
+    return () => {
+      ClearDrawConnection(socket);
+    };
   }, []);
 
   useEffect(() => {

@@ -2,8 +2,8 @@ import { Socket } from "socket.io-client";
 import { ChatMessage } from "../types";
 
 export const GET_CHAT = "GET_CHAT";
-export const MESSAGE = "MESSAGE";
-export const ERROR = "ERROR";
+export const MESSAGE = "CHAT_MESSAGE";
+export const ERROR = "CHAT_ERROR";
 
 type Props = {
   socket: Socket<any, any>;
@@ -15,7 +15,8 @@ type Props = {
 };
 
 export const SetConnectionChat = (data: Props) => {
-  const { setIsLoading, setMessages, id, setMessageLoading, setError, socket } = data;
+  const { setIsLoading, setMessages, id, setMessageLoading, setError, socket } =
+    data;
 
   socket.emit(GET_CHAT);
   socket.on(ERROR, (data: string) => setError(data));
@@ -29,4 +30,9 @@ export const SetConnectionChat = (data: Props) => {
       setMessageLoading(false);
     }
   });
+};
+export const ClearConnectionChat = (socket: Socket<any, any>) => {
+  socket.off(ERROR);
+  socket.off(GET_CHAT);
+  socket.off(MESSAGE);
 };
