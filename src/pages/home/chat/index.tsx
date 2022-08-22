@@ -4,12 +4,12 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
-import { SetConnectionChat, ClearConnectionChat } from "./const";
+import { SetConnectionChat, ClearConnectionChat, CHAT_MESSAGE } from "./const";
 import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
 type ChatProps = {
   socket: Socket<any, any>;
-}
+};
 
 export const Chat: FC<ChatProps> = ({ socket }) => {
   const [messages, setMessages] = useState<ChatMessage[] | []>([]);
@@ -39,12 +39,11 @@ export const Chat: FC<ChatProps> = ({ socket }) => {
 
   const handleSendMessage = () => {
     if (inputRef.current?.value) {
-      socket.emit("MESSAGE", {
+      socket.emit(CHAT_MESSAGE, {
         userId: data.id,
         name: data.name,
         message: inputRef.current.value,
-      }
-      );
+      });
       inputRef.current.value = "";
     }
   };
