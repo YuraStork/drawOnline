@@ -32,7 +32,7 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms });
+    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms, userId: id });
     return () => ClearRoomsConnection(socket);
   }, []);
 
@@ -60,7 +60,7 @@ export const HomePage = () => {
           <EnterInRoomComponent socket={socket} />
         </Wrapper>
 
-        <UserRooms socket={socket} userRooms={userRooms} />
+        <UserRooms socket={socket} userRooms={userRooms} userId={id} />
 
         <ChatWrapper>
           <h3>Chat</h3>

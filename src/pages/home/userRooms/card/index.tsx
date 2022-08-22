@@ -1,6 +1,5 @@
 import { FC, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
-import { useAppSelector } from "store/store";
 import { ActiveRoom } from "types/rooms";
 import { Portal } from "utils/portal";
 import { RoomCard, CardSettings } from "./styles";
@@ -9,12 +8,12 @@ import { UpdateCard } from "./update";
 type Props = {
   room: ActiveRoom;
   socket: Socket<any, any>;
+  userId: string;
 };
 
-export const UserRoomCard: FC<Props> = ({ room, socket }) => {
+export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const { id } = useAppSelector((s) => s.user.data);
   const [deleteModal, setDeleteModal] = useState(false);
   const deleteRef = useRef<HTMLInputElement>(null!);
 
@@ -52,7 +51,7 @@ export const UserRoomCard: FC<Props> = ({ room, socket }) => {
           <button
             onClick={() => {
               socket.emit("DELETE_USER_ROOM", {
-                userId: id,
+                userId,
                 roomId: room._id,
                 roomPassword: deleteRef.current.value,
               });
@@ -68,7 +67,7 @@ export const UserRoomCard: FC<Props> = ({ room, socket }) => {
         <UpdateCard
           socket={socket}
           room={room}
-          userId={id}
+          userId={userId}
           setEditMode={setEditMode}
         />
       )}
