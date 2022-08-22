@@ -4,7 +4,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
-import { SetConnectionChat } from "./const";
+import { SetConnectionChat, ClearConnectionChat } from "./const";
 import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
 type ChatProps = {
@@ -29,6 +29,8 @@ export const Chat: FC<ChatProps> = ({ socket }) => {
       setMessages,
       setError,
     });
+
+    return () => ClearConnectionChat(socket);
   }, []);
 
   useEffect(() => {

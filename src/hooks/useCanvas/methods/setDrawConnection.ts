@@ -9,6 +9,11 @@ import {
   Square,
 } from "../../../canvas_classes/index";
 
+export const CONNECTION_DRAW = "CONNECTION_DRAW";
+export const FINISH_DRAW = "FINISH_DRAW";
+export const CASE_EXIT = "CASE_EXIT";
+export const DRAW = "DRAW";
+
 export const SetDrawConnection = (
   socket: Socket<any, any>,
   canvasRef: any,
@@ -19,20 +24,18 @@ export const SetDrawConnection = (
   strokeStyle: string,
   lineWidht: number
 ) => {
-  socket.emit("CONNECTION_DRAW", { userName: name, roomId });
-
-  socket.on("CONNECTION_DRAW", (data: string) => toastSuccess(data + "joined"));
-
-  socket.on("FINISH_DRAW", () => {
+  socket.emit(CONNECTION_DRAW, { userName: name, roomId });
+  socket.on(CONNECTION_DRAW, (data: string) => toastSuccess(data + " joined"));
+  socket.on(FINISH_DRAW, () => {
     const ctx = canvasRef.current?.getContext("2d");
     ctx?.beginPath();
   });
-  socket.on("CASE_EXIT", () => {
+  socket.on(CASE_EXIT, () => {
     console.log("EXIT");
     navigate("/");
   });
 
-  socket.on("DRAW", (data: any) => {
+  socket.on(DRAW, (data: any) => {
     if (canvasRef.current) {
       const ctx = canvasRef.current?.getContext("2d");
       switch (data.tool) {
@@ -57,4 +60,10 @@ export const SetDrawConnection = (
       }
     }
   });
+};
+
+export const ClearDrawConnection = (socket: Socket<any, any>) => {
+  socket.off(CONNECTION_DRAW);
+  socket.off(FINISH_DRAW);
+  socket.off(CASE_EXIT);
 };
