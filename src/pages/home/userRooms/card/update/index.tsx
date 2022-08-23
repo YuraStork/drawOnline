@@ -3,33 +3,76 @@ import { FC } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
 import { Portal } from "utils/portal";
+import {
+  UpdateModalWrapper,
+  UpdateModalForm,
+  UpdateModalButtonsWrapper,
+} from "./styles";
 
 type Props = {
   socket: Socket<any, any>;
-  room: ActiveRoom,
-  setEditMode: (e: boolean) => void,
-  userId: string
+  room: ActiveRoom;
+  setEditMode: (e: boolean) => void;
+  userId: string;
 };
-export const UpdateCard: FC<Props> = ({ socket, room, setEditMode, userId }) => {
+
+export const UpdateCard: FC<Props> = ({
+  socket,
+  room,
+  setEditMode,
+  userId,
+}) => {
   const formik = useFormik({
     initialValues: {
-      roomName: room.roomName || "",
+      roomName: room.roomName,
       isShow: !!room.isShow,
-      roomPassword: "",
+      roomPassword: room.roomPassword,
     },
     enableReinitialize: true,
-    onSubmit: (data) => { socket.emit("UPDATE_USER_ROOM", { ...data, roomId: room._id, userId }); setEditMode(false) },
+    onSubmit: (data) => {
+      socket.emit("UPDATE_USER_ROOM", { ...data, roomId: room._id, userId });
+      setEditMode(false);
+    },
   });
 
   return (
     <Portal>
-      <form onSubmit={formik.handleSubmit}>
-        <input type="text" name="roomName" value={formik.values.roomName} onChange={formik.handleChange} placeholder="name" />
-        <input type="text" name="roomPassword" value={formik.values.roomPassword} onChange={formik.handleChange} placeholder="password" />
-        <input type="checkbox" name="isShow" checked={formik.values.isShow} onChange={formik.handleChange} />
-        <button type="submit">save</button>
-        <button onClick={() => setEditMode(false)}>cancel</button>
-      </form>
+      <UpdateModalWrapper>
+        <UpdateModalForm onSubmit={formik.handleSubmit}>
+          <div>
+            <label>Room name</label>
+            <input
+              type="text"
+              name="roomName"
+              value={formik.values.roomName}
+              onChange={formik.handleChange}
+              placeholder="name"
+            />
+
+            <label>Room password</label>
+            <input
+              type="text"
+              name="roomPassword"
+              value={formik.values.roomPassword}
+              onChange={formik.handleChange}
+              placeholder="password"
+            />
+
+            <label>Show</label>
+            <input
+              type="checkbox"
+              name="isShow"
+              checked={formik.values.isShow}
+              onChange={formik.handleChange}
+              title="all users can saw your room"
+            />
+          </div>
+          <UpdateModalButtonsWrapper>
+            <button type="submit">save</button>
+            <button onClick={() => setEditMode(false)}>cancel</button>
+          </UpdateModalButtonsWrapper>
+        </UpdateModalForm>
+      </UpdateModalWrapper>
     </Portal>
   );
 };
