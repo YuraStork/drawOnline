@@ -28,11 +28,10 @@ export const UpdateCard: FC<Props> = ({
   setEditMode,
   userId,
 }) => {
-  console.log("ROOM", room);
   const formik = useFormik({
     initialValues: {
       roomName: room.roomName,
-      isShow: !!room.isShow,
+      isShow: room.isShow,
       roomPassword: room.roomPassword,
     },
     enableReinitialize: true,
@@ -77,7 +76,7 @@ export const UpdateCard: FC<Props> = ({
             <input
               type="checkbox"
               name="isShow"
-              checked={!!formik.values.isShow}
+              checked={formik.values.isShow}
               onChange={formik.handleChange}
               title="all users can saw your room"
             />
