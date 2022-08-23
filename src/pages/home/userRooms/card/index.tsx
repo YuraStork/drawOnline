@@ -20,7 +20,7 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
       roomId: room._id,
       roomPassword: room.roomPassword,
     });
-  }, [room._id]);
+  }, [room]);
 
   return (
     <RoomCard active={active}>

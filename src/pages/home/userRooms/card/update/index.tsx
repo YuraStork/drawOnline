@@ -16,6 +16,12 @@ type Props = {
   userId: string;
 };
 
+enum Updatekeys {
+  roomName = "roomName",
+  isShow = "isShow",
+  roomPassword = "roomPassword",
+}
+
 export const UpdateCard: FC<Props> = ({
   socket,
   room,
@@ -25,12 +31,20 @@ export const UpdateCard: FC<Props> = ({
   const formik = useFormik({
     initialValues: {
       roomName: room.roomName,
-      isShow: !!room.isShow,
+      isShow: room.isShow,
       roomPassword: room.roomPassword,
     },
     enableReinitialize: true,
     onSubmit: (data) => {
-      socket.emit("UPDATE_USER_ROOM", { ...data, roomId: room._id, userId });
+      const keys = Object.keys(data) as Updatekeys[];
+      const res = keys
+        .filter((key) => data[key] !== room[key])
+        .reduce((acum: any, key) => {
+          acum[key] = data[key];
+          return acum;
+        }, {});
+
+      socket.emit("UPDATE_USER_ROOM", { ...res, roomId: room._id, userId });
       setEditMode(false);
     },
   });
