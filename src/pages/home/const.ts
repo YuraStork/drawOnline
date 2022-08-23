@@ -10,7 +10,7 @@ export const JOIN_SUCCESS = "JOIN_SUCCESS";
 export const JOIN_ERROR = "JOIN_ERROR";
 export const CASE_EXIT = "CASE_EXIT";
 export const GET_USER_ROOMS = "GET_USER_ROOMS";
-export const DELETE_USER_ROOM_ERROR = "DELETE_USER_ROOM_ERROR";
+export const DELETE_USER_ROOM_ERROR = "ERROR_DELETE_USER_ROOM";
 
 type Props = {
   setActiveRooms: (e: ActiveRoom[]) => void;

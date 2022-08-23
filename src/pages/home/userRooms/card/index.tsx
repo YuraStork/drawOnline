@@ -1,7 +1,6 @@
-import { FC, useRef, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
-import { Portal } from "utils/portal";
 import { RoomCard, CardSettings } from "./styles";
 import { UpdateCard } from "./update";
 
@@ -14,8 +13,14 @@ type Props = {
 export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const deleteRef = useRef<HTMLInputElement>(null!);
+
+  const handleDeleteRoom = useCallback(() => {
+    socket.emit("DELETE_USER_ROOM", {
+      userId,
+      roomId: room._id,
+      roomPassword: room.roomPassword,
+    });
+  }, [room._id]);
 
   return (
     <RoomCard active={active}>
@@ -32,7 +37,7 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
       {active && (
         <CardSettings>
           <li onClick={() => setEditMode(!editMode)}>edit</li>
-          <li onClick={() => setDeleteModal(true)}>delete</li>
+          <li onClick={() => handleDeleteRoom()}>delete</li>
         </CardSettings>
       )}
       <span onClick={() => setActive(!active)}>
@@ -42,26 +47,6 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
           <img src="/assets/close.png" alt="close" width={25} height={25} />
         )}
       </span>
-
-      {deleteModal && (
-        <Portal>
-          {" "}
-          <label htmlFor="password"></label>
-          <input id="password" type="text" ref={deleteRef} />
-          <button
-            onClick={() => {
-              socket.emit("DELETE_USER_ROOM", {
-                userId,
-                roomId: room._id,
-                roomPassword: deleteRef.current.value,
-              });
-              setDeleteModal(false);
-            }}
-          >
-            send
-          </button>{" "}
-        </Portal>
-      )}
 
       {editMode && (
         <UpdateCard

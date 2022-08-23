@@ -6,6 +6,7 @@ type UserInRoom = {
 
 export type ActiveRoom = {
   _id: string;
+  roomPassword: string;
   roomName: string;
   users: UserInRoom[];
   status: boolean;
