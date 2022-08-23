@@ -76,7 +76,7 @@ export const UpdateCard: FC<Props> = ({
             <input
               type="checkbox"
               name="isShow"
-              checked={formik.values.isShow}
+              checked={!!formik.values.isShow}
               onChange={formik.handleChange}
               title="all users can saw your room"
             />
