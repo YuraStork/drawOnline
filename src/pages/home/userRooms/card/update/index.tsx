@@ -28,11 +28,10 @@ export const UpdateCard: FC<Props> = ({
   setEditMode,
   userId,
 }) => {
-  console.log("ROOM", room);
   const formik = useFormik({
     initialValues: {
       roomName: room.roomName,
-      isShow: !!room.isShow,
+      isShow: room.isShow,
       roomPassword: room.roomPassword,
     },
     enableReinitialize: true,
