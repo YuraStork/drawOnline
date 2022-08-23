@@ -16,12 +16,19 @@ type Props = {
   userId: string;
 };
 
+enum Updatekeys {
+  roomName = "roomName",
+  isShow = "isShow",
+  roomPassword = "roomPassword",
+}
+
 export const UpdateCard: FC<Props> = ({
   socket,
   room,
   setEditMode,
   userId,
 }) => {
+  console.log("ROOM", room);
   const formik = useFormik({
     initialValues: {
       roomName: room.roomName,
@@ -30,7 +37,15 @@ export const UpdateCard: FC<Props> = ({
     },
     enableReinitialize: true,
     onSubmit: (data) => {
-      socket.emit("UPDATE_USER_ROOM", { ...data, roomId: room._id, userId });
+      const keys = Object.keys(data) as Updatekeys[];
+      const res = keys
+        .filter((key) => data[key] !== room[key])
+        .reduce((acum: any, key) => {
+          acum[key] = data[key];
+          return acum;
+        }, {});
+
+      socket.emit("UPDATE_USER_ROOM", { ...res, roomId: room._id, userId });
       setEditMode(false);
     },
   });
@@ -62,7 +77,7 @@ export const UpdateCard: FC<Props> = ({
             <input
               type="checkbox"
               name="isShow"
-              checked={formik.values.isShow}
+              checked={!!formik.values.isShow}
               onChange={formik.handleChange}
               title="all users can saw your room"
             />
