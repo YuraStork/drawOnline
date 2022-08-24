@@ -6,7 +6,8 @@ import { UserInRoom } from "types";
 
 const RoomUsersBlock = styled.div`
   grid-area: roomUsers;
-  box-shadow: 0px 2px 5px 0px #b7bebe;
+  padding: 5px;
+  background-color: #fff;
 
   & > div {
     padding: 10px;

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
-import { StyledToolbar, ToolButton } from "./styles";
+import { StyledToolbar, ToolButton, LeaveButton } from "./styles";
 
 export const Toolbar = () => {
   const {
@@ -85,7 +85,7 @@ export const Toolbar = () => {
         <ToolButton img="../assets/left-arrow.png" onClick={handleReset} />
         <ToolButton img="../assets/right-arrow.png" onClick={handleRedo} />
         <ToolButton img="../assets/diskette.png" onClick={handleSavePhoto} />
-        <button onClick={handleExitFromRoom}>Exit from room</button>
+        <LeaveButton onClick={handleExitFromRoom}>Leave</LeaveButton>
       </div>
     </StyledToolbar>
   );

@@ -3,13 +3,15 @@ import styled from "styled-components";
 const StyledSettings = styled.div`
   grid-area: settings;
   padding: 5px;
-  box-shadow: 0px 2px 5px 1px #b7bebe;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  background-color: #fff;
+  gap: 20px;
+  border-bottom: 2px solid #000;
 
   & > div{
     display: flex;
+    align-items: center;
     gap: 10px;
   }
 `;

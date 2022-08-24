@@ -3,10 +3,11 @@ import styled, { css } from "styled-components";
 const StyledToolbar = styled.div`
   grid-area: toolbar;
   padding: 5px;
-  box-shadow: 0px 2px 5px 1px #b7bebe;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
+  border-bottom: 2px solid #000;
 
   & > div {
     display: flex;
@@ -21,14 +22,16 @@ type ToolButtonProps = {
 
 const ToolButton = styled.button<ToolButtonProps>`
   display: inline-block;
-  width: 35px;
-  height: 35px;
+  padding: 5px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
   background: none;
-  border: 2px solid white;
+  border-radius: 5px;
+  border: 2px solid #ffffff;
   
   ${p => p.active && css`
-      border: 2px solid red;
+      border: 2px solid #000;
   `};
 
   ${(p) =>
@@ -36,8 +39,28 @@ const ToolButton = styled.button<ToolButtonProps>`
     css`
       background-image: url(${p.img});
       background-size: 30px 30px;
+      background-position: center center;
       background-repeat: no-repeat;
     `}
 `;
 
-export { ToolButton, StyledToolbar };
+const LeaveButton = styled.button`
+  width: 100px;
+  background-color: black;
+  color:#fff;
+  cursor: pointer;
+  padding: 5px;
+  appearance: none;
+  border-radius: 5px;
+  transition: all .3s;
+
+  &:hover{
+    background-color: #ffffff;
+    color:#000;
+  }
+  &:focus{
+    ${p => p.theme.shadows.buttonFocus}
+  }
+`
+
+export { ToolButton, StyledToolbar, LeaveButton };

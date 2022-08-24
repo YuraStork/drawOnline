@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 const CanvasWrapper = styled.div`
   grid-area: canvas;
-  padding: 10px 5px;
-  box-shadow: 0px 2px 5px 1px #b7bebe;
+  background: #ffffff;
+  border-right: 2px solid #000; 
   & > canvas {
-    background: #ececec;
+    background: #ffffff;
   }
 `;
 
