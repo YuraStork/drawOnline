@@ -8,22 +8,30 @@ import {
   Pen,
   Square,
 } from "../../../canvas_classes/index";
+import { handleSnapshot } from "./snapshot";
 
 export const CONNECTION_DRAW = "CONNECTION_DRAW";
 export const FINISH_DRAW = "FINISH_DRAW";
 export const CASE_EXIT = "CASE_EXIT";
 export const DRAW = "DRAW";
 
-export const SetDrawConnection = (
+type Props = {
   socket: Socket<any, any>,
   canvasRef: any,
   roomId: string,
   name: string,
+  setSnapshotList: React.Dispatch<React.SetStateAction<string[]>>,
   navigate: NavigateFunction,
   fillStyle: string,
   strokeStyle: string,
-  lineWidht: number
-) => {
+  lineWidth: number,
+  snapshotList: string[],
+  setSnapshotIndex: React.Dispatch<React.SetStateAction<number>>,
+  snapshotIndex: number
+}
+export const SetDrawConnection = (data: Props) => {
+  const { canvasRef, fillStyle, lineWidth, name, navigate, roomId, socket, strokeStyle, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex } = data;
+
   socket.emit(CONNECTION_DRAW, { userName: name, roomId });
   socket.on(CONNECTION_DRAW, (data: string) => {
     toastSuccess(data + " joined");
