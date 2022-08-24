@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
 import { RoomCard, CardSettings } from "./styles";
@@ -14,13 +14,13 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const handleDeleteRoom = useCallback(() => {
+  const handleDeleteRoom = () => {
     socket.emit("DELETE_USER_ROOM", {
       userId,
       roomId: room._id,
       roomPassword: room.roomPassword,
     });
-  }, [room]);
+  };
 
   return (
     <RoomCard active={active}>
