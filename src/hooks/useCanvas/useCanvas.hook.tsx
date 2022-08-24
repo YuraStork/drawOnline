@@ -66,6 +66,6 @@ export const useCanvas = () => {
       }),
     handleReset: () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
     handleRedo: () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
-    snapshot: snapshotList[snapshotList.length - 1] || null,
+    snapshot: snapshotList[snapshotIndex] || null,
   };
 };
