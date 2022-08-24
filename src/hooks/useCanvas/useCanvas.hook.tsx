@@ -3,19 +3,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
-import {
-  SetDrawConnection,
-  ClearDrawConnection,
-} from "./methods/setDrawConnection";
+import { SetDrawConnection, ClearDrawConnection } from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
-import {
-  Circle,
-  Eraser,
-  Line,
-  Pen,
-  Square,
-  Tool,
-} from "../../canvas_classes/index";
+import { Tool } from "../../canvas_classes/index";
+import { SetTool } from "./const";
 
 type ParamsProps = {
   roomId: string;
@@ -25,20 +16,30 @@ export const useCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);
   const navigate = useNavigate();
   const [tool, setTool] = useState<ToolsTypes>("pen");
-  const [fillStyle, setFillStyle] = useState("#000");
-  const [strokeStyle, setStrokeStyle] = useState("#000");
-  const [lineWidth, setLineWidth] = useState(1);
   const [snapshotList, setSnapshotList] = useState<string[]>([]);
   const [snapshotIndex, setSnapshotIndex] = useState(-1);
   const { socket } = useContext(WsContext);
   const { roomId } = useParams<ParamsProps>();
-  const setToolhandler = (tool: ToolsTypes) => setTool(tool);
   const { name } = useAppSelector((s) => s.user.data);
 
   useEffect(() => {
     canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
     canvasRef.current.height = document.body.clientHeight - 150;
 
+    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, Tool.fillStyle, Tool.strokeStyle, Tool.lineWidth);
+
+    return () => {
+      ClearDrawConnection(socket);
+    };
+  }, []);
+
+  useEffect(() => {
+    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+  }, [tool])
+
+  useEffect(() => {
+    console.log(snapshotIndex);
     handleSnapshot({
       snapshotIndex,
       snapshotList,
@@ -46,53 +47,15 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-
-    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, fillStyle, strokeStyle, lineWidth);
-    return () => {
-      ClearDrawConnection(socket);
-    };
-  }, []);
-
-  useEffect(() => {
-    draw();
-  }, [tool, fillStyle, strokeStyle, lineWidth, snapshotIndex]);
-
-  const draw = () => {
-    const myCanvas = new Tool(canvasRef, socket, roomId!);
-    myCanvas.changeFillStyle(fillStyle);
-    myCanvas.changeStrokeStyle(strokeStyle);
-    myCanvas.changeLineWidth(lineWidth);
-    myCanvas.setSnapshot(snapshotList[snapshotIndex]);
-
-    switch (tool) {
-      case "pen":
-        new Pen(canvasRef, socket, roomId!);
-        break;
-      case "square":
-        new Square(canvasRef, socket, roomId!);
-        break;
-      case "circle":
-        new Circle(canvasRef, socket, roomId!);
-        break;
-      case "eraser":
-        new Eraser(canvasRef, socket, roomId!);
-        break;
-      case "line":
-        new Line(canvasRef, socket, roomId!);
-        break;
-      default:
-        new Pen(canvasRef, socket, roomId!);
-    }
-  };
+  }, [snapshotIndex])
 
   return {
     canvasRef,
-    setToolhandler,
-    draw,
     tool,
-    changeFillStyle: setFillStyle,
-    changeStrokeStyle: setStrokeStyle,
-    changeLineWidth: setLineWidth,
+    setToolhandler: (tool: ToolsTypes) => setTool(tool),
+    changeFillStyle: (color: string) => Tool.changeFillStyle(canvasRef.current.getContext("2d"), color),
+    changeStrokeStyle: (color: string) => Tool.changeStrokeStyle(canvasRef.current.getContext("2d"), color),
+    changeLineWidth: (size: number) => Tool.changeLineWidth(canvasRef.current.getContext("2d"), size),
     handleSnapshot: () =>
       handleSnapshot({
         snapshotIndex,

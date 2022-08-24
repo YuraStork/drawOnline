@@ -26,7 +26,7 @@ export const SetDrawConnection = (
 ) => {
   socket.emit(CONNECTION_DRAW, { userName: name, roomId });
   socket.on(CONNECTION_DRAW, (data: string) => {
-    toastSuccess(data + " joined")
+    toastSuccess(data + " joined");
   });
 
   socket.on(FINISH_DRAW, () => {

@@ -7,9 +7,9 @@ export class Tool {
   protected height = 550;
   protected socket;
   protected id;
-  protected strokeStyle = "#000";
-  protected fillStyle = "#000";
-  protected lineWidth = 1;
+  static strokeStyle = "#000";
+  static fillStyle = "#000";
+  static lineWidth = 1;
 
   constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
     this.canvas = canvas;
@@ -20,33 +20,31 @@ export class Tool {
     this.height = canvas.current.height;
   }
 
-  changeFillStyle(color: string) {
-    if (this.ctx) {
-      this.fillStyle = color;
-      this.ctx.fillStyle = color;
+  static changeFillStyle(ctx: CanvasRenderingContext2D | null, color: string) {
+    if (ctx) {
+      ctx.fillStyle = color;
     }
   }
-  changeStrokeStyle(color: string) {
-    if (this.ctx) {
-      this.strokeStyle = color;
-      this.ctx.strokeStyle = color;
+
+  static changeStrokeStyle(ctx: CanvasRenderingContext2D | null, color: string) {
+    if (ctx) {
+      ctx.strokeStyle = color;
     }
   }
-  changeLineWidth(size: number) {
-    if (this.ctx) {
-      this.lineWidth = size;
-      this.ctx.lineWidth = size;
+
+  static changeLineWidth(ctx: CanvasRenderingContext2D | null, size: number) {
+    if (ctx) {
+      ctx.lineWidth = size;
     }
   }
-  setSnapshot(snapshot: string | null) {
-    if (snapshot) {
+
+  static setSnapshot(ctx: CanvasRenderingContext2D | null, snapshot: string | null) {
+    if (snapshot && ctx) {
       const img = new Image();
       img.src = snapshot;
       img.onload = () => {
-        if (this.ctx) {
-          this.ctx.clearRect(0, 0, this.width, this.height)
-          this.ctx.drawImage(img, 0, 0, this.width, this.height);
-        }
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
       };
     }
   }
