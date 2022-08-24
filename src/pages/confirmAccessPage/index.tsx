@@ -35,7 +35,7 @@ export const PrivateRoom = () => {
     <ConfirmAccessPage>
       <ConfirmAccessPageMain>
         {isLoading ? (
-          <Loader position="absolute" />
+          <Loader position="absolute" color="white" />
         ) : (
           <>
             <div>

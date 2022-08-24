@@ -1,5 +1,11 @@
+import { API } from "api/const";
+import axios from "axios";
 import { PaintContext } from "context/paintContext";
+import { WsContext } from "context/ws.context";
 import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "store/store";
 import styled from "styled-components";
 import { Canvas } from "../../../components/canvas";
 import { SettingsBar } from "../../../components/settings";
@@ -12,14 +18,32 @@ const Layout = styled.div`
   margin: 0 auto;
   display: grid;
   grid-template: 50px 50px 1fr / 1fr 200px;
-  grid-template-areas: "toolbar toolbar"
-                       "settings settings"
-                       "canvas roomUsers";
+  grid-template-areas:
+    "toolbar toolbar"
+    "settings settings"
+    "canvas roomUsers";
 `;
+
+type ParamsProps = {
+  roomId: string;
+};
 
 export const OnlineCanvas = () => {
   const data = useCanvas();
-  
+  const { socket } = useContext(WsContext);
+  const user = useAppSelector((s) => s.user.data);
+  const { roomId } = useParams<ParamsProps>();
+
+  const handleLeave = async (userId: string, roomId: string) => {
+    await axios.put(`${API}/room/leave`, { userId, roomId });
+  };
+
+  useEffect(() => {
+    return () => {
+      handleLeave(user.id, roomId || "");
+    };
+  }, []);
+
   return (
     <PaintContext.Provider value={{ ...data }}>
       <Layout>

@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { checkRoom } from "api/rooms/checkRoom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
-import { AxiosError } from "axios";
+import { CheckUserInRoom } from "./const";
 
 type ParamsProps = {
   roomId: string;
@@ -17,17 +16,7 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
   const [access, setAccess] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    checkRoom(roomId || "", user.id)
-      .then((res) => {
-        if (res.status === 200) {
-          setAccess(true);
-        }
-      })
-      .catch((e: AxiosError) => {
-        navigate(`/checkRoompassword/${roomId}`);
-      })
-      .finally(() => setIsLoading(false));
+    CheckUserInRoom({ navigate, roomId, setIsLoading, userId: user.id, setAccess });
   }, []);
 
   if (isLoading) return <Loader position="absolute" />;
