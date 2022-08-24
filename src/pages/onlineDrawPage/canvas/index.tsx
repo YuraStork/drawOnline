@@ -13,19 +13,21 @@ import { Toolbar } from "../../../components/toolbar";
 import { RoomUsers } from "../roomUsers";
 import { CanvasSection } from "./styles";
 
-
 const Layout = styled.div`
   max-width: 1400px;
   max-height: 100vh;
   margin: 0 auto;
   display: grid;
+  gap: 5px;
   grid-template: 52px 52px 1fr / 1fr 200px;
   grid-template-areas:
     "toolbar toolbar"
     "settings settings"
     "canvas roomUsers";
+  & > div {
+    border-radius: 5px;
+  }
 `;
-
 type ParamsProps = {
   roomId: string;
 };
@@ -54,7 +56,6 @@ export const OnlineCanvas = () => {
           <SettingsBar />
           <Canvas />
           <RoomUsers />
-
         </Layout>
       </PaintContext.Provider>
     </CanvasSection>

@@ -12,6 +12,9 @@ const StyledToolbar = styled.div`
   & > div {
     display: flex;
     gap: 10px;
+    & > input{
+      margin-top: 5px;
+    }
   }
 `;
 
@@ -46,7 +49,7 @@ const ToolButton = styled.button<ToolButtonProps>`
 
 const LeaveButton = styled.button`
   width: 100px;
-  background-color: black;
+  background-color: #165bb4;
   color:#fff;
   cursor: pointer;
   padding: 5px;
@@ -55,8 +58,8 @@ const LeaveButton = styled.button`
   transition: all .3s;
 
   &:hover{
-    background-color: #ffffff;
-    color:#000;
+    background-color: #006eff;
+    color:#fff;
   }
   &:focus{
     ${p => p.theme.shadows.buttonFocus}
