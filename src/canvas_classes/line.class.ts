@@ -44,11 +44,13 @@ export class Line extends Tool {
   }
 
   private onMouseMove(e: MouseEvent) {
-    let img = new Image();
-    img.src = this.saved;
-    img.onload = () => {
-      this.draw(e, img);
-    };
+    if (this.mouseDown && this.ctx) {
+      let img = new Image();
+      img.src = this.saved;
+      img.onload = () => {
+        this.draw(e, img);
+      };
+    }
   }
 
   private draw(e: MouseEvent, img: HTMLImageElement) {
@@ -58,6 +60,7 @@ export class Line extends Tool {
       this.ctx.beginPath();
       this.ctx.moveTo(this.x1, this.y1);
       this.ctx.lineTo(e.offsetX, e.offsetY);
+      this.ctx.stroke();
       this.ctx.closePath();
     }
   }

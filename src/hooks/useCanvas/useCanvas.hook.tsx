@@ -38,6 +38,7 @@ export const useCanvas = () => {
   useEffect(() => {
     canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
     canvasRef.current.height = document.body.clientHeight - 150;
+
     handleSnapshot({
       snapshotIndex,
       snapshotList,
@@ -45,16 +46,8 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-    SetDrawConnection(
-      socket,
-      canvasRef,
-      roomId || "",
-      name,
-      navigate,
-      fillStyle,
-      strokeStyle,
-      lineWidth
-    );
+
+    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, fillStyle, strokeStyle, lineWidth);
     return () => {
       ClearDrawConnection(socket);
     };
@@ -65,7 +58,7 @@ export const useCanvas = () => {
   }, [tool, fillStyle, strokeStyle, lineWidth, snapshotIndex]);
 
   const draw = () => {
-    const myCanvas = new Tool(canvasRef, socket, roomId || "1");
+    const myCanvas = new Tool(canvasRef, socket, roomId!);
     myCanvas.changeFillStyle(fillStyle);
     myCanvas.changeStrokeStyle(strokeStyle);
     myCanvas.changeLineWidth(lineWidth);
@@ -73,22 +66,22 @@ export const useCanvas = () => {
 
     switch (tool) {
       case "pen":
-        new Pen(canvasRef, socket, roomId || "1");
+        new Pen(canvasRef, socket, roomId!);
         break;
       case "square":
-        new Square(canvasRef, socket, roomId || "1");
+        new Square(canvasRef, socket, roomId!);
         break;
       case "circle":
-        new Circle(canvasRef, socket, roomId || "1");
+        new Circle(canvasRef, socket, roomId!);
         break;
       case "eraser":
-        new Eraser(canvasRef, socket, roomId || "1");
+        new Eraser(canvasRef, socket, roomId!);
         break;
       case "line":
-        new Line(canvasRef, socket, roomId || "1");
+        new Line(canvasRef, socket, roomId!);
         break;
       default:
-        new Pen(canvasRef, socket, roomId || "1");
+        new Pen(canvasRef, socket, roomId!);
     }
   };
 
