@@ -36,8 +36,8 @@ export const useCanvas = () => {
   const { name } = useAppSelector((s) => s.user.data);
 
   useEffect(() => {
-    canvasRef.current.width = 1100;
-    canvasRef.current.height = 550;
+    canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
+    canvasRef.current.height = document.body.clientHeight - 150;
     handleSnapshot({
       snapshotIndex,
       snapshotList,

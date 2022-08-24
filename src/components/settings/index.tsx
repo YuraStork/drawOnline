@@ -15,6 +15,8 @@ export const SettingsBar = () => {
           defaultValue={1}
           onChange={(e) => changeLineWidth(Number(e.target.value))}
         />
+      </div>
+      <div>
         <label htmlFor="borderColor">Border color</label>
         <input
           type="color"
