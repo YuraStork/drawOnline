@@ -28,7 +28,6 @@ export const useCanvas = () => {
 
     SetTool({ canvasRef, roomId: roomId!, socket, tool })
     SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, Tool.fillStyle, Tool.strokeStyle, Tool.lineWidth);
-
     return () => {
       ClearDrawConnection(socket);
     };
