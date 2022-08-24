@@ -85,7 +85,7 @@ export const Toolbar = () => {
         <ToolButton img="../assets/left-arrow.png" onClick={handleReset} />
         <ToolButton img="../assets/right-arrow.png" onClick={handleRedo} />
         <ToolButton img="../assets/diskette.png" onClick={handleSavePhoto} />
-        <LeaveButton onClick={handleExitFromRoom}>Leave</LeaveButton>
+        <LeaveButton onClick={handleExitFromRoom}>leave</LeaveButton>
       </div>
     </StyledToolbar>
   );

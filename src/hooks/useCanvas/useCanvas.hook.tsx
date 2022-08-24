@@ -26,8 +26,16 @@ export const useCanvas = () => {
     canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
     canvasRef.current.height = document.body.clientHeight - 150;
 
+    handleSnapshot({
+      snapshotIndex,
+      snapshotList,
+      setSnapshotIndex,
+      setSnapshotList,
+      canvasRef,
+    });
     SetTool({ canvasRef, roomId: roomId!, socket, tool })
-    SetDrawConnection(socket, canvasRef, roomId || "", name, navigate, Tool.fillStyle, Tool.strokeStyle, Tool.lineWidth);
+    SetDrawConnection({ socket, canvasRef, roomId: roomId || "", name, navigate, fillStyle: Tool.fillStyle, strokeStyle: Tool.strokeStyle, lineWidth: Tool.lineWidth, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex });
+
     return () => {
       ClearDrawConnection(socket);
     };
@@ -38,14 +46,7 @@ export const useCanvas = () => {
   }, [tool])
 
   useEffect(() => {
-    console.log(snapshotIndex);
-    handleSnapshot({
-      snapshotIndex,
-      snapshotList,
-      setSnapshotIndex,
-      setSnapshotList,
-      canvasRef,
-    });
+   console.log(snapshotIndex, snapshotList);
   }, [snapshotIndex])
 
   return {
@@ -63,8 +64,8 @@ export const useCanvas = () => {
         setSnapshotList,
         canvasRef,
       }),
-    handleReset: () => pushUndo(snapshotIndex, setSnapshotIndex),
-    handleRedo: () => pushRedo(snapshotIndex, snapshotList, setSnapshotIndex),
-    snapshot: snapshotList[snapshotList.length - 1] || null,
+    handleReset: () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
+    handleRedo: () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
+    snapshot: snapshotList[snapshotIndex] || null,
   };
 };
