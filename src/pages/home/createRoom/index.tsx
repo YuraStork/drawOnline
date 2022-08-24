@@ -5,23 +5,33 @@ import { FC } from "react";
 import { Loader } from "../../../components/loader";
 import { useAppSelector } from "store/store";
 import { Socket } from "socket.io-client";
+import { ErrorOutput } from "components/errorOutput";
 
 type ComponentProps = {
-  isLoading: boolean,
-  setIsLoading: (arg: boolean) => void,
-  socket: Socket<any, any>,
-}
+  isLoading: boolean;
+  setIsLoading: (arg: boolean) => void;
+  socket: Socket<any, any>;
+};
 
-export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoading, socket }) => {
-  const user = useAppSelector(s => s.user.data);
+export const CreateRoomComponent: FC<ComponentProps> = ({
+  isLoading,
+  setIsLoading,
+  socket,
+}) => {
+  const user = useAppSelector((s) => s.user.data);
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data) => onSubmit({ ...data, userId: user.id, userName: user.name }, setIsLoading, socket),
+    onSubmit: (data) =>
+      onSubmit(
+        { ...data, userId: user.id, userName: user.name },
+        setIsLoading,
+        socket
+      ),
   });
 
-  if (isLoading) return <Loader position="absolute" />
+  if (isLoading) return <Loader position="absolute" />;
   return (
     <RoomWrapper>
       <h3>Create room</h3>
@@ -36,7 +46,7 @@ export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoadin
             onBlur={formik.handleBlur}
           />
           {formik.errors.roomName && formik.touched.roomName && (
-            <div>{formik.errors.roomName}</div>
+            <ErrorOutput>{formik.errors.roomName}</ErrorOutput>
           )}
         </div>
         <div>
@@ -48,9 +58,6 @@ export const CreateRoomComponent: FC<ComponentProps> = ({ isLoading, setIsLoadin
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.roomPassword && formik.touched.roomPassword && (
-            <div>{formik.errors.roomPassword}</div>
-          )}
         </div>
         <button type="submit">Create room</button>
       </form>

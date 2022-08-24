@@ -5,18 +5,24 @@ import { FC, useState } from "react";
 import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
 import { Socket } from "socket.io-client";
+import { ErrorOutput } from "components/errorOutput";
 
 type ComponentProps = {
-  socket: Socket<any, any>,
-}
+  socket: Socket<any, any>;
+};
 export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
-  const user = useAppSelector(s => s.user);
+  const user = useAppSelector((s) => s.user);
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (data) => onSubmit({ ...data, userId: user.data.id, userName: user.data.name }, socket, setIsLoading)
+    onSubmit: (data) =>
+      onSubmit(
+        { ...data, userId: user.data.id, userName: user.data.name },
+        socket,
+        setIsLoading
+      ),
   });
 
   return (
@@ -34,7 +40,7 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
             disabled={isLoading}
           />
           {formik.errors.roomId && formik.touched.roomId && (
-            <div>{formik.errors.roomId}</div>
+            <ErrorOutput>{formik.errors.roomId}</ErrorOutput>
           )}
         </div>
         <div>
@@ -47,11 +53,10 @@ export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
             onBlur={formik.handleBlur}
             disabled={isLoading}
           />
-          {formik.errors.roomPassword && formik.touched.roomPassword && (
-            <div>{formik.errors.roomPassword}</div>
-          )}
         </div>
-        <button type="submit" disabled={isLoading}>Enter in room</button>
+        <button type="submit" disabled={isLoading}>
+          Enter in room
+        </button>
         {isLoading && <LittleLoader />}
       </form>
     </RoomWrapper>

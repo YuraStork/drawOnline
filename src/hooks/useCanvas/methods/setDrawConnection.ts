@@ -25,7 +25,10 @@ export const SetDrawConnection = (
   lineWidht: number
 ) => {
   socket.emit(CONNECTION_DRAW, { userName: name, roomId });
-  socket.on(CONNECTION_DRAW, (data: string) => toastSuccess(data + " joined"));
+  socket.on(CONNECTION_DRAW, (data: string) => {
+    toastSuccess(data + " joined");
+  });
+
   socket.on(FINISH_DRAW, () => {
     const ctx = canvasRef.current?.getContext("2d");
     ctx?.beginPath();

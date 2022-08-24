@@ -23,7 +23,7 @@ import {
 import { UserRooms } from "./userRooms";
 
 export const HomePage = () => {
-  const { id } = useAppSelector((s) => s.user.data);
+  const { id, name } = useAppSelector((s) => s.user.data);
   const [loading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
@@ -60,7 +60,7 @@ export const HomePage = () => {
           <EnterInRoomComponent socket={socket} />
         </Wrapper>
 
-        <UserRooms socket={socket} userRooms={userRooms} userId={id} />
+        <UserRooms socket={socket} userRooms={userRooms} userId={id} userName={name} />
 
         <ChatWrapper>
           <h3>Chat</h3>

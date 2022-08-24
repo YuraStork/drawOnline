@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
 import { RoomCard, CardSettings } from "./styles";
@@ -8,19 +8,28 @@ type Props = {
   room: ActiveRoom;
   socket: Socket<any, any>;
   userId: string;
+  userName: string;
 };
 
-export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
+export const UserRoomCard: FC<Props> = ({ room, socket, userId, userName }) => {
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const handleDeleteRoom = useCallback(() => {
+  const handleDeleteRoom = () => {
     socket.emit("DELETE_USER_ROOM", {
       userId,
       roomId: room._id,
       roomPassword: room.roomPassword,
     });
-  }, [room]);
+  };
+  const handleJoinRoom = () => {
+    socket.emit("JOIN", {
+      userId,
+      userName, 
+      roomId: room._id,
+      roomPassword: room.roomPassword,
+    });
+  };
 
   return (
     <RoomCard active={active}>
@@ -38,6 +47,7 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId }) => {
         <CardSettings>
           <li onClick={() => setEditMode(!editMode)}>edit</li>
           <li onClick={() => handleDeleteRoom()}>delete</li>
+          <li onClick={() => handleJoinRoom()}>join</li>
         </CardSettings>
       )}
       <span onClick={() => setActive(!active)}>

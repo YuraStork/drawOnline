@@ -7,7 +7,7 @@ export const Canvas = () => {
 
   return (
     <CanvasWrapper>
-      <canvas onMouseUp={() => { handleSnapshot() }} ref={canvasRef} ></canvas>
+      <canvas onMouseUp={handleSnapshot} ref={canvasRef} ></canvas>
     </CanvasWrapper>
   );
 };

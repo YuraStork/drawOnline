@@ -8,7 +8,6 @@ const initialValues = {
 };
 const validationSchema = yup.object().shape({
   roomName: yup.string().required("Required"),
-  roomPassword: yup.string().required("Required"),
 });
 
 const onSubmit = async (

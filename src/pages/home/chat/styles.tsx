@@ -21,7 +21,22 @@ const ChatWrapper = styled.div`
     background-color: #183333;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding: 0px 10px;
+
+    & > input{
+      flex-grow: 1;
+      height: 30px;
+      border-radius: 5px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    & > button{
+      width: 50px;
+      height: 30px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      cursor: pointer;
+    }
   }
 `;
 
