@@ -7,7 +7,11 @@ export class Circle extends Tool {
   private x1 = 0;
   private y1 = 0;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -37,16 +41,19 @@ export class Circle extends Tool {
 
   private onMouseUp(e: MouseEvent) {
     this.mouseDown = false;
-
-    this.socket.emit("DRAW", {
-      roomId: this.id,
-      tool: "circle",
-      x1: this.x1,
-      y1: this.y1,
-      a: e.offsetY - this.y1,
-      b: e.offsetY - this.y1,
-    })
-
+    if (this.ctx) {
+      this.socket.emit("DRAW", {
+        roomId: this.id,
+        tool: "circle",
+        x1: this.x1,
+        y1: this.y1,
+        a: e.offsetY - this.y1,
+        b: e.offsetY - this.y1,
+        fillStyle: this.ctx.fillStyle,
+        strokeStyle: this.ctx.strokeStyle,
+        lineWidth: this.ctx.lineWidth,
+      });
+    }
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
   }
@@ -66,15 +73,35 @@ export class Circle extends Tool {
       this.ctx.closePath();
     }
   }
-  static drawOnline(ctx: any, x1: number, y1: number, a: number, b: number) {
+
+  static drawOnline(
+    ctx: CanvasRenderingContext2D,
+    x1: number,
+    y1: number,
+    a: number,
+    b: number,
+    fillStyle: string,
+    strokeStyle: string,
+    lineWidht: number
+  ) {
     let c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 
     if (ctx) {
+      const strokeStyleDefault = ctx.strokeStyle;
+      const lineWidthDefault = ctx.lineWidth;
+      const fillStyleDefault = ctx.fillStyle;
+      ctx.fillStyle = fillStyle;
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidht;
+
       ctx.beginPath();
       ctx.arc(x1, y1, c / 2, 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
       ctx.closePath();
+      ctx.strokeStyle = strokeStyleDefault;
+      ctx.lineWidth = lineWidthDefault;
+      ctx.fillStyle = fillStyleDefault;
     }
   }
 }
