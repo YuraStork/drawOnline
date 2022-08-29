@@ -42,7 +42,7 @@ const filterFields = (
   userFields: AuthorizedUser
 ): [keyof Omit<UserCabinetTypes, "gender" | "color">, string][] => {
   const res = Object.entries(userFields).filter(
-    ([key, value]) =>
+    ([key]) =>
       key !== "id" &&
       key !== "role" &&
       key !== "email" &&
@@ -61,7 +61,8 @@ const setInputTypes = (name: string) => {
       return "date";
     case "age":
       return "number";
-    case "color": return "color"
+    case "color":
+      return "color";
     default:
       return "text";
   }
@@ -70,11 +71,10 @@ const setInputTypes = (name: string) => {
 const onSubmit = async (
   chenchedData: Omit<AuthorizedUser, "role" | "email">,
   original: AuthorizedUser,
-  helper: any,
   dispatch: AppDispatch,
   handleEdit: () => void
 ) => {
-  const keys: any[] = Object.keys(chenchedData);
+  const keys:any = Object.keys(chenchedData);
   const formData = new FormData();
   const filteredKeys = keys.filter(
     (key: keyof Omit<AuthorizedUser, "role" | "email">) => {
@@ -101,8 +101,10 @@ const onSubmit = async (
   formData.append("id", original.id);
 
   handleEdit();
-  dispatch(updateUserProfileThunk(formData)).then(() => dispatch(getUserProfileThunk(original.id)));
-}
+  dispatch(updateUserProfileThunk(formData)).then(() =>
+    dispatch(getUserProfileThunk(original.id))
+  );
+};
 export {
   setInitialValues,
   validationSchema,

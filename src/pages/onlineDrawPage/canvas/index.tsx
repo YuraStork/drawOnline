@@ -1,9 +1,7 @@
-import { API } from "api/const";
-import axios from "axios";
+import { handleLeave } from "api/user/leave";
 import { PaintContext } from "context/paintContext";
-import { WsContext } from "context/ws.context";
 import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import styled from "styled-components";
@@ -34,19 +32,15 @@ type ParamsProps = {
 
 export const OnlineCanvas = () => {
   const data = useCanvas();
-  const { socket } = useContext(WsContext);
   const user = useAppSelector((s) => s.user.data);
   const { roomId } = useParams<ParamsProps>();
 
-  const handleLeave = async (userId: string, roomId: string) => {
-    await axios.put(`${API}/room/leave`, { userId, roomId });
-  };
-
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       handleLeave(user.id, roomId || "");
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <CanvasSection>

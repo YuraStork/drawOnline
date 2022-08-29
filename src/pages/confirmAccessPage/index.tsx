@@ -2,7 +2,7 @@ import { WsContext } from "context/ws.context";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
-import { Loader } from "../../components/loader";
+import { Loader } from "components/loader";
 import { ConfirmAccessPage, ConfirmAccessPageMain } from "./styles";
 import { ClearAccessPageConnection, SetAccessPageConnection } from "./const";
 

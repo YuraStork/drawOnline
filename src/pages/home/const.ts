@@ -3,6 +3,7 @@ import { Socket } from "socket.io-client";
 import { toastError } from "services/toast.service";
 import { ActiveRoom } from "types/rooms";
 
+export const GET_ROOM = "GET_ROOM";
 export const GET_ROOMS = "GET_ROOMS";
 export const CREATE_ERROR = "CREATE_ERROR";
 export const CREATE_SUCCESS = "CREATE_SUCCESS";

@@ -2,7 +2,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
-import { CheckUserInRoom } from "./const";
+import { checkUserInRoom } from "./const";
 import { WsContext } from "context/ws.context";
 
 type ParamsProps = {
@@ -18,7 +18,7 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
   const { socket } = useContext(WsContext);
 
   useEffect(() => {
-    CheckUserInRoom({ navigate, roomId, setIsLoading, userId: user.id, setAccess, socket });
+    checkUserInRoom({ navigate, roomId, setIsLoading, userId: user.id, setAccess, socket });
   }, []);
 
   if (isLoading) return <Loader position="absolute" />;

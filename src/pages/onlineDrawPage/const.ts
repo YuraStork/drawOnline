@@ -11,7 +11,7 @@ type Props = {
   socket: Socket<any, any>
 };
 
-export const CheckUserInRoom = async (data: Props) => {
+export const checkUserInRoom = async (data: Props) => {
   const { navigate, roomId, setIsLoading, userId, setAccess, socket } = data;
 
   if (!roomId) {

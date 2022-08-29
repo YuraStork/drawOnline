@@ -16,13 +16,12 @@ import {
 import {
   UserForm,
   ButtonWrapper,
-  RadioButtonsWrapper,
   AvatarWrapper,
 } from "./styles";
 import { UserCabinetTypes } from "../types";
 import { UpdateUserModalTypes } from "./types";
-import { FileInput } from "components/fileInput";
-import { RadioButtons } from "components/radioButton";
+import { Heading3 } from "styles/typography/styles";
+import { UserRadioButtons } from "../radioButtons";
 
 export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
   userData,
@@ -47,10 +46,9 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
     e?.target?.files && setBackgroundFon(e.target.files[0]);
   };
 
-
   const formik = useFormik({
     initialValues: setInitialValues(userData),
-    onSubmit: (data, helper) =>
+    onSubmit: (data) =>
       onSubmit(
         {
           ...data,
@@ -60,7 +58,6 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
           biography,
         },
         userData,
-        helper,
         dispatch,
         handleEdit
       ),
@@ -77,7 +74,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
     <Portal>
       <UserForm onSubmit={formik.handleSubmit}>
         <AvatarWrapper>
-          <h3>Avatar</h3>
+          <Heading3>Avatar</Heading3>
           <ImageCrop
             image={avatar}
             width={350}
@@ -97,38 +94,13 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
             onBlur={formik.handleBlur}
           />
         ))}
-        <RadioButtonsWrapper>
-          <div>
-            <h4>Gender</h4>
-            <RadioButtons
-              name="gender"
-              onChange={formik.handleChange}
-              values={["male", "woman"]}
-              defaultValue={formik.values.gender}
-            />
-          </div>
-          <div>
-            <h4>Favorite color</h4>
-            <Input
-              key="color"
-              label="Color"
-              name="color"
-              type={"color"}
-              value={formik.values.color}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </div>
-
-          <div>
-            <h4>Background image</h4>
-            <FileInput name="backgroundFon" onChange={handleSaveBackground} />
-          </div>
-        </RadioButtonsWrapper>
-
+        <UserRadioButtons
+          formik={formik}
+          handleSaveBackground={handleSaveBackground}
+        />
         <TextEditor
           name="biography"
-          onChange={(str: string) => setBiography(str)}
+          onChange={setBiography}
           value={biography}
         />
 

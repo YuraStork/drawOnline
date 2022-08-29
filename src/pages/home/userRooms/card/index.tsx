@@ -46,8 +46,8 @@ export const UserRoomCard: FC<Props> = ({ room, socket, userId, userName }) => {
       {active && (
         <CardSettings>
           <li onClick={() => setEditMode(!editMode)}>edit</li>
-          <li onClick={() => handleDeleteRoom()}>delete</li>
-          <li onClick={() => handleJoinRoom()}>join</li>
+          <li onClick={handleDeleteRoom}>delete</li>
+          <li onClick={handleJoinRoom}>join</li>
         </CardSettings>
       )}
       <span onClick={() => setActive(!active)}>
