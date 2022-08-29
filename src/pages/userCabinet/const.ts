@@ -42,7 +42,7 @@ const filterFields = (
   userFields: AuthorizedUser
 ): [keyof Omit<UserCabinetTypes, "gender" | "color">, string][] => {
   const res = Object.entries(userFields).filter(
-    ([key, value]) =>
+    ([key]) =>
       key !== "id" &&
       key !== "role" &&
       key !== "email" &&
