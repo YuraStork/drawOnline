@@ -1,15 +1,10 @@
-import { AuthorizedUser } from "./../../types";
 import { defaultUserData, userInitialState, USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getSavedUser } from "services/token.service";
 import { SavedUserObject } from "types";
-import { updateUserProfileThunk } from "store/thunks/user/user.thunk";
-import { AuthorizedThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user/authorization.thunk";
-
-type LoginPayload = {
-  token: string;
-  profile: AuthorizedUser
-}
+import { updateUserProfileBuilder } from "store/builders/updateUserProfileBuilder";
+import { userRegistrationBuilder } from "store/builders/userRegistrationBuilder";
+import { authorizedBuilder } from "store/builders/authorizedBuilder";
+import { userLoginBuilder } from "store/builders/userLoginBuilder";
 
 export const UserReducer = createSlice({
   name: USER_REDUCER,
@@ -31,60 +26,10 @@ export const UserReducer = createSlice({
   },
 
   extraReducers: builder => {
-    builder.addCase(UserLoginThunk.pending, (state) => {
-      state.isLoading = true;
-    })
-    builder.addCase(UserLoginThunk.fulfilled, (state, { payload: { token, profile } }: PayloadAction<LoginPayload>) => {
-      state.token = token;
-      state.data = { ...profile };
-      state.error = undefined;
-      state.isLoading = false;
-      state.isAuth = true;
-    })
-    builder.addCase(UserLoginThunk.rejected, (state, { payload }) => {
-      state.isLoading = false;
-      state.isAuth = false;
-      state.error = payload as string;
-    })
-    // --------------------------------------------------------
-    builder.addCase(updateUserProfileThunk.pending, (state) => {
-      state.isLoading = true;
-    })
-    builder.addCase(updateUserProfileThunk.fulfilled, (state) => {
-      state.isLoading = false;
-    })
-    builder.addCase(updateUserProfileThunk.rejected, (state) => {
-      state.isLoading = false;
-      state.error = "Error";
-    })
-    // --------------------------------------------------------
-    builder.addCase(UserRegistrationThunk.pending, (state) => {
-      state.isLoading = true;
-    })
-    builder.addCase(UserRegistrationThunk.fulfilled, (state) => {
-      state.isLoading = false;
-    })
-    builder.addCase(UserRegistrationThunk.rejected, (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload as string;
-    })
-    // --------------------------------------------------------
-    builder.addCase(AuthorizedThunk.pending, (state) => {
-      state.isLoading = true;
-    })
-    builder.addCase(AuthorizedThunk.fulfilled, (state, { payload }: PayloadAction<AuthorizedUser>) => {
-      const user = getSavedUser() as SavedUserObject;
-      state.token = user.token;
-      state.data = { ...payload };
-      state.isLoading = false;
-      state.error = undefined;
-      state.isAuth = true;
-    })
-    builder.addCase(AuthorizedThunk.rejected, (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload as string;
-    })
-    // --------------------------------------------------------
+    userLoginBuilder(builder);
+    updateUserProfileBuilder(builder);
+    userRegistrationBuilder(builder)
+    authorizedBuilder(builder)
   }
 })
 
