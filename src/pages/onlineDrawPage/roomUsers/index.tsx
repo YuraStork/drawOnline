@@ -30,7 +30,7 @@ export const RoomUsers = () => {
 
   return (
     <RoomUsersBlock>
-      {(users.length > 0 ? users : []).map((user) => (
+      {users.length && users.map((user) => (
         <div key={user.userId}>{user.userName}</div>
       ))}
     </RoomUsersBlock>
