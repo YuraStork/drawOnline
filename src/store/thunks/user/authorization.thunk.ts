@@ -1,18 +1,18 @@
 import { AxiosError } from "axios";
-import { UserLoginFormData, UserRegistrationData } from "./../../../types";
+import { UserLoginFormData, UserRegistrationData } from "../../../types";
 import { createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { USER_REDUCER } from "store/const";
 import { authorizeUser } from "api/user/authorize";
 import { getProfile } from "api/user/getProfile";
 import { registrationUser } from "api/user/registration";
 import { logout } from "api/user/logout";
-import { initializeUser, logoutAction } from "store/reducers/user.reducer";
+import { initializeUser, logoutAction } from "store/slices/user.slice";
 import {
   deleteSavedToken,
   getSavedUser,
   saveUserInStorage,
 } from "services/token.service";
-import { toastError, toastSuccess } from "../../../toast";
+import { toastError, toastSuccess } from "services/toast.service";
 
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,

@@ -1,4 +1,4 @@
-import { toastSuccess } from "./../../../toast/index";
+import { toastSuccess } from "services/toast.service";
 import { Socket } from "socket.io-client";
 import { NavigateFunction } from "react-router-dom";
 import {
