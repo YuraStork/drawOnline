@@ -1,4 +1,5 @@
 import { WsContext } from "context/ws.context";
+import { GET_ROOM } from "pages/home/const";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -21,8 +22,8 @@ export const RoomUsers = () => {
   const { roomId } = useParams();
 
   useEffect(() => {
-    socket.emit("GET_ROOM", roomId);
-    socket.on("GET_ROOM", (data: any) => {
+    socket.emit(GET_ROOM, roomId);
+    socket.on(GET_ROOM, (data: any) => {
       setUsers(data.users);
     });
   }, []);
