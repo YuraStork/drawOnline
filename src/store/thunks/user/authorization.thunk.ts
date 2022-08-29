@@ -12,7 +12,7 @@ import {
   getSavedUser,
   saveUserInStorage,
 } from "services/token.service";
-import { toastError, toastSuccess } from "../../../toast";
+import { toastError, toastSuccess } from "services/toast.service";
 
 export const AuthorizedThunk = createAsyncThunk(
   `${USER_REDUCER}/authorize-thunk`,

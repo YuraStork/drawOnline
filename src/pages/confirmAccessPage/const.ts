@@ -1,4 +1,4 @@
-import { toastError } from "./../../toast/index";
+import { toastError } from "services/toast.service";
 import { JOIN_ERROR, JOIN_SUCCESS } from "pages/home/const";
 import { NavigateFunction } from "react-router-dom";
 import { Socket } from "socket.io-client";
