@@ -23,6 +23,7 @@ import { UserCabinetTypes } from "../types";
 import { UpdateUserModalTypes } from "./types";
 import { FileInput } from "components/fileInput";
 import { RadioButtons } from "components/radioButton";
+import { Heading3, Heading4 } from "styles/typography/styles";
 
 export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
   userData,
@@ -76,7 +77,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
     <Portal>
       <UserForm onSubmit={formik.handleSubmit}>
         <AvatarWrapper>
-          <h3>Avatar</h3>
+          <Heading3>Avatar</Heading3>
           <ImageCrop
             image={avatar}
             width={350}
@@ -98,7 +99,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
         ))}
         <RadioButtonsWrapper>
           <div>
-            <h4>Gender</h4>
+            <Heading4>Gender</Heading4>
             <RadioButtons
               name="gender"
               onChange={formik.handleChange}
@@ -107,7 +108,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
             />
           </div>
           <div>
-            <h4>Favorite color</h4>
+            <Heading4>Favorite color</Heading4>
             <Input
               key="color"
               label="Color"
@@ -120,7 +121,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
           </div>
 
           <div>
-            <h4>Background image</h4>
+            <Heading4>Background image</Heading4>
             <FileInput name="backgroundFon" onChange={handleSaveBackground} />
           </div>
         </RadioButtonsWrapper>
