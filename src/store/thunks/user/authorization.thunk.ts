@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { UserLoginFormData, UserRegistrationData } from "./../../../types";
+import { UserLoginFormData, UserRegistrationData } from "../../../types";
 import { createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { USER_REDUCER } from "store/const";
 import { authorizeUser } from "api/user/authorize";

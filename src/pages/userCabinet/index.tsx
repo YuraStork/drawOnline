@@ -1,6 +1,6 @@
 import { Button } from "components/button/styles";
 import { Container } from "components/container/styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   UserCabinetSection,
   AvatarWrapper,
@@ -12,12 +12,11 @@ import {
   ImagesWrapper,
   ButtonWrapper,
 } from "./styles";
-import { useAppDispatch, useAppSelector } from "store/store";
+import { useAppSelector } from "store/store";
 import { getUser } from "store/selectors/user.selector";
-import { getUserProfileThunk } from "store/thunks/user.thunk";
 import { UpdateUserModal } from "./updateUserModal";
 import { HtmlText } from "components/htmlText";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const UserCabinet = () => {
   const navigate = useNavigate();

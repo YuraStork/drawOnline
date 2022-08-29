@@ -2,7 +2,7 @@ import { AppDispatch } from "store/store";
 import {
   getUserProfileThunk,
   updateUserProfileThunk,
-} from "store/thunks/user.thunk";
+} from "store/thunks/user/user.thunk";
 import { AuthorizedUser } from "types";
 import { createBlobFile } from "utils/encodeBase64";
 import * as yup from "yup";

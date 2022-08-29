@@ -2,7 +2,7 @@ import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
 import { Router } from "./router";
 import { useAppDispatch } from "store/store";
-import { AuthorizedThunk } from "store/thunks/user_authorization_thunks/index";
+import { AuthorizedThunk } from "store/thunks/user/authorization.thunk";
 
 export const App = () => {
   const dispatch = useAppDispatch();

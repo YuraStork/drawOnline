@@ -2,7 +2,7 @@ import { UserRegistrationData } from "types";
 import { cryptoSha256 } from "utils/cryptoPassord";
 import * as yup from "yup";
 import { AppDispatch } from "store/store";
-import { UserRegistrationThunk } from "store/thunks/user_authorization_thunks/index";
+import { UserRegistrationThunk } from "store/thunks/user/authorization.thunk";
 
 export const validationSchema = yup.object().shape({
   name: yup.string().min(2, "min 2 symbols").required("Required"),

@@ -3,8 +3,8 @@ import { defaultUserData, userInitialState, USER_REDUCER } from "../const";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getSavedUser } from "services/token.service";
 import { SavedUserObject } from "types";
-import { updateUserProfileThunk } from "store/thunks/user.thunk";
-import { AuthorizedThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user_authorization_thunks";
+import { updateUserProfileThunk } from "store/thunks/user/user.thunk";
+import { AuthorizedThunk, UserLoginThunk, UserRegistrationThunk } from "store/thunks/user/authorization.thunk";
 
 type LoginPayload = {
   token: string;

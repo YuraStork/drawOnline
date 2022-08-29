@@ -4,7 +4,7 @@ import { WsContext } from "context/ws.context";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/store";
-import { UserLogoutThunk } from "store/thunks/user_authorization_thunks/index";
+import { UserLogoutThunk } from "store/thunks/user/authorization.thunk";
 import { ActiveRoom } from "types/rooms";
 import { ActiveRooms } from "./activeRooms";
 import { Chat } from "./chat";
