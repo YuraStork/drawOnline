@@ -74,7 +74,7 @@ const onSubmit = async (
   dispatch: AppDispatch,
   handleEdit: () => void
 ) => {
-  const keys: any[] = Object.keys(chenchedData);
+  const keys:any = Object.keys(chenchedData);
   const formData = new FormData();
   const filteredKeys = keys.filter(
     (key: keyof Omit<AuthorizedUser, "role" | "email">) => {
