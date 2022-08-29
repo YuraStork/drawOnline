@@ -16,14 +16,12 @@ import {
 import {
   UserForm,
   ButtonWrapper,
-  RadioButtonsWrapper,
   AvatarWrapper,
 } from "./styles";
 import { UserCabinetTypes } from "../types";
 import { UpdateUserModalTypes } from "./types";
-import { FileInput } from "components/fileInput";
-import { RadioButtons } from "components/radioButton";
-import { Heading3, Heading4 } from "styles/typography/styles";
+import { Heading3 } from "styles/typography/styles";
+import { UserRadioButtons } from "../radioButtons";
 
 export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
   userData,
@@ -47,7 +45,6 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
     }
     e?.target?.files && setBackgroundFon(e.target.files[0]);
   };
-
 
   const formik = useFormik({
     initialValues: setInitialValues(userData),
@@ -97,35 +94,10 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
             onBlur={formik.handleBlur}
           />
         ))}
-        <RadioButtonsWrapper>
-          <div>
-            <Heading4>Gender</Heading4>
-            <RadioButtons
-              name="gender"
-              onChange={formik.handleChange}
-              values={["male", "woman"]}
-              defaultValue={formik.values.gender}
-            />
-          </div>
-          <div>
-            <Heading4>Favorite color</Heading4>
-            <Input
-              key="color"
-              label="Color"
-              name="color"
-              type={"color"}
-              value={formik.values.color}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          </div>
-
-          <div>
-            <Heading4>Background image</Heading4>
-            <FileInput name="backgroundFon" onChange={handleSaveBackground} />
-          </div>
-        </RadioButtonsWrapper>
-
+        <UserRadioButtons
+          formik={formik}
+          handleSaveBackground={handleSaveBackground}
+        />
         <TextEditor
           name="biography"
           onChange={setBiography}
