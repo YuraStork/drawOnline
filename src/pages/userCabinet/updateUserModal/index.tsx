@@ -127,7 +127,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
 
         <TextEditor
           name="biography"
-          onChange={(str: string) => setBiography(str)}
+          onChange={setBiography}
           value={biography}
         />
 
