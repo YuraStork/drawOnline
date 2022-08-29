@@ -26,8 +26,8 @@ type TextEditorProps = {
   value: string;
 }
 
-export const TextEditor: FC<TextEditorProps> = ({ name, onChange, value }) => {
-  const contentBlock = htmlToDraft(value || "");
+export const TextEditor: FC<TextEditorProps> = ({ name, onChange, value = "" }) => {
+  const contentBlock = htmlToDraft(value);
   const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
 
   const [textState, setTextState] = useState(EditorState.createWithContent(contentState));

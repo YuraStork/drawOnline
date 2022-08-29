@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
  
-  html,body{
+  html, body{
     height: 100%;
   }
 
@@ -16,7 +16,9 @@ export const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
     font-family: Roboto;
     min-height: 100vh;
+
   }
+
   li{
     list-style-type: none;
   }
