@@ -16,26 +16,26 @@ import { socket } from "./utils/socket";
 const setRoutes = (isAuth: boolean) =>
   isAuth
     ? [
-        { path: "/", element: <HomePage /> },
-        { path: "/draw", element: <LayoutComponent /> },
-        {
-          path: "/draw_online/:roomId",
-          element: (
-            <OnlineDrawPage>
-              <OnlineCanvas />
-            </OnlineDrawPage>
-          ),
-        },
-        { path: "/checkRoompassword/:roomId", element: <PrivateRoom /> },
-        { path: "/cabinet", element: <UserCabinet /> },
-        { path: "/server-error", element: <ServerErrorPage /> },
-        { path: "/authorization", element: <Navigate to="/" /> },
-        { path: "*", element: <NotFoundPage /> },
-      ]
+      { path: "/", element: <HomePage /> },
+      { path: "/draw", element: <LayoutComponent /> },
+      {
+        path: "/draw_online/:roomId",
+        element: (
+          <OnlineDrawPage>
+            <OnlineCanvas />
+          </OnlineDrawPage>
+        ),
+      },
+      { path: "/checkRoompassword/:roomId", element: <PrivateRoom /> },
+      { path: "/cabinet", element: <UserCabinet /> },
+      { path: "/server-error", element: <ServerErrorPage /> },
+      { path: "/authorization", element: <Navigate to="/" /> },
+      { path: "*", element: <NotFoundPage /> },
+    ]
     : [
-        { path: "/authorization", element: <AuthPage /> },
-        { path: "*", element: <Navigate to="/authorization" /> },
-      ];
+      { path: "/authorization", element: <AuthPage /> },
+      { path: "*", element: <Navigate to="/authorization" /> },
+    ];
 
 export const Router = () => {
   const { isAuth } = useAppSelector(getUser);

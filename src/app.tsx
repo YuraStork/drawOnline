@@ -8,8 +8,6 @@ export const App = () => {
   const dispatch = useAppDispatch();
   const [isReady, setIsReady] = useState(false);
 
-  console.log("APP");
-  
   useEffect(() => {
     dispatch(AuthorizedThunk()).finally(() => setIsReady(true));
   }, []);

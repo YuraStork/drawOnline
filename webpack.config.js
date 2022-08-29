@@ -1,7 +1,7 @@
-require("dotenv").config();
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 const DEVELOPMENT_MODE = process.env.DEVELOPMENT_MODE;
 
@@ -36,6 +36,9 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
+    new Dotenv({
+      path: "./.env",
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/assets/webpack-logo.png",
