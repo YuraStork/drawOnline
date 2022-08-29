@@ -42,11 +42,11 @@ export const SetDrawConnection = (data: Props) => {
     ctx?.beginPath();
   });
   socket.on(CASE_EXIT, () => {
-    console.log("EXIT");
     navigate("/");
   });
 
   socket.on(DRAW, (data: any) => {
+    console.log("DRAW")
     if (canvasRef.current) {
       const ctx = canvasRef.current?.getContext("2d");
       switch (data.tool) {
@@ -54,16 +54,16 @@ export const SetDrawConnection = (data: Props) => {
           Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);
           break;
         case "square":
-          Square.drawOnline(ctx, data.x1, data.y1, data.width, data.height);
+          Square.drawOnline(ctx, data.x1, data.y1, data.width, data.height, data.fillStyle, data.strokeStyle, data.lineWidth);
           break;
         case "circle":
-          Circle.drawOnline(ctx, data.x1, data.y1, data.a, data.b);
+          Circle.drawOnline(ctx, data.x1, data.y1, data.a, data.b, data.fillStyle, data.strokeStyle, data.lineWidth);
           break;
         case "eraser":
           Eraser.draw(ctx, data.x1, data.y1);
           break;
         case "line":
-          Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2);
+          Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2, data.strokeStyle, data.lineWidth);
           break;
         default:
           Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);

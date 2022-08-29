@@ -35,7 +35,9 @@ export class Eraser extends Tool {
         x1: this.x1,
         y1: this.y1,
       });
+      Eraser.draw(this.ctx, this.x1, this.y1)
     }
+
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
   }
@@ -44,7 +46,7 @@ export class Eraser extends Tool {
     this.mouseDown = false;
   }
 
-  static draw(ctx: any, x1: number, y1: number) {
+  static draw(ctx: CanvasRenderingContext2D, x1: number, y1: number) {
     if (ctx) {
       ctx.beginPath();
       ctx.arc(x1, y1, 20, 0, Math.PI * 2);

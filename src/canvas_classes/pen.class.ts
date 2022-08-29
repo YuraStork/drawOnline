@@ -43,11 +43,12 @@ export class Pen extends Tool {
         strokeStyle: this.ctx.strokeStyle,
         lineWidth: this.ctx.lineWidth,
       });
+      Pen.draw(this.ctx, e.offsetX, e.offsetY);
     }
   }
 
   static draw(
-    ctx: any,
+    ctx: CanvasRenderingContext2D,
     x: number,
     y: number,
   ) {
@@ -62,9 +63,16 @@ export class Pen extends Tool {
     strokeStyle: string,
     lineWidht: number,
   ) {
-    ctx.strokeStyle = strokeStyle;
-    ctx.lineWidth = lineWidht;
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    if (ctx) {
+      const strokeStyleDefault = ctx.strokeStyle;
+      const lineWidthDefault = ctx.lineWidth;
+
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidht;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.strokeStyle = strokeStyleDefault;
+      ctx.lineWidth = lineWidthDefault;
+    }
   }
 }

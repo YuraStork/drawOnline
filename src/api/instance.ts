@@ -1,9 +1,8 @@
-import { toastError } from "./../toast/index";
 import { API, SetHeaders } from "api/const";
 import axios, { AxiosError } from "axios";
 import { getToken, saveUserInStorage } from "services/token.service";
 
-export const Instance = axios.create({ baseURL: "http://localhost:5000/api/" });
+export const Instance = axios.create({ baseURL: API });
 
 Instance.interceptors.response.use(
   function (config) {

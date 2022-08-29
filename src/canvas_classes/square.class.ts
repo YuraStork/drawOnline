@@ -37,14 +37,19 @@ export class Square extends Tool {
 
   private onMouseUp(e: MouseEvent) {
     this.mouseDown = false;
-    this.socket.emit("DRAW", {
-      tool: "square",
-      roomId: this.id,
-      x1: this.x1,
-      y1: this.y1,
-      width: e.offsetX - this.x1,
-      height: e.offsetY - this.y1,
-    })
+    if (this.ctx) {
+      this.socket.emit("DRAW", {
+        tool: "square",
+        roomId: this.id,
+        x1: this.x1,
+        y1: this.y1,
+        width: e.offsetX - this.x1,
+        height: e.offsetY - this.y1,
+        fillStyle: this.ctx.fillStyle,
+        strokeStyle: this.ctx.strokeStyle,
+        lineWidth: this.ctx.lineWidth
+      })
+    }
     this.x1 = 0;
     this.y1 = 0;
   };
@@ -60,13 +65,24 @@ export class Square extends Tool {
       ctx.closePath();
     }
   }
-  static drawOnline(ctx: any, x1: number, y1: number, width: number, height: number) {
+
+  static drawOnline(ctx: CanvasRenderingContext2D, x1: number, y1: number, width: number, height: number,fillStyle:string, strokeStyle: string, lineWidht: number) {
     if (ctx) {
+      const strokeStyleDefault = ctx.strokeStyle;
+      const lineWidthDefault = ctx.lineWidth;
+      const fillStyleDefault = ctx.fillStyle;
+
+      ctx.fillStyle = fillStyle;
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidht;
       ctx.beginPath();
       ctx.rect(x1, y1, width, height);
       ctx.fill();
       ctx.stroke();
       ctx.closePath();
+      ctx.strokeStyle = strokeStyleDefault;
+      ctx.lineWidth = lineWidthDefault;
+      ctx.fillStyle = fillStyleDefault;
     }
   }
 };

@@ -1,4 +1,4 @@
-import { EditorState, ContentState } from "draft-js";
+import { ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
 
 export const FormatHtmlToString = (str: string) => {

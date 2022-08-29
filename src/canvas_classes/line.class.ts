@@ -24,14 +24,18 @@ export class Line extends Tool {
 
   private onMouseUp(e: any) {
     this.mouseDown = false;
-    this.socket.emit("DRAW", {
-      tool: "line",
-      roomId: this.id,
-      x1: this.x1,
-      y1: this.y1,
-      x2: e.offsetX,
-      y2: e.offsetY,
-    });
+    if (this.ctx) {
+      this.socket.emit("DRAW", {
+        tool: "line",
+        roomId: this.id,
+        x1: this.x1,
+        y1: this.y1,
+        x2: e.offsetX,
+        y2: e.offsetY,
+        lineWidth: this.ctx.lineWidth,
+        strokeStyle: this.ctx.strokeStyle
+      });
+    }
     this.x1 = 0;
     this.y1 = 0;
   }
@@ -65,13 +69,23 @@ export class Line extends Tool {
     }
   }
 
-  static drawOnline(ctx: any, x1: number, y1: number, x2: number, y2: number) {
+  static drawOnline(ctx: any, x1: number, y1: number, x2: number, y2: number, strokeStyle: string, lineWidth: string) {
     if (ctx) {
+      const strokeStyleDefault = ctx.strokeStyle;
+      const lineWidthDefault = ctx.lineWidth;
+
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
+      
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
       ctx.closePath();
+      ctx.strokeStyle = strokeStyleDefault;
+      ctx.lineWidth = lineWidthDefault;
     }
   }
 }
