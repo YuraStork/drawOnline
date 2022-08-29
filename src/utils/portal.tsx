@@ -7,26 +7,20 @@ const ChildrenWrapper = styled.div`
   width: 100%;
   background: #0000006f;
   height: 100vh;
-  z-index: 9998;
+  z-index: 9999;
   backdrop-filter: blur(3px);
   top: 0;
-
-  & > div{
-    z-index: 9999;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 type Props = {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 export const Portal = ({ children = null }: Props) => {
   return createPortal(
-    <ChildrenWrapper><div>{children}</div></ChildrenWrapper>,
+    <ChildrenWrapper>{children}</ChildrenWrapper>,
     document.getElementById("modal") as HTMLDivElement
   );
 };
