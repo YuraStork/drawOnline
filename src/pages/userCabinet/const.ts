@@ -61,7 +61,8 @@ const setInputTypes = (name: string) => {
       return "date";
     case "age":
       return "number";
-    case "color": return "color"
+    case "color":
+      return "color";
     default:
       return "text";
   }
@@ -101,8 +102,10 @@ const onSubmit = async (
   formData.append("id", original.id);
 
   handleEdit();
-  dispatch(updateUserProfileThunk(formData)).then(() => dispatch(getUserProfileThunk(original.id)));
-}
+  dispatch(updateUserProfileThunk(formData)).then(() =>
+    dispatch(getUserProfileThunk(original.id))
+  );
+};
 export {
   setInitialValues,
   validationSchema,
