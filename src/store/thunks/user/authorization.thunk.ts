@@ -6,7 +6,7 @@ import { authorizeUser } from "api/user/authorize";
 import { getProfile } from "api/user/getProfile";
 import { registrationUser } from "api/user/registration";
 import { logout } from "api/user/logout";
-import { initializeUser, logoutAction } from "store/reducers/user.reducer";
+import { initializeUser, logoutAction } from "store/slices/user.slice";
 import {
   deleteSavedToken,
   getSavedUser,

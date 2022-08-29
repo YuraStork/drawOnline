@@ -3,7 +3,7 @@ import { USER_REDUCER } from "store/const";
 import { getProfile } from "api/user/getProfile";
 import { updateUser } from "api/user/update";
 import { AxiosError } from "axios";
-import { logoutAction } from "store/reducers/user.reducer";
+import { logoutAction } from "store/slices/user.slice";
 
 export const getUserProfileThunk = createAsyncThunk(
   `${USER_REDUCER}/profile-thunk`,

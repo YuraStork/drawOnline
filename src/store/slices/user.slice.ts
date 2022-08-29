@@ -6,7 +6,7 @@ import { userRegistrationBuilder } from "store/builders/userRegistrationBuilder"
 import { authorizedBuilder } from "store/builders/authorizedBuilder";
 import { userLoginBuilder } from "store/builders/userLoginBuilder";
 
-export const UserReducer = createSlice({
+export const UserSlice = createSlice({
   name: USER_REDUCER,
   initialState: userInitialState,
   reducers: {
@@ -33,4 +33,4 @@ export const UserReducer = createSlice({
   }
 })
 
-export const { initializeUser, logoutAction } = UserReducer.actions;
+export const { initializeUser, logoutAction } = UserSlice.actions;
