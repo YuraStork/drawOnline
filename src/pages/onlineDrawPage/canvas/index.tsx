@@ -34,7 +34,6 @@ type ParamsProps = {
 
 export const OnlineCanvas = () => {
   const data = useCanvas();
-  const { socket } = useContext(WsContext);
   const user = useAppSelector((s) => s.user.data);
   const { roomId } = useParams<ParamsProps>();
 
