@@ -9,6 +9,11 @@ const StyledToolbar = styled.div`
   background-color: #fff;
   border-bottom: 2px solid #000;
 
+  & > div:last-child{
+    & > button:first-child{
+      transform: rotate(180deg);
+    }
+  }
   & > div {
     display: flex;
     gap: 10px;
