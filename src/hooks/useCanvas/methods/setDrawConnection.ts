@@ -8,7 +8,6 @@ import {
   Pen,
   Square,
 } from "../../../canvas_classes/index";
-import { handleSnapshot } from "./snapshot";
 
 export const CONNECTION_DRAW = "CONNECTION_DRAW";
 export const FINISH_DRAW = "FINISH_DRAW";

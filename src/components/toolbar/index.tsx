@@ -82,7 +82,7 @@ export const Toolbar = () => {
       </div>
 
       <div>
-        <ToolButton img="../assets/left-arrow.png" onClick={handleReset} />
+        <ToolButton img="../assets/right-arrow.png" onClick={handleReset} />
         <ToolButton img="../assets/right-arrow.png" onClick={handleRedo} />
         <ToolButton img="../assets/diskette.png" onClick={handleSavePhoto} />
         <LeaveButton onClick={handleExitFromRoom}>leave</LeaveButton>

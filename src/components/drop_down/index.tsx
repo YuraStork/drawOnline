@@ -1,7 +1,5 @@
 import { FC, useState } from "react";
 import { DropDownContainer } from "./styles";
-import { CSSTransition, Transition } from "react-transition-group";
-import { Link } from "react-router-dom";
 
 type DropDownTypes = {
   list: string[];
