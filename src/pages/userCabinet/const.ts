@@ -71,7 +71,6 @@ const setInputTypes = (name: string) => {
 const onSubmit = async (
   chenchedData: Omit<AuthorizedUser, "role" | "email">,
   original: AuthorizedUser,
-  helper: any,
   dispatch: AppDispatch,
   handleEdit: () => void
 ) => {

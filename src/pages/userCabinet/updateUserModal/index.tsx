@@ -50,7 +50,7 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
 
   const formik = useFormik({
     initialValues: setInitialValues(userData),
-    onSubmit: (data, helper) =>
+    onSubmit: (data) =>
       onSubmit(
         {
           ...data,
@@ -60,7 +60,6 @@ export const UpdateUserModal: FC<UpdateUserModalTypes> = ({
           biography,
         },
         userData,
-        helper,
         dispatch,
         handleEdit
       ),
