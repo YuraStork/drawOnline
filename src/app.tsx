@@ -1,6 +1,6 @@
 import { Loader } from "components/loader";
 import { useEffect, useState } from "react";
-import { RouterWrapper } from "./RouterWrapper";
+import { Router } from "./router";
 import { useAppDispatch } from "store/store";
 import { AuthorizedThunk } from "store/thunks/user_authorization_thunks/index";
 
@@ -13,5 +13,5 @@ export const App = () => {
   }, []);
 
   if (!isReady) return <Loader position="absolute" />;
-  return <RouterWrapper />;
+  return <Router />;
 };
