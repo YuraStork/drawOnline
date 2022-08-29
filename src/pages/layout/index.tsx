@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Canvas } from "../../components/canvas"
-import { SettingsBar } from "../../components/settings"
-import { Toolbar } from "../../components/toolbar"
-import { PaintContext } from "../../context/paintContext";
-import { useCanvas } from "../../hooks/useCanvas/useCanvas.hook";
+import { Canvas } from "components/canvas"
+import { SettingsBar } from "components/settings"
+import { Toolbar } from "components/toolbar"
+import { PaintContext } from "context/paintContext";
+import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
 
 const Layout = styled.div`
   max-width: 1200px;
