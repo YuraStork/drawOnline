@@ -12,7 +12,7 @@ const Room = styled.div`
   align-items: center;
   cursor: pointer;
 
-  & > div{
+  & > div {
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -23,15 +23,20 @@ const Room = styled.div`
 `;
 
 type ActiveRoomsProps = {
-  activeRooms: ActiveRoom[],
+  activeRooms: ActiveRoom[];
   userId: string;
-}
+};
 
 export const ActiveRooms: FC<ActiveRoomsProps> = ({ activeRooms, userId }) => {
   return (
     <>
-      {activeRooms ? (
-        activeRooms.map((room) => <Room key={room._id}><div /> {room.roomName} {room.users.length} / {room.limit} {room.owner === userId && "(your)"}</Room>)
+      {activeRooms.length ? (
+        activeRooms.map((room) => (
+          <Room key={room._id}>
+            <div /> {room.roomName} {room.users.length} / {room.limit}{" "}
+            {room.owner === userId && "(your)"}
+          </Room>
+        ))
       ) : (
         <p>no active rooms</p>
       )}
