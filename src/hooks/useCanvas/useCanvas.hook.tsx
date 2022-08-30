@@ -5,7 +5,7 @@ import { ToolsTypes } from "types/canvas";
 import { SetDrawConnection, ClearDrawConnection } from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import { Tool } from "../../canvas_classes/index";
-import { SetTool } from "./const";
+import { setCanvasHeight, setCanvasWidth, SetTool } from "./const";
 import { useSocket } from "hooks/useSocket";
 import { userDataSelector } from "store/selectors/user.selector";
 
@@ -24,8 +24,8 @@ export const useCanvas = () => {
   const { name } = useAppSelector(userDataSelector);
 
   useEffect(() => {
-    canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
-    canvasRef.current.height = document.body.clientHeight - 150;
+    canvasRef.current.width = setCanvasWidth();
+    canvasRef.current.height = setCanvasHeight();
 
     handleSnapshot({
       snapshotIndex,

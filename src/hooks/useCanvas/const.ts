@@ -12,6 +12,14 @@ type Props = {
   roomId: string;
 };
 
+export const setCanvasWidth = () => {
+  return document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
+}
+
+export const setCanvasHeight = () => {
+  return document.body.clientHeight - 150;
+}
+
 export const SetTool = (data: Props) => {
   const { canvasRef, roomId, socket, tool } = data;
 
