@@ -39,17 +39,17 @@ const ConfirmAccessPageMain = styled.div`
     display: flex;
     margin-top: 20px;
     gap: 5px;
-    
+
     & > button {
       appearance: none;
       cursor: pointer;
-      transition: all .3s;
+      transition: all 0.3s;
       color: #000000;
       background-color: #fff;
       height: 35px;
       flex-basis: 50%;
 
-      &:hover{
+      &:hover {
         background-color: #747474;
         color: #ffffff;
       }

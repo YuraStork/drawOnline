@@ -35,7 +35,7 @@ export class Eraser extends Tool {
         x1: this.x1,
         y1: this.y1,
       });
-      Eraser.draw(this.ctx, this.x1, this.y1)
+      Eraser.draw(this.ctx, this.x1, this.y1);
     }
 
     this.x1 = e.offsetX;

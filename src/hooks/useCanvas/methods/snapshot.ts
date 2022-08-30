@@ -15,7 +15,7 @@ const pushUndo = (
   setSnapshotIndex: React.Dispatch<React.SetStateAction<number>>
 ) => {
   if (snapshotIndex > 0 && snapshotIndex < 10) {
-    Tool.setSnapshot(canvas, snapshotList[snapshotIndex - 1])
+    Tool.setSnapshot(canvas, snapshotList[snapshotIndex - 1]);
     setSnapshotIndex((prev) => (prev -= 1));
   }
 };
@@ -27,7 +27,7 @@ const pushRedo = (
   setSnapshotIndex: React.Dispatch<React.SetStateAction<number>>
 ) => {
   if (snapshotIndex < snapshotList.length - 1) {
-    Tool.setSnapshot(canvas, snapshotList[snapshotIndex + 1])
+    Tool.setSnapshot(canvas, snapshotList[snapshotIndex + 1]);
     setSnapshotIndex((prev) => (prev += 1));
   }
 };
@@ -37,7 +37,7 @@ const handleSnapshot = (data: handleSnapshotProps) => {
 
   if (snapshotList.length < 10) {
     setSnapshotList((prev) => [...prev, canvasRef.current.toDataURL()]);
-    setSnapshotIndex(prev => prev + 1);
+    setSnapshotIndex((prev) => prev + 1);
   } else {
     setSnapshotList((prev) => [
       ...prev.slice(1, 10),

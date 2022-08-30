@@ -15,7 +15,7 @@ export const defaultUserData = {
   gender: "",
   date: "",
   biography: "",
-}
+};
 export const userInitialState: UserReducerInitialTypes = {
   isAuth: false,
   error: undefined,
@@ -35,5 +35,5 @@ export const userInitialState: UserReducerInitialTypes = {
     gender: "",
     date: "",
     biography: "",
-  }
-}
+  },
+};

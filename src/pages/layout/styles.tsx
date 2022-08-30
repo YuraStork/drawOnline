@@ -8,4 +8,4 @@ const Layout = styled.div`
   grid-template: 50px 50px 1fr / 1fr;
 `;
 
-export { Layout }
+export { Layout };

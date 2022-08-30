@@ -35,11 +35,10 @@ const ImagesWrapper = styled.div`
     object-fit: cover;
     transition: all 1s linear;
 
-    &:hover{
-      transform: scale(110%)
+    &:hover {
+      transform: scale(110%);
     }
   }
-
 `;
 
 const AvatarWrapper = styled.div`
@@ -49,8 +48,8 @@ const AvatarWrapper = styled.div`
   gap: 20px;
   padding-left: 60px;
   align-items: flex-start;
- 
-  @media screen and (max-width: 700px){
+
+  @media screen and (max-width: 700px) {
     padding-left: 10px;
   }
 
@@ -81,7 +80,7 @@ const Avatar = styled.div`
 
 const UserInfoWrapper = styled.div`
   grid-column: 1/3;
-  border-radius:10px;
+  border-radius: 10px;
   display: grid;
   grid-template: minmax(150px, auto) minmax(50px, auto) / 1fr;
   box-shadow: 2px 2px 10px 1px #bcbcbc;
@@ -135,7 +134,7 @@ const ButtonWrapper = styled.div`
   background-color: #fff;
   border-radius: 10px;
   grid-column: 1/3;
-  
+
   & > button {
     width: 100px;
   }

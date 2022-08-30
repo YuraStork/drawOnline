@@ -5,10 +5,10 @@ import { Socket } from "socket.io-client";
 import { FunctionWithParams } from "types";
 
 type Props = {
-  socket: Socket<any, any>,
-  navigate: NavigateFunction,
+  socket: Socket<any, any>;
+  navigate: NavigateFunction;
   setIsLoading: FunctionWithParams<boolean>;
-}
+};
 
 export const SetAccessPageConnection = (data: Props) => {
   const { navigate, setIsLoading, socket } = data;

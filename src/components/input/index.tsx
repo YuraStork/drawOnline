@@ -12,7 +12,7 @@ type InputProps = {
   id?: string;
   onChange?: FunctionWithParams<any>;
   onBlur?: FunctionWithParams<any>;
-  disabled?: boolean
+  disabled?: boolean;
 };
 
 export const Input: FC<InputProps> = ({ label, ...rest }) => {

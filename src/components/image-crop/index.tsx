@@ -15,7 +15,7 @@ export const ImageCrop: FC<ImageCropProps> = ({
   const [preview, setPreview] = useState<null | string>(null);
   const [prevPreview, setPrevPreview] = useState<null | string>(null);
 
-  const onClose = () => setPreview(null)
+  const onClose = () => setPreview(null);
   const onCrop = (preview: string) => setPreview(preview);
   const onBeforeFileLoad = (elem: any) => {
     if (elem.target.files[0].size > 10_485_760) {
@@ -32,8 +32,11 @@ export const ImageCrop: FC<ImageCropProps> = ({
   };
 
   const onFileLoad = (file: any) => {
-    EncodeBase64(file).then(res => { console.log("res", res); setEditingImage(res) });
-  }
+    EncodeBase64(file).then((res) => {
+      console.log("res", res);
+      setEditingImage(res);
+    });
+  };
 
   return (
     <AvatarEditWrapper>

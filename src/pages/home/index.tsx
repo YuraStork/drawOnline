@@ -34,7 +34,13 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    SetRoomsConnection({ navigate, setActiveRooms, socket, setUserRooms, userId: id });
+    SetRoomsConnection({
+      navigate,
+      setActiveRooms,
+      socket,
+      setUserRooms,
+      userId: id,
+    });
     return () => ClearRoomsConnection(socket);
   }, []);
 

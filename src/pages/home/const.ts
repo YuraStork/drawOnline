@@ -22,12 +22,11 @@ type Props = {
   userId: string;
 };
 
-
 export const SetRoomsConnection = (data: Props) => {
   const { socket, setActiveRooms, navigate, setUserRooms, userId } = data;
   socket.emit(GET_ROOMS);
   socket.emit(GET_USER_ROOMS, { userId });
-  
+
   socket.on(GET_ROOMS, (data: ActiveRoom[]) => setActiveRooms(data));
   socket.on(CREATE_SUCCESS, (id: string) => navigate(`/draw_online/${id}`));
   socket.on(CREATE_ERROR, (e: string) => toastError(e));
@@ -45,4 +44,4 @@ export const ClearRoomsConnection = (socket: Socket<any, any>) => {
   socket.off(JOIN_ERROR);
   socket.off(GET_USER_ROOMS);
   socket.off(DELETE_USER_ROOM_ERROR);
-}
+};

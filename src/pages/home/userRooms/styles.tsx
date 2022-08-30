@@ -6,7 +6,7 @@ const UserRoomsWrapper = styled.div`
   box-shadow: 0px 0px 2px 1px #6b9080;
   overflow: auto;
 
-  & >h3 {
+  & > h3 {
     color: #ffffff;
     font-weight: 400;
     font-size: 22px;

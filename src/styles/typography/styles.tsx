@@ -19,4 +19,3 @@ export const Heading4 = styled.h4<TypographyProps>`
   font-weight: 400;
   color: ${(p) => p.color || "#000"};
 `;
-

@@ -20,7 +20,7 @@ export const RoomUsers = () => {
   const { socket } = useSocket();
   const { roomId } = useParams();
   const [users, setUsers] = useState<UserInRoom[]>([]);
-  
+
   useEffect(() => {
     socket.emit(GET_ROOM, roomId);
     socket.on(GET_ROOM, (data: any) => {
@@ -31,7 +31,9 @@ export const RoomUsers = () => {
   return (
     <RoomUsersBlock>
       {users.length &&
-        users.map((user) => <RoomUserBlock key={user.userId}>{user.userName}</RoomUserBlock>)}
+        users.map((user) => (
+          <RoomUserBlock key={user.userId}>{user.userName}</RoomUserBlock>
+        ))}
     </RoomUsersBlock>
   );
 };

@@ -7,7 +7,11 @@ export class Square extends Tool {
   private y1 = 0;
   private saved = "";
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     super(canvas, socket, id);
     this.listen();
   }
@@ -23,17 +27,25 @@ export class Square extends Tool {
     this.x1 = e.offsetX;
     this.y1 = e.offsetY;
     this.saved = this.canvas.current.toDataURL();
-  };
+  }
 
   private onMouseMove(e: MouseEvent) {
     if (this.mouseDown && this.ctx) {
       let img = new Image();
       img.src = this.saved;
       img.onload = () => {
-        Square.draw(this.ctx, this.canvas, this.x1, this.y1, e.offsetX - this.x1, e.offsetY - this.y1, img)
-      }
+        Square.draw(
+          this.ctx,
+          this.canvas,
+          this.x1,
+          this.y1,
+          e.offsetX - this.x1,
+          e.offsetY - this.y1,
+          img
+        );
+      };
     }
-  };
+  }
 
   private onMouseUp(e: MouseEvent) {
     this.mouseDown = false;
@@ -47,14 +59,22 @@ export class Square extends Tool {
         height: e.offsetY - this.y1,
         fillStyle: this.ctx.fillStyle,
         strokeStyle: this.ctx.strokeStyle,
-        lineWidth: this.ctx.lineWidth
-      })
+        lineWidth: this.ctx.lineWidth,
+      });
     }
     this.x1 = 0;
     this.y1 = 0;
-  };
+  }
 
-  static draw(ctx: any, canvas: any, x1: number, y1: number, widht: number, height: number, img: HTMLImageElement) {
+  static draw(
+    ctx: any,
+    canvas: any,
+    x1: number,
+    y1: number,
+    widht: number,
+    height: number,
+    img: HTMLImageElement
+  ) {
     if (ctx) {
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
       ctx.drawImage(img, 0, 0, canvas.current.width, canvas.current.height);
@@ -66,7 +86,16 @@ export class Square extends Tool {
     }
   }
 
-  static drawOnline(ctx: CanvasRenderingContext2D, x1: number, y1: number, width: number, height: number,fillStyle:string, strokeStyle: string, lineWidht: number) {
+  static drawOnline(
+    ctx: CanvasRenderingContext2D,
+    x1: number,
+    y1: number,
+    width: number,
+    height: number,
+    fillStyle: string,
+    strokeStyle: string,
+    lineWidht: number
+  ) {
     if (ctx) {
       const strokeStyleDefault = ctx.strokeStyle;
       const lineWidthDefault = ctx.lineWidth;
@@ -85,4 +114,4 @@ export class Square extends Tool {
       ctx.fillStyle = fillStyleDefault;
     }
   }
-};
+}

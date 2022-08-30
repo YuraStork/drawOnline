@@ -39,26 +39,25 @@ const UpdateModalButtonsWrapper = styled.div`
     cursor: pointer;
     flex-basis: 50%;
     height: 30px;
-    transition: all .3s;
+    transition: all 0.3s;
 
-    &:focus{
+    &:focus {
       box-shadow: 0px 0px 2px 5px #1692ff;
     }
   }
 
-  & > button:first-child{
+  & > button:first-child {
     background-color: #006900;
-    &:hover{
+    &:hover {
       background-color: #00cf00;
     }
   }
-  & > button:last-child{
+  & > button:last-child {
     background-color: #930202;
-    &:hover{
+    &:hover {
       background-color: #ed1b1b;
     }
   }
-
 `;
 
 export { UpdateModalWrapper, UpdateModalForm, UpdateModalButtonsWrapper };

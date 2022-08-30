@@ -24,12 +24,12 @@ const Wrapper = styled.div`
   border: 4px solid #fff;
   box-shadow: 0px 0px 2px 0px #989898;
   padding: 20px;
-`
+`;
 
 const Title = styled.h2`
   color: #ffffff;
   font-weight: 400;
-`
+`;
 const Logo = styled.h1`
   font-weight: 400;
   font-size: 40px;
@@ -42,9 +42,8 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > h2{
+  & > h2 {
     margin: 0;
-
   }
   & > a {
     width: max-content;

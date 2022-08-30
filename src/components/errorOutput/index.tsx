@@ -5,4 +5,4 @@ export const ErrorOutput = styled.div`
   color: red;
   padding: 5px 0px;
   min-width: 150px;
-`
+`;

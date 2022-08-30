@@ -12,7 +12,10 @@ export const responseInterceptor = async (error: AxiosError) => {
     try {
       const token = getToken();
       if (token) {
-        const refresh = await axios.get(`${API}/user/refresh`, { withCredentials: true, ...SetHeaders() });
+        const refresh = await axios.get(`${API}/user/refresh`, {
+          withCredentials: true,
+          ...SetHeaders(),
+        });
         saveUserInStorage(refresh.data);
         error.config.headers!["authorization"] = `Bearer ${refresh.data.token}`;
         return Instance.request(error.config);
@@ -22,4 +25,4 @@ export const responseInterceptor = async (error: AxiosError) => {
     }
   }
   return Promise.reject(error);
-}
+};

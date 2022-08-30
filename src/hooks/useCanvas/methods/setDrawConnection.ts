@@ -15,19 +15,19 @@ export const CASE_EXIT = "CASE_EXIT";
 export const DRAW = "DRAW";
 
 type Props = {
-  socket: Socket<any, any>,
-  canvasRef: any,
-  roomId: string,
-  name: string,
-  setSnapshotList: React.Dispatch<React.SetStateAction<string[]>>,
-  navigate: NavigateFunction,
-  fillStyle: string,
-  strokeStyle: string,
-  lineWidth: number,
-  snapshotList: string[],
-  setSnapshotIndex: React.Dispatch<React.SetStateAction<number>>,
-  snapshotIndex: number
-}
+  socket: Socket<any, any>;
+  canvasRef: any;
+  roomId: string;
+  name: string;
+  setSnapshotList: React.Dispatch<React.SetStateAction<string[]>>;
+  navigate: NavigateFunction;
+  fillStyle: string;
+  strokeStyle: string;
+  lineWidth: number;
+  snapshotList: string[];
+  setSnapshotIndex: React.Dispatch<React.SetStateAction<number>>;
+  snapshotIndex: number;
+};
 export const SetDrawConnection = (data: Props) => {
   const { canvasRef, name, navigate, roomId, socket } = data;
 
@@ -45,7 +45,7 @@ export const SetDrawConnection = (data: Props) => {
   });
 
   socket.on(DRAW, (data: any) => {
-    console.log("DRAW")
+    console.log("DRAW");
     if (canvasRef.current) {
       const ctx = canvasRef.current?.getContext("2d");
       switch (data.tool) {
@@ -53,16 +53,42 @@ export const SetDrawConnection = (data: Props) => {
           Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);
           break;
         case "square":
-          Square.drawOnline(ctx, data.x1, data.y1, data.width, data.height, data.fillStyle, data.strokeStyle, data.lineWidth);
+          Square.drawOnline(
+            ctx,
+            data.x1,
+            data.y1,
+            data.width,
+            data.height,
+            data.fillStyle,
+            data.strokeStyle,
+            data.lineWidth
+          );
           break;
         case "circle":
-          Circle.drawOnline(ctx, data.x1, data.y1, data.a, data.b, data.fillStyle, data.strokeStyle, data.lineWidth);
+          Circle.drawOnline(
+            ctx,
+            data.x1,
+            data.y1,
+            data.a,
+            data.b,
+            data.fillStyle,
+            data.strokeStyle,
+            data.lineWidth
+          );
           break;
         case "eraser":
           Eraser.draw(ctx, data.x1, data.y1);
           break;
         case "line":
-          Line.drawOnline(ctx, data.x1, data.y1, data.x2, data.y2, data.strokeStyle, data.lineWidth);
+          Line.drawOnline(
+            ctx,
+            data.x1,
+            data.y1,
+            data.x2,
+            data.y2,
+            data.strokeStyle,
+            data.lineWidth
+          );
           break;
         default:
           Pen.drawOnline(ctx, data.x, data.y, data.strokeStyle, data.lineWidth);

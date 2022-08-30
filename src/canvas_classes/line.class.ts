@@ -33,7 +33,7 @@ export class Line extends Tool {
         x2: e.offsetX,
         y2: e.offsetY,
         lineWidth: this.ctx.lineWidth,
-        strokeStyle: this.ctx.strokeStyle
+        strokeStyle: this.ctx.strokeStyle,
       });
     }
     this.x1 = 0;
@@ -69,7 +69,15 @@ export class Line extends Tool {
     }
   }
 
-  static drawOnline(ctx: any, x1: number, y1: number, x2: number, y2: number, strokeStyle: string, lineWidth: string) {
+  static drawOnline(
+    ctx: any,
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    strokeStyle: string,
+    lineWidth: string
+  ) {
     if (ctx) {
       const strokeStyleDefault = ctx.strokeStyle;
       const lineWidthDefault = ctx.lineWidth;
@@ -78,7 +86,7 @@ export class Line extends Tool {
       ctx.lineWidth = lineWidth;
       ctx.strokeStyle = strokeStyle;
       ctx.lineWidth = lineWidth;
-      
+
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
