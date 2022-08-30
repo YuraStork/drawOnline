@@ -56,16 +56,15 @@ export const HomePage = () => {
           <CreateRoomComponent
             isLoading={loading}
             setIsLoading={setIsLoading}
-            socket={socket}
           />
-          <EnterInRoomComponent socket={socket} />
+          <EnterInRoomComponent />
         </Wrapper>
 
-        <UserRooms socket={socket} userRooms={userRooms} userId={id} userName={name} />
+        <UserRooms userRooms={userRooms} userId={id} userName={name} />
 
         <ChatWrapper>
           <h3>Chat</h3>
-          <Chat socket={socket} />
+          <Chat />
         </ChatWrapper>
       </HomePageWrapper>
     </HomePageSection>

@@ -1,24 +1,23 @@
 import { useFormik } from "formik";
 import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Loader } from "../../../components/loader";
 import { useAppSelector } from "store/store";
-import { Socket } from "socket.io-client";
 import { ErrorOutput } from "components/errorOutput";
+import { WsContext } from "context/ws.context";
 
 type ComponentProps = {
   isLoading: boolean;
   setIsLoading: (arg: boolean) => void;
-  socket: Socket<any, any>;
 };
 
 export const CreateRoomComponent: FC<ComponentProps> = ({
   isLoading,
   setIsLoading,
-  socket,
 }) => {
   const user = useAppSelector((s) => s.user.data);
+  const { socket } = useContext(WsContext);
 
   const formik = useFormik({
     initialValues,

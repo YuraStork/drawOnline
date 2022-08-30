@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { WsContext } from "context/ws.context";
+import { FC, useContext, useState } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
 import { RoomCard, CardSettings } from "./styles";
@@ -6,14 +7,14 @@ import { UpdateCard } from "./update";
 
 type Props = {
   room: ActiveRoom;
-  socket: Socket<any, any>;
   userId: string;
   userName: string;
 };
 
-export const UserRoomCard: FC<Props> = ({ room, socket, userId, userName }) => {
+export const UserRoomCard: FC<Props> = ({ room, userId, userName }) => {
   const [active, setActive] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const { socket } = useContext(WsContext);
 
   const handleDeleteRoom = () => {
     socket.emit("DELETE_USER_ROOM", {
