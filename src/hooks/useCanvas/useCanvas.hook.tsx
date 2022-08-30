@@ -5,7 +5,7 @@ import { ToolsTypes } from "types/canvas";
 import { SetDrawConnection, ClearDrawConnection } from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import { Tool } from "../../canvas_classes/index";
-import { setCanvasHeight, setCanvasWidth, SetTool } from "./const";
+import { setCanvasHeight, setCanvasWidth, handleSetTool } from "./const";
 import { useSocket } from "hooks/useSocket";
 import { userDataSelector } from "store/selectors/user.selector";
 
@@ -34,7 +34,7 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+    handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
     SetDrawConnection({ socket, canvasRef, roomId: roomId || "", name, navigate, fillStyle: Tool.fillStyle, strokeStyle: Tool.strokeStyle, lineWidth: Tool.lineWidth, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex });
 
     return () => {
@@ -43,7 +43,7 @@ export const useCanvas = () => {
   }, []);
 
   useEffect(() => {
-    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+    handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
   }, [tool])
 
   useEffect(() => {

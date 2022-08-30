@@ -20,7 +20,7 @@ export const setCanvasHeight = () => {
   return document.body.clientHeight - 150;
 }
 
-export const SetTool = (data: Props) => {
+export const handleSetTool = (data: Props) => {
   const { canvasRef, roomId, socket, tool } = data;
 
   switch (tool) {
