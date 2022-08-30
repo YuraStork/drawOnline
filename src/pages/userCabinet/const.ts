@@ -74,10 +74,10 @@ const onSubmit = async (
   dispatch: AppDispatch,
   handleEdit: VoidFunction
 ) => {
-  const keys: any = Object.keys(chenchedData);
+  const keys = Object.keys(chenchedData) as (keyof Omit<AuthorizedUser, "role" | "email">)[];
   const formData = new FormData();
   const filteredKeys = keys.filter(
-    (key: keyof Omit<AuthorizedUser, "role" | "email">) => {
+    (key) => {
       return chenchedData[key] !== original[key];
     }
   );
