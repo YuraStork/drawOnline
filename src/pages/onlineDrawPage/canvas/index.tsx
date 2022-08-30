@@ -4,28 +4,12 @@ import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
-import styled from "styled-components";
 import { Canvas } from "../../../components/canvas";
 import { SettingsBar } from "../../../components/settings";
 import { Toolbar } from "../../../components/toolbar";
 import { RoomUsers } from "../roomUsers";
-import { CanvasSection } from "./styles";
+import { CanvasSection, Layout } from "./styles";
 
-const Layout = styled.div`
-  max-width: 1400px;
-  max-height: 100vh;
-  margin: 0 auto;
-  display: grid;
-  gap: 5px;
-  grid-template: 52px 52px 1fr / 1fr 200px;
-  grid-template-areas:
-    "toolbar toolbar"
-    "settings settings"
-    "canvas roomUsers";
-  & > div {
-    border-radius: 5px;
-  }
-`;
 type ParamsProps = {
   roomId: string;
 };
