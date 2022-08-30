@@ -36,7 +36,6 @@ export const useCanvas = () => {
     });
     handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
     SetDrawConnection({ socket, canvasRef, roomId: roomId || "", name, navigate, fillStyle: Tool.fillStyle, strokeStyle: Tool.strokeStyle, lineWidth: Tool.lineWidth, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex });
-
     return () => {
       ClearDrawConnection(socket);
     };
@@ -46,13 +45,22 @@ export const useCanvas = () => {
     handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
   }, [tool])
 
+  const setToolhandler = (tool: ToolsTypes) => setTool(tool);
+  const changeFillStyle = (color: string) => Tool.changeFillStyle(canvasRef.current.getContext("2d"), color);
+  const changeStrokeStyle = (color: string) => Tool.changeStrokeStyle(canvasRef.current.getContext("2d"), color);
+  const changeLineWidth = (size: number) => Tool.changeLineWidth(canvasRef.current.getContext("2d"), size);
+  const handleReset = () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex);
+  const handleRedo = () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex);
+
   return {
     canvasRef,
     tool,
-    setToolhandler: (tool: ToolsTypes) => setTool(tool),
-    changeFillStyle: (color: string) => Tool.changeFillStyle(canvasRef.current.getContext("2d"), color),
-    changeStrokeStyle: (color: string) => Tool.changeStrokeStyle(canvasRef.current.getContext("2d"), color),
-    changeLineWidth: (size: number) => Tool.changeLineWidth(canvasRef.current.getContext("2d"), size),
+    setToolhandler,
+    changeFillStyle,
+    changeStrokeStyle,
+    changeLineWidth,
+    handleReset,
+    handleRedo,
     handleSnapshot: () =>
       handleSnapshot({
         snapshotIndex,
@@ -61,8 +69,6 @@ export const useCanvas = () => {
         setSnapshotList,
         canvasRef,
       }),
-    handleReset: () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
-    handleRedo: () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
     snapshot: snapshotList[snapshotIndex] || null,
   };
 };
