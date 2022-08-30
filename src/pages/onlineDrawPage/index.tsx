@@ -4,13 +4,14 @@ import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
 import { checkUserInRoom } from "./const";
 import { useSocket } from "hooks/useSocket";
+import { userDataSelector } from "store/selectors/user.selector";
 
 type ParamsProps = {
   roomId: string;
 };
 
 export const OnlineDrawPage: FC<any> = ({ children }) => {
-  const user = useAppSelector((s) => s.user.data);
+  const user = useAppSelector(userDataSelector);
   const { roomId } = useParams<ParamsProps>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);

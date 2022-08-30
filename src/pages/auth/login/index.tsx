@@ -11,11 +11,11 @@ import { Portal } from "utils/portal";
 import { Loader } from "components/loader";
 import { Input } from "components/input";
 import { useAppDispatch, useAppSelector } from "store/store";
-import { getUser } from "store/selectors/user.selector";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { UserLoginFormData } from "types";
 
 export const LoginComponent = () => {
-  const { isLoading } = useAppSelector(getUser);
+  const { isLoading } = useAppSelector(userInfoSelector);
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues,
@@ -41,7 +41,7 @@ export const LoginComponent = () => {
               onBlur={formik.handleBlur}
               error={
                 formik.errors[field as keyof UserLoginFormData] &&
-                formik.touched[field as keyof UserLoginFormData]
+                  formik.touched[field as keyof UserLoginFormData]
                   ? formik.errors[field as keyof UserLoginFormData]
                   : ""
               }

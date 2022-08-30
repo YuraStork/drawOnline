@@ -2,6 +2,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { LittleLoader } from "components/littleLoader";
 import { useSocket } from "hooks/useSocket";
 import { useEffect, useRef, useState } from "react";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
 import { SetConnectionChat, ClearConnectionChat, CHAT_MESSAGE } from "./const";
@@ -13,7 +14,7 @@ export const Chat = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data } = useAppSelector((s) => s.user);
+  const { data } = useAppSelector(userInfoSelector);
   const chatRef = useRef<HTMLDivElement>(null);
   const [messageLoading, setMessageLoading] = useState(false);
   const DEFAULT_IMAGE = "http://localhost:5000/users/defaultUserImage.png";

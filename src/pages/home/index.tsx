@@ -3,6 +3,7 @@ import { Loader } from "components/loader";
 import { useSocket } from "hooks/useSocket";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userDataSelector } from "store/selectors/user.selector";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user/authorization.thunk";
 import { ActiveRoom } from "types/rooms";
@@ -23,7 +24,7 @@ import {
 import { UserRooms } from "./userRooms";
 
 export const HomePage = () => {
-  const { id, name } = useAppSelector((s) => s.user.data);
+  const { id, name } = useAppSelector(userDataSelector);
   const [loading, setIsLoading] = useState(false);
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
   const [userRooms, setUserRooms] = useState<ActiveRoom[]>([]);

@@ -5,10 +5,11 @@ import { Loader } from "components/loader";
 import { ConfirmAccessPage, ConfirmAccessPageMain } from "./styles";
 import { ClearAccessPageConnection, SetAccessPageConnection } from "./const";
 import { useSocket } from "hooks/useSocket";
+import { userDataSelector } from "store/selectors/user.selector";
 
 export const PrivateRoom = () => {
   const [roomPassword, setPassword] = useState("");
-  const user = useAppSelector((s) => s.user.data);
+  const user = useAppSelector(userDataSelector);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { roomId } = useParams();

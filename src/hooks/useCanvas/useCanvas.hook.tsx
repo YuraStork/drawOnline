@@ -7,6 +7,7 @@ import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import { Tool } from "../../canvas_classes/index";
 import { SetTool } from "./const";
 import { useSocket } from "hooks/useSocket";
+import { userDataSelector } from "store/selectors/user.selector";
 
 type ParamsProps = {
   roomId: string;
@@ -20,7 +21,7 @@ export const useCanvas = () => {
   const [snapshotIndex, setSnapshotIndex] = useState(-1);
   const { socket } = useSocket();
   const { roomId } = useParams<ParamsProps>();
-  const { name } = useAppSelector((s) => s.user.data);
+  const { name } = useAppSelector(userDataSelector);
 
   useEffect(() => {
     canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
@@ -46,7 +47,7 @@ export const useCanvas = () => {
   }, [tool])
 
   useEffect(() => {
-   console.log(snapshotIndex, snapshotList);
+    console.log(snapshotIndex, snapshotList);
   }, [snapshotIndex])
 
   return {

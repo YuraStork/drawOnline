@@ -3,6 +3,7 @@ import { PaintContext } from "context/paintContext";
 import { useCanvas } from "hooks/useCanvas/useCanvas.hook";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { userDataSelector } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { Canvas } from "../../../components/canvas";
 import { SettingsBar } from "../../../components/settings";
@@ -16,7 +17,7 @@ type ParamsProps = {
 
 export const OnlineCanvas = () => {
   const data = useCanvas();
-  const user = useAppSelector((s) => s.user.data);
+  const user = useAppSelector(userDataSelector);
   const { roomId } = useParams<ParamsProps>();
 
   useEffect(

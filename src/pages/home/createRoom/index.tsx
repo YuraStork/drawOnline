@@ -6,6 +6,7 @@ import { Loader } from "../../../components/loader";
 import { useAppSelector } from "store/store";
 import { ErrorOutput } from "components/errorOutput";
 import { useSocket } from "hooks/useSocket";
+import { userDataSelector } from "store/selectors/user.selector";
 
 type ComponentProps = {
   isLoading: boolean;
@@ -16,7 +17,7 @@ export const CreateRoomComponent: FC<ComponentProps> = ({
   isLoading,
   setIsLoading,
 }) => {
-  const user = useAppSelector((s) => s.user.data);
+  const user = useAppSelector(userDataSelector);
   const { socket } = useSocket();
 
   const formik = useFormik({

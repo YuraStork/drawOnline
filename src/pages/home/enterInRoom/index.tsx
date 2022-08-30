@@ -6,10 +6,11 @@ import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
 import { ErrorOutput } from "components/errorOutput";
 import { useSocket } from "hooks/useSocket";
+import { userInfoSelector } from "store/selectors/user.selector";
 
 export const EnterInRoomComponent = () => {
   const { socket } = useSocket();
-  const user = useAppSelector((s) => s.user);
+  const user = useAppSelector(userInfoSelector);
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
