@@ -22,7 +22,7 @@ export interface AuthorizedUser {
 }
 
 export interface AuthorizedUserObject {
-  token: string,
+  token: string;
   data: AuthorizedUser;
 }
 export interface SavedUserObject {
@@ -30,7 +30,7 @@ export interface SavedUserObject {
   user: Pick<AuthorizedUser, "name" | "role" | "id">;
 }
 export interface FunctionWithParams<T> {
-  (e: T): void
+  (e: T): void;
 }
 export interface AuthContextTypes {
   isAuth: boolean;
@@ -41,11 +41,10 @@ export interface AuthContextTypes {
   isLoading: boolean;
 }
 export interface RoomType {
-  _id: string,
+  _id: string;
 }
 
 export interface UserInRoom {
   userName: string;
   userId: string;
 }
-

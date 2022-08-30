@@ -57,4 +57,4 @@ const Label = styled.label`
   user-select: none;
 `;
 
-export { InputWrapper, Wrapper, Label, Input, Span }
+export { InputWrapper, Wrapper, Label, Input, Span };

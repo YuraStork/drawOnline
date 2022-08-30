@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { InitialStateTypes, UserCabinetTypes } from "./types";
 
 export const MALE = "male";
-export const WOMAN = "woman"
+export const WOMAN = "woman";
 const defaultUserValues = {
   name: "",
   country: "",
@@ -76,13 +76,14 @@ const onSubmit = async (
   dispatch: AppDispatch,
   handleEdit: VoidFunction
 ) => {
-  const keys = Object.keys(chenchedData) as (keyof Omit<AuthorizedUser, "role" | "email">)[];
+  const keys = Object.keys(chenchedData) as (keyof Omit<
+    AuthorizedUser,
+    "role" | "email"
+  >)[];
   const formData = new FormData();
-  const filteredKeys = keys.filter(
-    (key) => {
-      return chenchedData[key] !== original[key];
-    }
-  );
+  const filteredKeys = keys.filter((key) => {
+    return chenchedData[key] !== original[key];
+  });
 
   const isAvatar = filteredKeys.includes("avatar");
 

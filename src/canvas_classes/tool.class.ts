@@ -11,7 +11,11 @@ export class Tool {
   static fillStyle = "#000";
   static lineWidth = 1;
 
-  constructor(canvas: React.MutableRefObject<HTMLCanvasElement>, socket: Socket<any, any>, id: string) {
+  constructor(
+    canvas: React.MutableRefObject<HTMLCanvasElement>,
+    socket: Socket<any, any>,
+    id: string
+  ) {
     this.canvas = canvas;
     this.socket = socket;
     this.id = id;
@@ -26,7 +30,10 @@ export class Tool {
     }
   }
 
-  static changeStrokeStyle(ctx: CanvasRenderingContext2D | null, color: string) {
+  static changeStrokeStyle(
+    ctx: CanvasRenderingContext2D | null,
+    color: string
+  ) {
     if (ctx) {
       ctx.strokeStyle = color;
     }
@@ -38,12 +45,15 @@ export class Tool {
     }
   }
 
-  static setSnapshot(ctx: CanvasRenderingContext2D | null, snapshot: string | null) {
+  static setSnapshot(
+    ctx: CanvasRenderingContext2D | null,
+    snapshot: string | null
+  ) {
     if (snapshot && ctx) {
       const img = new Image();
       img.src = snapshot;
       img.onload = () => {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
       };
     }

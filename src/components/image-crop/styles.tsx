@@ -11,4 +11,4 @@ const AvatarEditWrapper = styled.div`
   }
 `;
 
-export {AvatarEditWrapper};
+export { AvatarEditWrapper };

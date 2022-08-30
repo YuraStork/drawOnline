@@ -21,7 +21,7 @@ export type ChatMessage = {
 
 export type ChatError = {
   error: string;
-}
+};
 
 export type ChatType = {
   method: "GET_CHAT" | "MESSAGE" | "ERROR";

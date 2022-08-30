@@ -1,8 +1,8 @@
 type UserInRoom = {
-  userId: string,
-  userName: string,
-  online: boolean
-}
+  userId: string;
+  userName: string;
+  online: boolean;
+};
 
 export type ActiveRoom = {
   _id: string;
@@ -14,4 +14,4 @@ export type ActiveRoom = {
   roomImages: string[];
   owner: string;
   isShow: boolean;
-}
+};

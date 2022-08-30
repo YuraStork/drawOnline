@@ -10,7 +10,10 @@ export const UserSlice = createSlice({
   name: USER_REDUCER,
   initialState: userInitialState,
   reducers: {
-    initializeUser: (state, { payload: { token, user } }: PayloadAction<SavedUserObject>) => {
+    initializeUser: (
+      state,
+      { payload: { token, user } }: PayloadAction<SavedUserObject>
+    ) => {
       state.token = token;
       state.data.id = user.id;
       state.data.name = user.name;
@@ -22,15 +25,15 @@ export const UserSlice = createSlice({
       state.isAuth = false;
       state.error = undefined;
       state.token = undefined;
-    }
+    },
   },
 
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     userLoginBuilder(builder);
     updateUserProfileBuilder(builder);
-    userRegistrationBuilder(builder)
-    authorizedBuilder(builder)
-  }
-})
+    userRegistrationBuilder(builder);
+    authorizedBuilder(builder);
+  },
+});
 
 export const { initializeUser, logoutAction } = UserSlice.actions;

@@ -9,15 +9,15 @@ const StyledToolbar = styled.div`
   background-color: #fff;
   border-bottom: 2px solid #000;
 
-  & > div:last-child{
-    & > button:first-child{
+  & > div:last-child {
+    & > button:first-child {
       transform: rotate(180deg);
     }
   }
   & > div {
     display: flex;
     gap: 10px;
-    & > input{
+    & > input {
       margin-top: 5px;
     }
   }
@@ -37,10 +37,12 @@ const ToolButton = styled.button<ToolButtonProps>`
   background: none;
   border-radius: 5px;
   border: 2px solid #ffffff;
-  
-  ${p => p.active && css`
+
+  ${(p) =>
+    p.active &&
+    css`
       border: 2px solid #000;
-  `};
+    `};
 
   ${(p) =>
     p.img &&
@@ -55,20 +57,20 @@ const ToolButton = styled.button<ToolButtonProps>`
 const LeaveButton = styled.button`
   width: 100px;
   background-color: #165bb4;
-  color:#fff;
+  color: #fff;
   cursor: pointer;
   padding: 5px;
   appearance: none;
   border-radius: 5px;
-  transition: all .3s;
+  transition: all 0.3s;
 
-  &:hover{
+  &:hover {
     background-color: #006eff;
-    color:#fff;
+    color: #fff;
   }
-  &:focus{
-    ${p => p.theme.shadows.buttonFocus}
+  &:focus {
+    ${(p) => p.theme.shadows.buttonFocus}
   }
-`
+`;
 
 export { ToolButton, StyledToolbar, LeaveButton };

@@ -27,11 +27,10 @@ export const checkUserInRoom = async (data: Props) => {
 
     if (response.status === 200) {
       setAccess(true);
-      socket.emit("JOIN_ACCESS", { roomId })
+      socket.emit("JOIN_ACCESS", { roomId });
     }
     setIsLoading(false);
     return true;
-
   } catch (e) {
     navigate(`/checkRoompassword/${roomId}`);
   }

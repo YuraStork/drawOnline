@@ -33,7 +33,13 @@ export const UserCabinet = () => {
           <>
             <Wrapper>
               <ImagesWrapper>
-                <img src={data.backgroundFon + `?id=${Math.floor(Math.random() * 100)}`} alt={data.name} />
+                <img
+                  src={
+                    data.backgroundFon +
+                    `?id=${Math.floor(Math.random() * 100)}`
+                  }
+                  alt={data.name}
+                />
                 <AvatarWrapper>
                   <Avatar>
                     <img src={data.avatar} alt={data.name} />
@@ -57,7 +63,17 @@ export const UserCabinet = () => {
                     <span>City</span> {data.city}
                   </div>
                   <div>
-                    <span>Color</span> <span style={{ display: "inline-block", background: data.color, width: "10px", height: "10px", borderRadius: "10px", minWidth: "10px" }}></span>
+                    <span>Color</span>{" "}
+                    <span
+                      style={{
+                        display: "inline-block",
+                        background: data.color,
+                        width: "10px",
+                        height: "10px",
+                        borderRadius: "10px",
+                        minWidth: "10px",
+                      }}
+                    ></span>
                   </div>
                   <div>
                     <span>Gender</span> {data.gender}
@@ -69,7 +85,13 @@ export const UserCabinet = () => {
 
                 <Biography>
                   <p>Biography</p>
-                  <HtmlText str={data.biography ? data.biography : "You`ve not a biography yet "} />
+                  <HtmlText
+                    str={
+                      data.biography
+                        ? data.biography
+                        : "You`ve not a biography yet "
+                    }
+                  />
                 </Biography>
               </UserInfoWrapper>
 
@@ -85,7 +107,9 @@ export const UserCabinet = () => {
           </>
         )}
 
-        {editMode && <UpdateUserModal userData={data} handleEdit={handleEdit} />}
+        {editMode && (
+          <UpdateUserModal userData={data} handleEdit={handleEdit} />
+        )}
       </Container>
     </UserCabinetSection>
   );

@@ -47,11 +47,7 @@ export class Pen extends Tool {
     }
   }
 
-  static draw(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-  ) {
+  static draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -61,7 +57,7 @@ export class Pen extends Tool {
     x: number,
     y: number,
     strokeStyle: string,
-    lineWidht: number,
+    lineWidht: number
   ) {
     if (ctx) {
       const strokeStyleDefault = ctx.strokeStyle;

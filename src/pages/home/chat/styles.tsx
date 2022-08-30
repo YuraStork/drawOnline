@@ -13,9 +13,9 @@ const ChatWrapper = styled.div`
     overflow: auto;
     background-color: #183333;
     border-radius: 5px;
-    padding:10px;
+    padding: 10px;
   }
-  & > div:last-child{
+  & > div:last-child {
     margin-top: 5px;
     border-radius: 5px;
     background-color: #183333;
@@ -23,14 +23,14 @@ const ChatWrapper = styled.div`
     align-items: center;
     padding: 0px 10px;
 
-    & > input{
+    & > input {
       flex-grow: 1;
       height: 30px;
       border-radius: 5px;
       border-top-right-radius: 0px;
       border-bottom-right-radius: 0px;
     }
-    & > button{
+    & > button {
       width: 50px;
       height: 30px;
       border-top-right-radius: 5px;

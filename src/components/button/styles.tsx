@@ -10,7 +10,7 @@ type ButtonProps = {
 export const Button = styled.button<ButtonProps>`
   position: relative;
   padding: 10px;
-  width:${(p) => p.width ? p.width : "100px"};
+  width: ${(p) => (p.width ? p.width : "100px")};
   ${(p) =>
     p.margin &&
     css`

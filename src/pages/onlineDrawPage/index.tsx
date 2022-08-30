@@ -19,7 +19,14 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
   const { socket } = useSocket();
 
   useEffect(() => {
-    checkUserInRoom({ navigate, roomId, setIsLoading, userId: user.id, setAccess, socket });
+    checkUserInRoom({
+      navigate,
+      roomId,
+      setIsLoading,
+      userId: user.id,
+      setAccess,
+      socket,
+    });
   }, []);
 
   if (isLoading) return <Loader position="absolute" />;

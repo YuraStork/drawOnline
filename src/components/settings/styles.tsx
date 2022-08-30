@@ -9,11 +9,11 @@ const StyledSettings = styled.div`
   gap: 20px;
   border-bottom: 2px solid #000;
 
-  & > div{
+  & > div {
     display: flex;
     align-items: center;
     gap: 10px;
   }
 `;
 
-export {StyledSettings};
+export { StyledSettings };

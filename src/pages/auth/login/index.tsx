@@ -41,7 +41,7 @@ export const LoginComponent = () => {
               onBlur={formik.handleBlur}
               error={
                 formik.errors[field as keyof UserLoginFormData] &&
-                  formik.touched[field as keyof UserLoginFormData]
+                formik.touched[field as keyof UserLoginFormData]
                   ? formik.errors[field as keyof UserLoginFormData]
                   : ""
               }

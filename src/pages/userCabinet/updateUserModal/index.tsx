@@ -13,11 +13,7 @@ import {
   onSubmit,
   setInputTypes,
 } from "../const";
-import {
-  UserForm,
-  ButtonWrapper,
-  AvatarWrapper,
-} from "./styles";
+import { UserForm, ButtonWrapper, AvatarWrapper } from "./styles";
 import { UserCabinetTypes } from "../types";
 import { UpdateUserModalTypes } from "./types";
 import { Heading3 } from "styles/typography/styles";
