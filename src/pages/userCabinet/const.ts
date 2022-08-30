@@ -8,6 +8,8 @@ import { createBlobFile } from "utils/encodeBase64";
 import * as yup from "yup";
 import { InitialStateTypes, UserCabinetTypes } from "./types";
 
+export const MALE = "male";
+export const WOMAN = "woman"
 const defaultUserValues = {
   name: "",
   country: "",
@@ -74,10 +76,10 @@ const onSubmit = async (
   dispatch: AppDispatch,
   handleEdit: VoidFunction
 ) => {
-  const keys: any = Object.keys(chenchedData);
+  const keys = Object.keys(chenchedData) as (keyof Omit<AuthorizedUser, "role" | "email">)[];
   const formData = new FormData();
   const filteredKeys = keys.filter(
-    (key: keyof Omit<AuthorizedUser, "role" | "email">) => {
+    (key) => {
       return chenchedData[key] !== original[key];
     }
   );
