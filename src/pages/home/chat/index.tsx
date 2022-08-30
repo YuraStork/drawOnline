@@ -1,24 +1,23 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { LittleLoader } from "components/littleLoader";
-import { FC, useEffect, useRef, useState } from "react";
-import { Socket } from "socket.io-client";
+import { useSocket } from "hooks/useSocket";
+import { useEffect, useRef, useState } from "react";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
 import { SetConnectionChat, ClearConnectionChat, CHAT_MESSAGE } from "./const";
 import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
-type ChatProps = {
-  socket: Socket<any, any>;
-};
-
-export const Chat: FC<ChatProps> = ({ socket }) => {
+export const Chat = () => {
+  const { socket } = useSocket();
   const [messages, setMessages] = useState<ChatMessage[] | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data } = useAppSelector((s) => s.user);
+  const { data } = useAppSelector(userInfoSelector);
   const chatRef = useRef<HTMLDivElement>(null);
   const [messageLoading, setMessageLoading] = useState(false);
+  const DEFAULT_IMAGE = "http://localhost:5000/users/defaultUserImage.png";
 
   useEffect(() => {
     SetConnectionChat({
@@ -34,7 +33,9 @@ export const Chat: FC<ChatProps> = ({ socket }) => {
   }, []);
 
   useEffect(() => {
-    chatRef.current?.scrollTo(0, 100000);
+    if (chatRef.current) {
+      chatRef.current.scrollTo(0, chatRef.current.scrollHeight);
+    }
   }, [messages]);
 
   const handleSendMessage = () => {
@@ -63,8 +64,7 @@ export const Chat: FC<ChatProps> = ({ socket }) => {
                   src={`http://localhost:5000/users/${msg.userId}/${msg.userId}_avatar.png`}
                   onError={(e) => {
                     (e.target as HTMLImageElement).onerror = null;
-                    (e.target as HTMLImageElement).src =
-                      "http://localhost:5000/users/defaultUserImage.png";
+                    (e.target as HTMLImageElement).src = DEFAULT_IMAGE;
                   }}
                   width={30}
                   height={30}

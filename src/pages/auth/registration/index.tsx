@@ -12,12 +12,12 @@ import { Input } from "components/input";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { Portal } from "utils/portal";
 import { Loader } from "components/loader";
-import { getUser } from "store/selectors/user.selector";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { UserRegistrationData } from "types";
 
 export const RegistrationComponent = () => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector(getUser);
+  const { isLoading } = useAppSelector(userInfoSelector);
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -41,7 +41,7 @@ export const RegistrationComponent = () => {
               onBlur={formik.handleBlur}
               error={
                 formik.errors[field as keyof UserRegistrationData] &&
-                formik.touched[field as keyof UserRegistrationData]
+                  formik.touched[field as keyof UserRegistrationData]
                   ? formik.errors[field as keyof UserRegistrationData]
                   : ""
               }

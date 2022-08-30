@@ -1,18 +1,19 @@
-import { WsContext } from "context/ws.context";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
 import { ConfirmAccessPage, ConfirmAccessPageMain } from "./styles";
 import { ClearAccessPageConnection, SetAccessPageConnection } from "./const";
+import { useSocket } from "hooks/useSocket";
+import { userDataSelector } from "store/selectors/user.selector";
 
 export const PrivateRoom = () => {
   const [roomPassword, setPassword] = useState("");
-  const user = useAppSelector((s) => s.user.data);
+  const user = useAppSelector(userDataSelector);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { roomId } = useParams();
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
 
   useEffect(() => {
     SetAccessPageConnection({ navigate, setIsLoading, socket });

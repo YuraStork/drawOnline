@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { AuthPage } from "pages/auth/index";
 import { UserCabinet } from "pages/userCabinet";
-import { getUser } from "store/selectors/user.selector";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { LayoutComponent } from "pages/layout";
 import { OnlineCanvas } from "pages/onlineDrawPage/canvas";
@@ -38,7 +38,7 @@ const setRoutes = (isAuth: boolean) =>
     ];
 
 export const Router = () => {
-  const { isAuth } = useAppSelector(getUser);
+  const { isAuth } = useAppSelector(userInfoSelector);
   const routes = useRoutes(setRoutes(isAuth));
 
   if (isAuth) {

@@ -1,6 +1,7 @@
-import { WsContext } from "context/ws.context";
+import { useSocket } from "hooks/useSocket";
 import { MouseEvent, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { userDataSelector } from "store/selectors/user.selector";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
 import { PaintContext } from "../../context/paintContext";
@@ -16,8 +17,8 @@ export const Toolbar = () => {
     snapshot,
   } = useContext(PaintContext);
   const { roomId } = useParams();
-  const { id } = useAppSelector((s) => s.user.data);
-  const { socket } = useContext(WsContext);
+  const { id } = useAppSelector(userDataSelector);
+  const { socket } = useSocket();
 
   const handleChangeTool = (e: MouseEvent) => {
     if ((e.target as HTMLElement).tagName === "BUTTON") {

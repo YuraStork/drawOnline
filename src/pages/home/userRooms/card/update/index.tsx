@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useSocket } from "hooks/useSocket";
 import { FC } from "react";
 import { Socket } from "socket.io-client";
 import { ActiveRoom } from "types/rooms";
@@ -22,12 +23,8 @@ enum Updatekeys {
   roomPassword = "roomPassword",
 }
 
-export const UpdateCard: FC<Props> = ({
-  socket,
-  room,
-  setEditMode,
-  userId,
-}) => {
+export const UpdateCard: FC<Props> = ({ room, setEditMode, userId }) => {
+  const { socket } = useSocket();
   const formik = useFormik({
     initialValues: {
       roomName: room.roomName,

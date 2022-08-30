@@ -13,7 +13,7 @@ import {
   ButtonWrapper,
 } from "./styles";
 import { useAppSelector } from "store/store";
-import { getUser } from "store/selectors/user.selector";
+import { userInfoSelector } from "store/selectors/user.selector";
 import { UpdateUserModal } from "./updateUserModal";
 import { HtmlText } from "components/htmlText";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 export const UserCabinet = () => {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
-  const { data, isLoading } = useAppSelector(getUser);
+  const { data, isLoading } = useAppSelector(userInfoSelector);
   const handleEdit = () => setEditMode(!editMode);
 
   return (

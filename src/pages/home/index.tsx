@@ -1,8 +1,9 @@
 import { Button } from "components/button/styles";
 import { Loader } from "components/loader";
-import { WsContext } from "context/ws.context";
-import { useContext, useEffect, useState } from "react";
+import { useSocket } from "hooks/useSocket";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userDataSelector } from "store/selectors/user.selector";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user/authorization.thunk";
 import { ActiveRoom } from "types/rooms";
@@ -23,12 +24,13 @@ import {
 import { UserRooms } from "./userRooms";
 
 export const HomePage = () => {
-  const { id, name } = useAppSelector((s) => s.user.data);
+  const { id, name } = useAppSelector(userDataSelector);
   const [loading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
-  const { socket } = useContext(WsContext);
   const [userRooms, setUserRooms] = useState<ActiveRoom[]>([]);
+
+  const dispatch = useAppDispatch();
+  const { socket } = useSocket();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,16 +57,15 @@ export const HomePage = () => {
           <CreateRoomComponent
             isLoading={loading}
             setIsLoading={setIsLoading}
-            socket={socket}
           />
-          <EnterInRoomComponent socket={socket} />
+          <EnterInRoomComponent />
         </Wrapper>
 
-        <UserRooms socket={socket} userRooms={userRooms} userId={id} userName={name} />
+        <UserRooms userRooms={userRooms} userId={id} userName={name} />
 
         <ChatWrapper>
           <h3>Chat</h3>
-          <Chat socket={socket} />
+          <Chat />
         </ChatWrapper>
       </HomePageWrapper>
     </HomePageSection>

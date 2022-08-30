@@ -1,17 +1,16 @@
 import { useFormik } from "formik";
 import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
-import { Socket } from "socket.io-client";
 import { ErrorOutput } from "components/errorOutput";
+import { useSocket } from "hooks/useSocket";
+import { userInfoSelector } from "store/selectors/user.selector";
 
-type ComponentProps = {
-  socket: Socket<any, any>;
-};
-export const EnterInRoomComponent: FC<ComponentProps> = ({ socket }) => {
-  const user = useAppSelector((s) => s.user);
+export const EnterInRoomComponent = () => {
+  const { socket } = useSocket();
+  const user = useAppSelector(userInfoSelector);
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
