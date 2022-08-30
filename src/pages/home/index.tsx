@@ -25,10 +25,11 @@ import { UserRooms } from "./userRooms";
 export const HomePage = () => {
   const { id, name } = useAppSelector((s) => s.user.data);
   const [loading, setIsLoading] = useState(false);
-  const dispatch = useAppDispatch();
   const [activeRooms, setActiveRooms] = useState<ActiveRoom[]>([]);
-  const { socket } = useContext(WsContext);
   const [userRooms, setUserRooms] = useState<ActiveRoom[]>([]);
+
+  const dispatch = useAppDispatch();
+  const { socket } = useContext(WsContext);
   const navigate = useNavigate();
 
   useEffect(() => {
