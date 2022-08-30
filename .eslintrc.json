@@ -34,7 +34,7 @@
         "avoidEscape": true
       }
     ],
-    "linebreak-style": "off",
+    "linebreak-style": "error",
     "object-curly-spacing": "off",
     "spaced-comment": "off",
     "import/default": "off",
