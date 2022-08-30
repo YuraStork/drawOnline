@@ -23,7 +23,10 @@ export const FileInput: FC<FileInputProps> = ({ onChange, name }) => {
     setFile(e.target.files ? e.target.files[0] : null);
     onChange(e);
   };
-  const handleClose = () => { setFile(null); onChange(null) }
+  const handleClose = () => {
+    setFile(null);
+    onChange(null);
+  };
 
   return (
     <ContentWrapper>
