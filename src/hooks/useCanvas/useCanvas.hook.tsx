@@ -46,10 +46,6 @@ export const useCanvas = () => {
     handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
   }, [tool])
 
-  useEffect(() => {
-    console.log(snapshotIndex, snapshotList);
-  }, [snapshotIndex])
-
   return {
     canvasRef,
     tool,
