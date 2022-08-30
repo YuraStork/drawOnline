@@ -1,6 +1,5 @@
 import { BurgerMenu } from "components/burger-menu";
-import { WsContext } from "context/ws.context";
-import { useContext } from "react";
+import { useSocket } from "hooks/useSocket";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { logoutAction } from "store/slices/user.slice";
 import { useAppDispatch } from "store/store";
@@ -10,7 +9,7 @@ import { HeaderComponent, BurgerWrapper, HeaderNavigation, HeaderUserBlock } fro
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
   const { pathname } = useLocation();
   return (
     <HeaderComponent>

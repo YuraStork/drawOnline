@@ -1,14 +1,14 @@
 import { useFormik } from "formik";
 import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "store/store";
 import { LittleLoader } from "components/littleLoader";
 import { ErrorOutput } from "components/errorOutput";
-import { WsContext } from "context/ws.context";
+import { useSocket } from "hooks/useSocket";
 
 export const EnterInRoomComponent = () => {
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
   const user = useAppSelector((s) => s.user);
   const [isLoading, setIsLoading] = useState(false);
 

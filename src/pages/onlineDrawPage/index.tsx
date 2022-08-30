@@ -1,9 +1,9 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { Loader } from "components/loader";
 import { checkUserInRoom } from "./const";
-import { WsContext } from "context/ws.context";
+import { useSocket } from "hooks/useSocket";
 
 type ParamsProps = {
   roomId: string;
@@ -15,7 +15,7 @@ export const OnlineDrawPage: FC<any> = ({ children }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [access, setAccess] = useState(false);
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
 
   useEffect(() => {
     checkUserInRoom({ navigate, roomId, setIsLoading, userId: user.id, setAccess, socket });

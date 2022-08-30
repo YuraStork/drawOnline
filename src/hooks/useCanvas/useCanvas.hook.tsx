@@ -1,5 +1,4 @@
-import { WsContext } from "context/ws.context";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "store/store";
 import { ToolsTypes } from "types/canvas";
@@ -7,6 +6,7 @@ import { SetDrawConnection, ClearDrawConnection } from "./methods/setDrawConnect
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import { Tool } from "../../canvas_classes/index";
 import { SetTool } from "./const";
+import { useSocket } from "hooks/useSocket";
 
 type ParamsProps = {
   roomId: string;
@@ -18,7 +18,7 @@ export const useCanvas = () => {
   const [tool, setTool] = useState<ToolsTypes>("pen");
   const [snapshotList, setSnapshotList] = useState<string[]>([]);
   const [snapshotIndex, setSnapshotIndex] = useState(-1);
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
   const { roomId } = useParams<ParamsProps>();
   const { name } = useAppSelector((s) => s.user.data);
 

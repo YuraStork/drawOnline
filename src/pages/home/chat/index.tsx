@@ -1,14 +1,14 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { LittleLoader } from "components/littleLoader";
-import { WsContext } from "context/ws.context";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useSocket } from "hooks/useSocket";
+import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "store/store";
 import { ChatMessage } from "../types";
 import { SetConnectionChat, ClearConnectionChat, CHAT_MESSAGE } from "./const";
 import { ChatWrapper, Message, MessagesWrapper } from "./styles";
 
 export const Chat = () => {
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
   const [messages, setMessages] = useState<ChatMessage[] | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");

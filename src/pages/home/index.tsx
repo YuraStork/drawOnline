@@ -1,7 +1,7 @@
 import { Button } from "components/button/styles";
 import { Loader } from "components/loader";
-import { WsContext } from "context/ws.context";
-import { useContext, useEffect, useState } from "react";
+import { useSocket } from "hooks/useSocket";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { UserLogoutThunk } from "store/thunks/user/authorization.thunk";
@@ -29,7 +29,7 @@ export const HomePage = () => {
   const [userRooms, setUserRooms] = useState<ActiveRoom[]>([]);
 
   const dispatch = useAppDispatch();
-  const { socket } = useContext(WsContext);
+  const { socket } = useSocket();
   const navigate = useNavigate();
 
   useEffect(() => {

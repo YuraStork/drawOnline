@@ -1,5 +1,4 @@
-import { WsContext } from "context/ws.context";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { ActiveRoom } from "types/rooms";
 import { UserRoomCard } from "./card";
 import { UserCardsWrapper, UserRoomsWrapper } from "./styles";
