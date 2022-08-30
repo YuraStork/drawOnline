@@ -5,7 +5,7 @@ import { ToolsTypes } from "types/canvas";
 import { SetDrawConnection, ClearDrawConnection } from "./methods/setDrawConnection";
 import { handleSnapshot, pushRedo, pushUndo } from "./methods/snapshot";
 import { Tool } from "../../canvas_classes/index";
-import { SetTool } from "./const";
+import { setCanvasHeight, setCanvasWidth, handleSetTool } from "./const";
 import { useSocket } from "hooks/useSocket";
 import { userDataSelector } from "store/selectors/user.selector";
 
@@ -24,8 +24,8 @@ export const useCanvas = () => {
   const { name } = useAppSelector(userDataSelector);
 
   useEffect(() => {
-    canvasRef.current.width = document.body.clientWidth >= 1400 ? 1190 : document.body.clientWidth - 210;
-    canvasRef.current.height = document.body.clientHeight - 150;
+    canvasRef.current.width = setCanvasWidth();
+    canvasRef.current.height = setCanvasHeight();
 
     handleSnapshot({
       snapshotIndex,
@@ -34,29 +34,33 @@ export const useCanvas = () => {
       setSnapshotList,
       canvasRef,
     });
-    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+    handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
     SetDrawConnection({ socket, canvasRef, roomId: roomId || "", name, navigate, fillStyle: Tool.fillStyle, strokeStyle: Tool.strokeStyle, lineWidth: Tool.lineWidth, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex });
-
     return () => {
       ClearDrawConnection(socket);
     };
   }, []);
 
   useEffect(() => {
-    SetTool({ canvasRef, roomId: roomId!, socket, tool })
+    handleSetTool({ canvasRef, roomId: roomId!, socket, tool })
   }, [tool])
 
-  useEffect(() => {
-    console.log(snapshotIndex, snapshotList);
-  }, [snapshotIndex])
+  const setToolhandler = (tool: ToolsTypes) => setTool(tool);
+  const changeFillStyle = (color: string) => Tool.changeFillStyle(canvasRef.current.getContext("2d"), color);
+  const changeStrokeStyle = (color: string) => Tool.changeStrokeStyle(canvasRef.current.getContext("2d"), color);
+  const changeLineWidth = (size: number) => Tool.changeLineWidth(canvasRef.current.getContext("2d"), size);
+  const handleReset = () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex);
+  const handleRedo = () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex);
 
   return {
     canvasRef,
     tool,
-    setToolhandler: (tool: ToolsTypes) => setTool(tool),
-    changeFillStyle: (color: string) => Tool.changeFillStyle(canvasRef.current.getContext("2d"), color),
-    changeStrokeStyle: (color: string) => Tool.changeStrokeStyle(canvasRef.current.getContext("2d"), color),
-    changeLineWidth: (size: number) => Tool.changeLineWidth(canvasRef.current.getContext("2d"), size),
+    setToolhandler,
+    changeFillStyle,
+    changeStrokeStyle,
+    changeLineWidth,
+    handleReset,
+    handleRedo,
     handleSnapshot: () =>
       handleSnapshot({
         snapshotIndex,
@@ -65,8 +69,6 @@ export const useCanvas = () => {
         setSnapshotList,
         canvasRef,
       }),
-    handleReset: () => pushUndo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
-    handleRedo: () => pushRedo(canvasRef.current.getContext("2d"), snapshotList, snapshotIndex, setSnapshotIndex),
     snapshot: snapshotList[snapshotIndex] || null,
   };
 };

@@ -2,6 +2,7 @@ import { NavigateFunction } from "react-router-dom";
 import { Socket } from "socket.io-client";
 import { toastError } from "services/toast.service";
 import { ActiveRoom } from "types/rooms";
+import { FunctionWithParams } from "types";
 
 export const GET_ROOM = "GET_ROOM";
 export const GET_ROOMS = "GET_ROOMS";
@@ -14,10 +15,10 @@ export const GET_USER_ROOMS = "GET_USER_ROOMS";
 export const DELETE_USER_ROOM_ERROR = "ERROR_DELETE_USER_ROOM";
 
 type Props = {
-  setActiveRooms: (e: ActiveRoom[]) => void;
+  setActiveRooms: FunctionWithParams<ActiveRoom[]>;
+  setUserRooms: FunctionWithParams<ActiveRoom[]>;
   navigate: NavigateFunction;
   socket: Socket<any, any>;
-  setUserRooms: (e: ActiveRoom[]) => void;
   userId: string;
 };
 

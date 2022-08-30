@@ -29,7 +29,7 @@ type Props = {
   snapshotIndex: number
 }
 export const SetDrawConnection = (data: Props) => {
-  const { canvasRef, fillStyle, lineWidth, name, navigate, roomId, socket, strokeStyle, setSnapshotList, snapshotList, setSnapshotIndex, snapshotIndex } = data;
+  const { canvasRef, name, navigate, roomId, socket } = data;
 
   socket.emit(CONNECTION_DRAW, { userName: name, roomId });
   socket.on(CONNECTION_DRAW, (data: string) => {

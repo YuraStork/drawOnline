@@ -1,4 +1,5 @@
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 import * as yup from "yup";
 import { EnterInRoomType } from "../types";
 
@@ -13,7 +14,7 @@ const validationSchema = yup.object().shape({
 const onSubmit = async (
   data: EnterInRoomType,
   socket: Socket<any, any>,
-  setIsLoading: (arg: boolean) => void
+  setIsLoading: FunctionWithParams<boolean>
 ) => {
   setIsLoading(true);
   socket.emit("JOIN", data);

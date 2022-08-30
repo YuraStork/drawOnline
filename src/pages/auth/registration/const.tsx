@@ -18,8 +18,16 @@ export const initialValues: UserRegistrationData = {
 
 export const RegistrationFileds = ["name", "email", "password"];
 
-export const SetTypesFields = (name: string) =>
-  name === "email" ? "email" : name === "password" ? "password" : "text";
+export const SetTypesFields = (name: string) => {
+  switch (name) {
+    case "email":
+      return "email";
+    case "password":
+      return "password";
+    default:
+      return "text";
+  }
+};
 
 export const onSubmit = async (
   data: UserRegistrationData,

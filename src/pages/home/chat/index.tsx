@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { LittleLoader } from "components/littleLoader";
+import { LittleLoader } from "components/loaders/littleLoader";
 import { useSocket } from "hooks/useSocket";
 import { useEffect, useRef, useState } from "react";
 import { userInfoSelector } from "store/selectors/user.selector";

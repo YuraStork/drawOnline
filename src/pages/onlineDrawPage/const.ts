@@ -1,14 +1,15 @@
 import { checkRoom } from "api/rooms/checkRoom";
 import { NavigateFunction } from "react-router-dom";
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 
 type Props = {
-  setIsLoading: (e: boolean) => void;
-  setAccess: (e: boolean) => void;
+  setIsLoading: FunctionWithParams<boolean>;
+  setAccess: FunctionWithParams<boolean>;
   roomId: string | undefined;
   userId: string;
   navigate: NavigateFunction;
-  socket: Socket<any, any>
+  socket: Socket<any, any>;
 };
 
 export const checkUserInRoom = async (data: Props) => {

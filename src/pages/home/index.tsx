@@ -1,5 +1,5 @@
 import { Button } from "components/button/styles";
-import { Loader } from "components/loader";
+import { Loader } from "components/loaders/loader";
 import { useSocket } from "hooks/useSocket";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

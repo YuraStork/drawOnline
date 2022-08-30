@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { useSocket } from "hooks/useSocket";
 import { FC } from "react";
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 import { ActiveRoom } from "types/rooms";
 import { Portal } from "utils/portal";
 import {
@@ -13,7 +14,7 @@ import {
 type Props = {
   socket: Socket<any, any>;
   room: ActiveRoom;
-  setEditMode: (e: boolean) => void;
+  setEditMode: FunctionWithParams<boolean>;
   userId: string;
 };
 

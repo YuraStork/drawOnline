@@ -5,12 +5,23 @@ import { logoutAction } from "store/slices/user.slice";
 import { useAppDispatch } from "store/store";
 import { Container } from "../container/styles";
 import { LINKS } from "./const";
-import { HeaderComponent, BurgerWrapper, HeaderNavigation, HeaderUserBlock } from "./styles";
+import {
+  HeaderComponent,
+  BurgerWrapper,
+  HeaderNavigation,
+  HeaderUserBlock,
+} from "./styles";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
   const { socket } = useSocket();
   const { pathname } = useLocation();
+
+  const handleLeave = () => {
+    socket.disconnect();
+    dispatch(logoutAction());
+  };
+
   return (
     <HeaderComponent>
       <Container>
@@ -30,7 +41,7 @@ export const Header = () => {
 
         <HeaderUserBlock>
           {pathname !== "/cabinet" && <Link to="/cabinet">My Cabinet</Link>}
-          <button onClick={() => { socket.disconnect(); dispatch(logoutAction()) }}>logout</button>
+          <button onClick={handleLeave}>logout</button>
         </HeaderUserBlock>
       </Container>
     </HeaderComponent>

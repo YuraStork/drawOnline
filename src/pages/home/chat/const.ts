@@ -1,4 +1,5 @@
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 import { ChatMessage } from "../types";
 
 export const GET_CHAT = "GET_CHAT";
@@ -7,10 +8,10 @@ export const CHAT_ERROR = "CHAT_ERROR";
 
 type Props = {
   socket: Socket<any, any>;
-  setIsLoading: (e: boolean) => void;
-  setMessages: (e: any) => void;
-  setMessageLoading: (e: boolean) => void;
-  setError: (e: string) => void;
+  setIsLoading: FunctionWithParams<boolean>;
+  setMessages: FunctionWithParams<any>;
+  setMessageLoading: FunctionWithParams<boolean>;
+  setError: FunctionWithParams<string>;
   id: string;
 };
 

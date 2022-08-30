@@ -16,13 +16,14 @@ export const DropDown: FC<DropDownTypes> = ({ list }) => {
       </div>
 
       <div>
-        {isOpen &&<>
-          {list.map(label => <div key={label}>{label}</div>)}
-        
+        {isOpen && (
+          <>
+            {list.map((label) => (
+              <div key={label}>{label}</div>
+            ))}
           </>
-        }
+        )}
       </div>
-     
     </DropDownContainer>
   );
 };
