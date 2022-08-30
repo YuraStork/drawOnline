@@ -4,6 +4,7 @@ import { RadioButtons } from "components/radioButton"
 import { ChangeEvent, FC } from "react"
 import { Heading4 } from "styles/typography/styles"
 import { FunctionWithParams } from "types"
+import { MALE, WOMAN } from "../const"
 import { RadioButtonsWrapper } from "../updateUserModal/styles"
 
 type Props = {
@@ -18,7 +19,7 @@ export const UserRadioButtons: FC<Props> = ({ formik, handleSaveBackground }) =>
       <RadioButtons
         name="gender"
         onChange={formik.handleChange}
-        values={["male", "woman"]}
+        values={[MALE, WOMAN]}
         defaultValue={formik.values.gender}
       />
     </div>

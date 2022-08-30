@@ -8,6 +8,8 @@ import { createBlobFile } from "utils/encodeBase64";
 import * as yup from "yup";
 import { InitialStateTypes, UserCabinetTypes } from "./types";
 
+export const MALE = "male";
+export const WOMAN = "woman"
 const defaultUserValues = {
   name: "",
   country: "",
