@@ -57,10 +57,10 @@ export const Loader: FC<LoaderProps> = ({ position, color }) => {
   return (
     <LoaderWrapper position={position} color={color}>
       <div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div/>
+        <div/>
+        <div/>
+        <div/>
       </div>
     </LoaderWrapper>
   );
