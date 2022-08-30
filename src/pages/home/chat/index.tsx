@@ -16,6 +16,7 @@ export const Chat = () => {
   const { data } = useAppSelector((s) => s.user);
   const chatRef = useRef<HTMLDivElement>(null);
   const [messageLoading, setMessageLoading] = useState(false);
+  const DEFAULT_IMAGE = "http://localhost:5000/users/defaultUserImage.png";
 
   useEffect(() => {
     SetConnectionChat({
@@ -62,8 +63,7 @@ export const Chat = () => {
                   src={`http://localhost:5000/users/${msg.userId}/${msg.userId}_avatar.png`}
                   onError={(e) => {
                     (e.target as HTMLImageElement).onerror = null;
-                    (e.target as HTMLImageElement).src =
-                      "http://localhost:5000/users/defaultUserImage.png";
+                    (e.target as HTMLImageElement).src = DEFAULT_IMAGE;
                   }}
                   width={30}
                   height={30}
