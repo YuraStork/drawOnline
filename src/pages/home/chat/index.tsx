@@ -31,7 +31,9 @@ export const Chat = () => {
   }, []);
 
   useEffect(() => {
-    chatRef.current?.scrollTo(0, 100000);
+    if (chatRef.current) {
+      chatRef.current.scrollTo(0, chatRef.current.scrollHeight);
+    }
   }, [messages]);
 
   const handleSendMessage = () => {
