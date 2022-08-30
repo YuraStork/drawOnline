@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { FunctionWithParams } from "types";
 import { InputWrapper, ErrorSpan } from "./styles";
 
@@ -16,14 +16,13 @@ type InputProps = {
 };
 
 export const Input: FC<InputProps> = ({ label, ...rest }) => {
-  const [type] = useState(rest.type || "text");
   return (
     <InputWrapper
       isError={!!rest.error}
       hasValue={!!rest.value}
       margin={rest.margin}
     >
-      <input {...rest} type={type} />
+      <input {...rest} type={rest.type} />
       <label>{label}</label>
       {!!rest.error && <ErrorSpan title={rest.error}></ErrorSpan>}
     </InputWrapper>
