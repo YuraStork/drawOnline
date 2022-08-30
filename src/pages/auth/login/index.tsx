@@ -8,7 +8,7 @@ import {
 } from "./const";
 import { Button } from "components/button/styles";
 import { Portal } from "utils/portal";
-import { Loader } from "components/loader";
+import { Loader } from "components/loaders/loader";
 import { Input } from "components/input";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { userInfoSelector } from "store/selectors/user.selector";

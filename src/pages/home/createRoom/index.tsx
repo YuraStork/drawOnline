@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
 import { FC } from "react";
-import { Loader } from "../../../components/loader";
+import { Loader } from "../../../components/loaders/loader";
 import { useAppSelector } from "store/store";
 import { ErrorOutput } from "components/errorOutput";
 import { useSocket } from "hooks/useSocket";

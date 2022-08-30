@@ -1,4 +1,4 @@
-import { Loader } from "components/loader";
+import { Loader } from "components/loaders/loader";
 import { useEffect, useState } from "react";
 import { Router } from "./router";
 import { useAppDispatch } from "store/store";

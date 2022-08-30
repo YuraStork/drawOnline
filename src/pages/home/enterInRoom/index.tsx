@@ -3,7 +3,7 @@ import { RoomWrapper } from "../styles";
 import { initialValues, onSubmit, validationSchema } from "./const";
 import { useState } from "react";
 import { useAppSelector } from "store/store";
-import { LittleLoader } from "components/littleLoader";
+import { LittleLoader } from "components/loaders/littleLoader";
 import { ErrorOutput } from "components/errorOutput";
 import { useSocket } from "hooks/useSocket";
 import { userInfoSelector } from "store/selectors/user.selector";

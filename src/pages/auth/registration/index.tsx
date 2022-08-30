@@ -11,7 +11,7 @@ import { Button } from "components/button/styles";
 import { Input } from "components/input";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { Portal } from "utils/portal";
-import { Loader } from "components/loader";
+import { Loader } from "components/loaders/loader";
 import { userInfoSelector } from "store/selectors/user.selector";
 import { UserRegistrationData } from "types";
 
