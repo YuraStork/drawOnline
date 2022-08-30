@@ -3,11 +3,12 @@ import { Input } from "components/input"
 import { RadioButtons } from "components/radioButton"
 import { ChangeEvent, FC } from "react"
 import { Heading4 } from "styles/typography/styles"
+import { FunctionWithParams } from "types"
 import { RadioButtonsWrapper } from "../updateUserModal/styles"
 
 type Props = {
   formik: any,
-  handleSaveBackground: (e: ChangeEvent<HTMLInputElement> | null) => void
+  handleSaveBackground: FunctionWithParams<ChangeEvent<HTMLInputElement> | null>
 }
 
 export const UserRadioButtons: FC<Props> = ({ formik, handleSaveBackground }) => {

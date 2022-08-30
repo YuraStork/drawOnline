@@ -1,4 +1,5 @@
 import { ChangeEvent, FC, useRef, useState } from "react";
+import { FunctionWithParams } from "types";
 import {
   ContentWrapper,
   FileInputStyled,
@@ -11,7 +12,7 @@ import {
 
 type FileInputProps = {
   name: string;
-  onChange: (e: ChangeEvent<HTMLInputElement> | null) => void;
+  onChange: FunctionWithParams<ChangeEvent<HTMLInputElement> | null>;
 };
 
 export const FileInput: FC<FileInputProps> = ({ onChange, name }) => {

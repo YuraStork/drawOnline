@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { FunctionWithParams } from "types";
 import { InputWrapper, ErrorSpan } from "./styles";
 
 type InputProps = {
@@ -9,8 +10,8 @@ type InputProps = {
   name: string;
   error?: string;
   id?: string;
-  onChange?: (e: any) => void;
-  onBlur?: (e: any) => void;
+  onChange?: FunctionWithParams<any>;
+  onBlur?: FunctionWithParams<any>;
   disabled?: boolean
 };
 

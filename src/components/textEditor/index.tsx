@@ -5,6 +5,7 @@ import htmlToDraft from "html-to-draftjs";
 import { FC, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styled from "styled-components";
+import { FunctionWithParams } from "types";
 
 const EditorWrapper = styled.div`
   border: 1px solid #f3f3f3;
@@ -22,7 +23,7 @@ const EditorWrapper = styled.div`
 
 type TextEditorProps = {
   name: string;
-  onChange: (e: string) => void;
+  onChange: FunctionWithParams<string>;
   value: string;
 }
 

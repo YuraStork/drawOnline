@@ -29,13 +29,15 @@ export interface SavedUserObject {
   token: string;
   user: Pick<AuthorizedUser, "name" | "role" | "id">;
 }
-
+export interface FunctionWithParams<T> {
+  (e: T): void
+}
 export interface AuthContextTypes {
   isAuth: boolean;
   isReady: boolean;
   userData: SavedUserObject;
-  login: (data: UserLoginFormData) => void;
-  logout: () => void;
+  login: FunctionWithParams<UserLoginFormData>;
+  logout: VoidFunction;
   isLoading: boolean;
 }
 export interface RoomType {
@@ -46,3 +48,4 @@ export interface UserInRoom {
   userName: string;
   userId: string;
 }
+

@@ -1,4 +1,5 @@
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 import * as yup from "yup";
 import { CreateRoom } from "../types";
 
@@ -12,7 +13,7 @@ const validationSchema = yup.object().shape({
 
 const onSubmit = async (
   data: CreateRoom,
-  setIsLoading: (arg: boolean) => void,
+  setIsLoading: FunctionWithParams<boolean>,
   socket: Socket<any, any>
 ) => {
   setIsLoading(true);

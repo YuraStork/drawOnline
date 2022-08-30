@@ -1,5 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import styled from "styled-components";
+import { FunctionWithParams } from "types";
 
 const InputWrapper = styled.div``;
 const Wrapper = styled.div`
@@ -62,7 +63,7 @@ type RadioButtonTypes = {
   defaultValue: string;
   values: string[];
   name: string;
-  onChange: (value: ChangeEvent<HTMLInputElement>) => void;
+  onChange: FunctionWithParams<ChangeEvent<HTMLInputElement>>;
 };
 
 export const RadioButtons: FC<RadioButtonTypes> = ({

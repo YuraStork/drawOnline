@@ -2,11 +2,12 @@ import { toastError } from "services/toast.service";
 import { JOIN_ERROR, JOIN_SUCCESS } from "pages/home/const";
 import { NavigateFunction } from "react-router-dom";
 import { Socket } from "socket.io-client";
+import { FunctionWithParams } from "types";
 
 type Props = {
   socket: Socket<any, any>,
   navigate: NavigateFunction,
-  setIsLoading: (e: boolean) => void
+  setIsLoading: FunctionWithParams<boolean>;
 }
 
 export const SetAccessPageConnection = (data: Props) => {

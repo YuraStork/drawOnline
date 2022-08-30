@@ -7,10 +7,11 @@ import { useAppSelector } from "store/store";
 import { ErrorOutput } from "components/errorOutput";
 import { useSocket } from "hooks/useSocket";
 import { userDataSelector } from "store/selectors/user.selector";
+import { FunctionWithParams } from "types";
 
 type ComponentProps = {
   isLoading: boolean;
-  setIsLoading: (arg: boolean) => void;
+  setIsLoading: FunctionWithParams<boolean>;
 };
 
 export const CreateRoomComponent: FC<ComponentProps> = ({

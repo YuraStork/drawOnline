@@ -1,28 +1,30 @@
 import React, { createContext } from "react";
+import { FunctionWithParams } from "types";
 import { ToolsTypes } from "types/canvas";
+import { noopFunction } from "utils/noop";
 
 type PaintContextTypes = {
   canvasRef: React.Ref<HTMLCanvasElement>;
-  setToolhandler: (tool: ToolsTypes) => void;
   tool: ToolsTypes;
-  changeFillStyle: (e: string) => void;
-  changeStrokeStyle: (e: string) => void;
-  changeLineWidth: (e: number) => void;
-  handleReset: () => void;
-  handleRedo: () => void;
-  handleSnapshot: () => void;
   snapshot: string | null;
+  setToolhandler: FunctionWithParams<ToolsTypes>;
+  changeFillStyle: FunctionWithParams<string>;
+  changeStrokeStyle: FunctionWithParams<string>;
+  changeLineWidth: FunctionWithParams<number>;
+  handleReset: VoidFunction;
+  handleRedo: VoidFunction;
+  handleSnapshot: VoidFunction;
 };
 
 export const PaintContext = createContext<PaintContextTypes>({
+  setToolhandler: noopFunction,
+  changeFillStyle: noopFunction,
+  changeStrokeStyle: noopFunction,
+  changeLineWidth: noopFunction,
+  handleReset: noopFunction,
+  handleRedo: noopFunction,
+  handleSnapshot: noopFunction,
   canvasRef: null,
-  setToolhandler: () => {},
   tool: "pen",
-  changeFillStyle: () => {},
-  changeStrokeStyle: () => {},
-  changeLineWidth: () => {},
-  handleReset: () => {},
-  handleRedo: () => {},
-  handleSnapshot: () => {},
   snapshot: null,
 });
